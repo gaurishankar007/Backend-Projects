@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
-import { jwtSecret } from "../constants/variables";
+import { jwtSecret } from "../constants/variables.js";
 
 const tokenHandler = {
   generateToken: (data, options = { expiresIn: "1h" }) => {
-    const token = jwt.sign(data, jwtSecret, { ...options });
+    const json = { ...data, type: "token" };
+    const token = jwt.sign(json, jwtSecret, options);
     return token;
   },
   verifyToken: (token) => {
@@ -11,8 +12,9 @@ const tokenHandler = {
     return data;
   },
   generateRefreshToken: (data, options = { expiresIn: "1d" }) => {
-    const token = jwt.sign(data, jwtSecret, { ...options });
-    return token;
+    const json = { ...data, type: "refresh" };
+    const refresh = jwt.sign(json, jwtSecret, options);
+    return refresh;
   },
 };
 

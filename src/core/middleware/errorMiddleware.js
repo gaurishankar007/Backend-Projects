@@ -9,7 +9,7 @@ const urlNotFound = (req, res, next) => {
 const errorHandler = (error, req, res, next) => {
   const statusCode = res.statusCode;
   if (res.statusCode == 200) statusCode = 500;
-  errorRes(res, error.message, error.stack, statusCode);
+  res.status(res, error.stack, error.message, statusCode);
 };
 
 export { urlNotFound, errorHandler };

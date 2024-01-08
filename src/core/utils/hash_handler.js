@@ -2,12 +2,12 @@ import bcrypt from "bcryptjs";
 import { bcryptSalt } from "../constants/variables.js";
 
 const hashHandler = {
-  has: (data) => {
-    const hashed = bcrypt.hash(data, bcryptSalt);
+  has: async (data) => {
+    const hashed = await bcrypt.hash(data, parseInt(bcryptSalt));
     return hashed;
   },
   compare: async (data, hashed) => {
-    const isValid = bcrypt.compare(data, hashed);
+    const isValid = await bcrypt.compare(data, hashed);
     return isValid;
   },
 };
