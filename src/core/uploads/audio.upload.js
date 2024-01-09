@@ -15,12 +15,12 @@ const storage = multer.diskStorage({
 });
 
 const filter = (req, file, cb) => {
-  const isValidImage =
+  const valid =
     file.mimetype == "audio/mp3" ||
     file.mimetype == "audio/mp4" ||
     file.mimetype == "audio/m4A";
 
-  if (isValidImage) {
+  if (valid) {
     cb(null, true);
   } else {
     cb(null, false);

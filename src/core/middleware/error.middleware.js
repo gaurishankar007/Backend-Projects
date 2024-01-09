@@ -1,3 +1,4 @@
+import { MulterError } from "multer";
 import { errorRes } from "../utils/response.js";
 
 const urlNotFound = (req, res, next) => {
@@ -7,9 +8,10 @@ const urlNotFound = (req, res, next) => {
 };
 
 const errorHandler = (error, req, res, next) => {
-  const statusCode = res.statusCode;
-  if (res.statusCode == 200) statusCode = 500;
-  res.status(res, error.stack, error.message, statusCode);
+  console.log(error);
+
+  const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
+  errorRes(res, error.message, undefined, statusCode);
 };
 
 export { urlNotFound, errorHandler };

@@ -6,7 +6,7 @@ import routes from "./routes.js";
 import {
   urlNotFound,
   errorHandler,
-} from "../core/middleware/errorMiddleware.js";
+} from "../core/middleware/error.middleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

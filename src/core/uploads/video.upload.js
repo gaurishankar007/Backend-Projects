@@ -15,10 +15,10 @@ const storage = multer.diskStorage({
 });
 
 const filter = (req, file, cb) => {
-  const isValidImage =
+  const valid =
     file.mimetype == "video/mp4" || file.mimetype == "video/mkv";
 
-  if (isValidImage) {
+  if (valid) {
     cb(null, true);
   } else {
     cb(null, false);

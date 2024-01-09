@@ -15,12 +15,12 @@ const pictureStorage = multer.diskStorage({
 });
 
 const filter = (req, file, cb) => {
-  const isValidImage =
+  const valid =
     file.mimetype == "image/jpg" ||
     file.mimetype == "image/jpeg" ||
     file.mimetype == "image/png";
 
-  if (isValidImage) {
+  if (valid) {
     cb(null, true);
   } else {
     cb(null, false);

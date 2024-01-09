@@ -25,6 +25,8 @@ const userController = {
       password: hashedPW,
     });
 
+    newUser.password = undefined;
+
     const token = tokenHandler.generateToken({ id: newUser._id });
     const refresh = tokenHandler.generateRefreshToken({ id: newUser._id });
     const data = { user: newUser, accessToken: token, refreshToken: refresh };
@@ -37,15 +39,24 @@ const userController = {
 
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
-    if (user == null) {
-      return errorRes(res, "User credential did not matched");
-    }
+    const errorMsg = "User credential did not matched";
+    if (user == null) return errorRes(res, errorMsg);
 
     const pWValid = await hashHandler.compare(password, user.password);
-    if (!pWValid) {
-      return errorRes(res, "User credential did not matched");
-    }
+    if (!pWValid) return errorRes(res, errorMsg);
 
+    const token = tokenHandler.generateToken({ id: user._id });
+    const refresh = tokenHandler.generateRefreshToken({ id: user._id });
+    const data = { user: user, accessToken: token, refreshToken: refresh };
+
+    successRes(res, data);
+  }),
+  changeProfile: asyncHandler(async (req, res) => {
+    const user = req.user;
+    const file = req.file;
+    user.profilePic = file.filename;
+
+    await UserModel.updateOne({ _id: user._id }, { profilePic: file.filename });
     successRes(res, user);
   }),
 };
