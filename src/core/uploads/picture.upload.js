@@ -27,6 +27,10 @@ const filter = (req, file, cb) => {
   }
 };
 
-const pictureUpload = multer({ storage: pictureStorage, fileFilter: filter });
+const pictureUpload = multer({
+  storage: pictureStorage,
+  fileFilter: filter,
+  limits: { fileSize: 5 * 1e6 },
+}).single("picture");
 
 export default pictureUpload;

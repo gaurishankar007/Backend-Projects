@@ -3,7 +3,7 @@ import UserModel from "../../models/user.model.js";
 import { errorRes } from "../utils/response.js";
 import tokenHandler from "../utils/token_handler.js";
 
-const verifyUser = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
     if (!authorization) {
@@ -21,11 +21,15 @@ const verifyUser = async (req, res, next) => {
     }
 
     const user = await UserModel.findOne({ _id: id }, "-password");
+    if (user == null) {
+      return errorRes(res, "Invalid token", undefined, 401);
+    }
+
     req.user = user;
     next();
   } catch (error) {
-    errorRes(res, "Token expired", undefined, 401);
+    errorRes(res, "Token has been expired", undefined, 401);
   }
 };
 
-export default verifyUser;
+export default authMiddleware;

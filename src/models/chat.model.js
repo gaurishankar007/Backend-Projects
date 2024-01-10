@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
-import MessageModel from "./message.model.js";
-import MemberModel from "./member.js";
 
 const ChatScheme = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    profile: { type: String, default: null },
-    members: [{ type: mongoose.Types.ObjectId, ref: MemberModel }],
+    members: [{ type: mongoose.Types.ObjectId, ref: "Member" }],
+    name: { type: String, default: null },
+    profilePic: { type: String, default: null },
     lastMessage: {
       type: mongoose.Types.ObjectId,
-      ref: MessageModel,
+      ref: "Message",
       default: null,
     },
     group: { type: Boolean, default: false },

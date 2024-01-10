@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import authValidator from "../core/validators/auth.validator.js";
 import UserModel from "../models/user.model.js";
+import authValidator from "../core/validators/auth.validator.js";
 import { errorRes, successRes } from "../core/utils/response.js";
 import hashHandler from "../core/utils/hash_handler.js";
 import tokenHandler from "../core/utils/token_handler.js";
@@ -31,7 +31,7 @@ const userController = {
     const refresh = tokenHandler.generateRefreshToken({ id: newUser._id });
     const data = { user: newUser, accessToken: token, refreshToken: refresh };
 
-    successRes(res, data, "User created", 201);
+    successRes(res, data, "User created");
   }),
   login: asyncHandler(async (req, res) => {
     const error = authValidator.login(req.body);
@@ -44,6 +44,7 @@ const userController = {
 
     const pWValid = await hashHandler.compare(password, user.password);
     if (!pWValid) return errorRes(res, errorMsg);
+    user.password = undefined;
 
     const token = tokenHandler.generateToken({ id: user._id });
     const refresh = tokenHandler.generateRefreshToken({ id: user._id });
@@ -51,12 +52,39 @@ const userController = {
 
     successRes(res, data);
   }),
-  changeProfile: asyncHandler(async (req, res) => {
-    const user = req.user;
-    const file = req.file;
-    user.profilePic = file.filename;
+  refreshToken: asyncHandler(async (req, res) => {
+    const refreshToken = req.body.refreshToken;
+    if (!refreshToken || refreshToken === "") {
+      return errorRes(res, "Refresh token is required");
+    }
 
-    await UserModel.updateOne({ _id: user._id }, { profilePic: file.filename });
+    try {
+      const { id, type } = tokenHandler.verifyToken(refreshToken);
+      if (type !== "refresh") {
+        return errorRes(res, "Invalid refresh token", undefined, 401);
+      }
+
+      const user = await UserModel.findOne({ _id: id }, "-password");
+      if (user == null) {
+        return errorRes(res, "Invalid refresh token", undefined, 401);
+      }
+
+      const accessToken = tokenHandler.generateToken({ id: id });
+      const newRefreshToken = tokenHandler.generateRefreshToken({ id: id });
+      const data = { accessToken, refreshToken: newRefreshToken };
+
+      successRes(res, data);
+    } catch (error) {
+      errorRes(res, "Refresh token has been expired", undefined, 401);
+    }
+  }),
+  changeProfile: asyncHandler(async (req, res) => {
+    const file = req.file;
+
+    const user = await UserModel.findOneAndUpdate(
+      { _id: req.user._id },
+      { profilePic: file.filename }
+    );
     successRes(res, user);
   }),
 };

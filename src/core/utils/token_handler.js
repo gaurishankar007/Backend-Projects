@@ -11,7 +11,7 @@ const tokenHandler = {
     const data = jwt.verify(token, jwtSecret);
     return data;
   },
-  generateRefreshToken: (data, options = { expiresIn: "1d" }) => {
+  generateRefreshToken: (data, options = { expiresIn: "100d" }) => {
     const json = { ...data, type: "refresh" };
     const refresh = jwt.sign(json, jwtSecret, options);
     return refresh;
