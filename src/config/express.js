@@ -1,15 +1,11 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 import routes from "./routes.js";
 import {
   urlNotFound,
   errorHandler,
 } from "../core/middleware/error.middleware.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import getDirectory from "../core/utils/directory.js";
 
 const app = express();
 const corsOption = { origin: [] };
@@ -17,7 +13,7 @@ const corsOption = { origin: [] };
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/public/", express.static(path.join(__dirname, "../../public/")));
+app.use("/public/", express.static(getDirectory("/")));
 app.use("/api", routes);
 app.use(urlNotFound);
 app.use(errorHandler);

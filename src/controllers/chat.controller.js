@@ -31,9 +31,9 @@ const chatController = {
 
     const user = req.user;
     const users = [
-      { user: `${user._id}`, groupCreator: true },
+      { user: `${user._id}`, groupCreator: true, admin: true },
       ...userIds.map(function (id) {
-        return { user: id, addedBy: `${user._id}` };
+        return { user: id };
       }),
     ];
 

@@ -1,10 +1,10 @@
 import multer from "multer";
-import getDirectory from "../utils/directory.js";
 import { errorRes } from "../utils/response.js";
+import getDirectory from "../utils/directory.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, getDirectory("/videos"));
+    cb(null, getDirectory("/images"));
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -12,39 +12,38 @@ const storage = multer.diskStorage({
 });
 
 const filter = (req, file, cb) => {
-  const types = ["video/mp4", "video/mkv"];
+  const types = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
   const fileSize = parseInt(req.headers["content-length"]);
 
   if (!types.includes(file.mimetype)) {
     cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
-  } else if (fileSize > 100 * 1e6) {
+  } else if (fileSize > 10 * 1e6) {
     cb(new multer.MulterError("LIMIT_FILE_SIZE"), false);
   } else {
     cb(null, true);
   }
 };
 
-const videoMulter = multer({
+const imageMulter = multer({
   storage: storage,
   fileFilter: filter,
-  limits: { fileSize: 100 * 1e6 },
-}).single("video");
+  limits: { fileSize: 10 * 1e6 },
+}).single("image");
 
-const videoUpload = (req, res, next) => {
-  videoMulter(req, res, (error) => {
+const imageUpload = (req, res, next) =>
+  imageMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
-        return errorRes(res, "Unsupported video");
+        return errorRes(res, "Unsupported image");
       } else if (error.code === "LIMIT_FILE_SIZE") {
-        return errorRes(res, "Unsupported video size");
+        return errorRes(res, "Unsupported image size");
       }
     }
 
     if (error) return errorRes(res, error.message);
-    if (!req.file) return errorRes(res, "Video not provided");
+    if (!req.file) return errorRes(res, "Image not provided");
 
     next();
   });
-};
 
-export default videoUpload;
+export default imageUpload;

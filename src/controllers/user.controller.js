@@ -2,8 +2,8 @@ import asyncHandler from "express-async-handler";
 import UserModel from "../models/user.model.js";
 import authValidator from "../core/validators/auth.validator.js";
 import { errorRes, successRes } from "../core/utils/response.js";
-import hashHandler from "../core/utils/hash_handler.js";
-import tokenHandler from "../core/utils/token_handler.js";
+import hashHandler from "../core/utils/hash.handler.js";
+import tokenHandler from "../core/utils/token.handler.js";
 
 const userController = {
   register: asyncHandler(async (req, res) => {

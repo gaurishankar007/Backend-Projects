@@ -1,14 +1,10 @@
 import multer from "multer";
-import path from "path";
-import { fileURLToPath } from "url";
 import { errorRes } from "../utils/response.js";
+import getDirectory from "../utils/directory.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const profileStorage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../../../public/profiles"));
+    cb(null, getDirectory("/profiles"));
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -29,7 +25,7 @@ const filter = (req, file, cb) => {
 };
 
 const profileMulter = multer({
-  storage: profileStorage,
+  storage: storage,
   fileFilter: filter,
   limits: { fileSize: 5 * 1e6 },
 }).single("profilePic");
@@ -38,13 +34,15 @@ const profileUpload = (req, res, next) =>
   profileMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
-        return errorRes(res, "Unsupported image type");
+        return errorRes(res, "Unsupported image");
       } else if (error.code === "LIMIT_FILE_SIZE") {
         return errorRes(res, "Unsupported image size");
       }
     }
+
     if (error) return errorRes(res, error.message);
     if (!req.file) return errorRes(res, "Image not provided");
+
     next();
   });
 
