@@ -14,5 +14,11 @@ userRouter.put(
   profileUpload,
   userController.changeProfile
 );
+userRouter.put(
+  "/changePassword",
+  authMiddleware,
+  userController.changePassword
+);
+userRouter.put("/changeName", authMiddleware, userController.changeName);
 
 export default userRouter;

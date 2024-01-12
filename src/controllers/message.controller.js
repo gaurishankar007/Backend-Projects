@@ -1,8 +1,10 @@
 import asyncHandler from "express-async-handler";
+import fs from "fs";
 import MessageModel from "../models/message.model.js";
 import ChatModel from "../models/chat.model.js";
 import messageValidator from "../core/validators/message.validator.js";
 import { errorRes, successRes } from "../core/utils/response.js";
+import { filePath } from "../core/utils/directory.js";
 
 const MessageController = {
   text: asyncHandler(async (req, res) => {
@@ -34,15 +36,15 @@ const MessageController = {
     const { chatId, messageId, content, contentType } = req.body;
     const user = req.user;
 
-    await MessageModel.deleteMany();
-
-    const message = await MessageModel.create({
+    let message = await MessageModel.create({
       chat: chatId,
       sender: user._id,
       content: content,
       contentType: contentType,
       repliedTo: messageId,
     });
+
+    message = await MessageModel.populate(message, { path: "repliedTo" });
 
     const chat = await ChatModel.findOneAndUpdate(
       { _id: chatId },
@@ -55,7 +57,10 @@ const MessageController = {
   file: asyncHandler(async (req, res) => {
     const file = req.file;
     const error = messageValidator.file(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) {
+      if (file) fs.unlinkSync(filePath(file));
+      return errorRes(res, error, "Validation Error");
+    }
 
     const { chatId, contentType } = req.body;
     const user = req.user;
@@ -76,20 +81,25 @@ const MessageController = {
     successRes(res, data);
   }),
   replyFile: asyncHandler(async (req, res) => {
+    const file = req.file;
     const error = messageValidator.replyFile(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) {
+      if (file) fs.unlinkSync(filePath(file));
+      return errorRes(res, error, "Validation Error");
+    }
 
     const { chatId, messageId, contentType } = req.body;
-    const file = req.file;
     const user = req.user;
 
-    const message = await MessageModel.create({
+    let message = await MessageModel.create({
       chat: chatId,
       sender: user._id,
       content: file.filename,
       contentType: contentType,
       repliedTo: messageId,
     });
+
+    message = await MessageModel.populate(message, { path: "repliedTo" });
 
     const chat = await ChatModel.findOneAndUpdate(
       { _id: chatId },

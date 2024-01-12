@@ -3,15 +3,14 @@ import { errorRes, successRes } from "../core/utils/response.js";
 import ChatModel from "../models/chat.model.js";
 import MemberModel from "../models/member.model.js";
 import UserModel from "../models/user.model.js";
+import memberValidator from "../core/validators/member.validator.js";
 
 const memberController = {
   add: asyncHandler(async (req, res) => {
-    const { chatId, userIds } = req.body;
-    if (!chatId || chatId === "") return errorRes(res, "Chat id is required");
-    if (!userIds || userIds.length === 0) {
-      return errorRes(res, "Users id are required");
-    }
+    const error = memberValidator.add(req.body);
+    if (error) return errorRes(res, error, "Validation Error");
 
+    const { chatId, userIds } = req.body;
     const user = req.user;
     const users = userIds.map(function (id) {
       return { user: id, addedBy: `${user._id}` };
@@ -26,7 +25,7 @@ const memberController = {
     if (chat === null) {
       const memberIds = members.map((member) => member._id);
       await MemberModel.deleteMany({ _id: { $in: memberIds } });
-      return errorRes(res, "Chat with that id does not exist");
+      return errorRes(res, "Invalid chat id");
     }
 
     members = await UserModel.populate(members, {
@@ -37,15 +36,19 @@ const memberController = {
     successRes(res, members);
   }),
   remove: asyncHandler(async (req, res) => {
-    const memberId = req.body.memberId;
-    if (!memberId || memberId === "") {
-      return errorRes(res, "Member id is required");
-    }
+    const error = memberValidator.remove(req.body);
+    if (error) return errorRes(res, error, "Validation Error");
+
+    const { chatId, memberId } = req.body;
+
+    const chat = await ChatModel.findOneAndUpdate(
+      { _id: chatId },
+      { $pull: { members: memberId } }
+    );
+    if (chat === null) return errorRes(res, "Invalid chat id");
 
     const member = await MemberModel.findOneAndDelete({ _id: memberId });
-    if (member === null) {
-      errorRes(res, "Member with that id does not exist");
-    }
+    if (member === null) return errorRes(res, "Invalid member id");
 
     successRes(res, "Member removed");
   }),

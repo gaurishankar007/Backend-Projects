@@ -40,7 +40,7 @@ const userController = {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
     const errorMsg = "User credential did not matched";
-    if (user == null) return errorRes(res, errorMsg);
+    if (user === null) return errorRes(res, errorMsg);
 
     const pWValid = await hashHandler.compare(password, user.password);
     if (!pWValid) return errorRes(res, errorMsg);
@@ -54,20 +54,16 @@ const userController = {
   }),
   refreshToken: asyncHandler(async (req, res) => {
     const refreshToken = req.body.refreshToken;
-    if (!refreshToken || refreshToken === "") {
+    if (!refreshToken || refreshToken === "")
       return errorRes(res, "Refresh token is required");
-    }
 
     try {
       const { id, type } = tokenHandler.verifyToken(refreshToken);
-      if (type !== "refresh") {
-        return errorRes(res, "Invalid refresh token", undefined, 401);
-      }
+      const errorMsg = "Invalid refresh token";
+      if (type !== "refresh") return errorRes(res, errorMsg, undefined, 401);
 
       const user = await UserModel.findOne({ _id: id }, "-password");
-      if (user == null) {
-        return errorRes(res, "Invalid refresh token", undefined, 401);
-      }
+      if (user === null) return errorRes(res, errorMsg, undefined, 401);
 
       const accessToken = tokenHandler.generateToken({ id: id });
       const newRefreshToken = tokenHandler.generateRefreshToken({ id: id });
@@ -86,6 +82,31 @@ const userController = {
       { profilePic: file.filename }
     );
     successRes(res, user);
+  }),
+  changePassword: asyncHandler(async (req, res) => {
+    const error = authValidator.changePassword(req.body);
+    if (error) return errorRes(res, error, "Validation Error");
+
+    const { oldPassword, password } = req.body;
+    const user = await UserModel.findOne({ _id: req.user._id });
+    const isValidPW = await hashHandler.compare(oldPassword, user.password);
+    if (!isValidPW) return errorRes(res, "Old password did not matched");
+    if (oldPassword === password)
+      return errorRes(res, "Same password can not be used");
+
+    const hashedPW = await hashHandler.has(password);
+    await UserModel.updateOne({ _id: req.user._id }, { password: hashedPW });
+
+    successRes(res, "Password changed");
+  }),
+  changeName: asyncHandler(async (req, res) => {
+    const user = req.user;
+    const name = req.body.name;
+    if (!name || name.trim() === "") return errorRes(res, "Name is required");
+
+    await UserModel.updateOne({ _id: user._id }, { name: name });
+
+    successRes(res, "Name changed");
   }),
 };
 

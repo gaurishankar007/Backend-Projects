@@ -21,7 +21,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const user = await UserModel.findOne({ _id: id }, "-password");
-    if (user == null) {
+    if (user === null) {
       return errorRes(res, "Invalid token", undefined, 401);
     }
 

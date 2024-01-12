@@ -1,10 +1,10 @@
 import multer from "multer";
-import getDirectory from "../utils/directory.js";
+import { publicDirectory } from "../utils/directory.js";
 import { errorRes } from "../utils/response.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, getDirectory("/videos"));
+    cb(null, publicDirectory("/videos"));
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
