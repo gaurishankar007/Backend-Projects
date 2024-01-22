@@ -6,28 +6,10 @@ import UserModel from "../models/user.model.js";
 import "../models/message.model.js";
 
 const chatController = {
-  fetch: asyncHandler(async (req, res) => {
-    const user = req.user;
-
-    const members = await MemberModel.find({ user: user._id });
-    let chats = await ChatModel.find({
-      members: { $elemMatch: { $in: members } },
-    })
-      .populate("members")
-      .populate("lastMessage");
-
-    chats = await UserModel.populate(chats, [
-      { path: "members.user", select: "-password" },
-      { path: "lastMessage.sender", select: "-password" },
-    ]);
-
-    successRes(res, chats);
-  }),
   create: asyncHandler(async (req, res) => {
     const { userIds, group } = req.body;
-    if (!userIds || userIds.length === 0) {
+    if (!userIds || userIds.length === 0)
       return errorRes(res, "Users id are required");
-    }
 
     const user = req.user;
     const users = [
@@ -50,6 +32,29 @@ const chatController = {
     ]);
 
     successRes(res, chat);
+  }),
+  fetch: asyncHandler(async (req, res) => {
+    const user = req.user;
+    const page = req.body.page;
+    if (!page) return errorRes(res, "Page is required");
+    if (!Number.isInteger(page)) return errorRes(res, "Page must be integer");
+
+    const members = await MemberModel.find({ user: user._id });
+    let chats = await ChatModel.find({
+      members: { $elemMatch: { $in: members } },
+    })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * 10)
+      .limit(10)
+      .populate("members")
+      .populate("lastMessage");
+
+    chats = await UserModel.populate(chats, [
+      { path: "members.user", select: "-password" },
+      { path: "lastMessage.sender", select: "-password" },
+    ]);
+
+    successRes(res, chats);
   }),
 };
 

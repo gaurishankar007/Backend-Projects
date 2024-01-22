@@ -8,7 +8,7 @@ import { errorRes, successRes } from "../core/utils/response.js";
 const reactionController = {
   add: asyncHandler(async (req, res) => {
     const error = reactionValidator.add(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { reaction, messageId } = req.body;
     const user = req.user;
@@ -44,7 +44,7 @@ const reactionController = {
   }),
   remove: asyncHandler(async (req, res) => {
     const error = reactionValidator.remove(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { reactionId, messageId } = req.body;
     const user = req.user;

@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import fs from "fs";
 import MessageModel from "../models/message.model.js";
 import ChatModel from "../models/chat.model.js";
+import UserModel from "../models/user.model.js";
 import messageValidator from "../core/validators/message.validator.js";
 import { errorRes, successRes } from "../core/utils/response.js";
 import { filePath } from "../core/utils/directory.js";
@@ -9,14 +10,14 @@ import { filePath } from "../core/utils/directory.js";
 const MessageController = {
   text: asyncHandler(async (req, res) => {
     const error = messageValidator.text(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { chatId, content, contentType } = req.body;
     const user = req.user;
 
     const message = await MessageModel.create({
       chat: chatId,
-      sender: user._id,
+      sender: user,
       content: content,
       contentType: contentType,
     });
@@ -31,14 +32,14 @@ const MessageController = {
   }),
   replyText: asyncHandler(async (req, res) => {
     const error = messageValidator.replyText(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { chatId, messageId, content, contentType } = req.body;
     const user = req.user;
 
     let message = await MessageModel.create({
       chat: chatId,
-      sender: user._id,
+      sender: user,
       content: content,
       contentType: contentType,
       repliedTo: messageId,
@@ -59,7 +60,7 @@ const MessageController = {
     const error = messageValidator.file(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
-      return errorRes(res, error, "Validation Error");
+      return errorRes(res, error);
     }
 
     const { chatId, contentType } = req.body;
@@ -67,7 +68,7 @@ const MessageController = {
 
     const message = await MessageModel.create({
       chat: chatId,
-      sender: user._id,
+      sender: user,
       content: file.filename,
       contentType: contentType,
     });
@@ -85,7 +86,7 @@ const MessageController = {
     const error = messageValidator.replyFile(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
-      return errorRes(res, error, "Validation Error");
+      return errorRes(res, error);
     }
 
     const { chatId, messageId, contentType } = req.body;
@@ -108,6 +109,26 @@ const MessageController = {
 
     const data = { message, chat };
     successRes(res, data);
+  }),
+  fetch: asyncHandler(async (req, res) => {
+    const error = messageValidator.fetch(req.body);
+    if (error) return errorRes(res, error);
+
+    const { chatId, page } = req.body;
+    let messages = await MessageModel.find({ chat: chatId })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * 10)
+      .limit(10)
+      .populate("sender", "-password")
+      .populate("repliedTo")
+      .populate("reactions");
+
+    messages = await UserModel.populate(messages, {
+      path: "reactions.user",
+      select: "-password",
+    });
+
+    return successRes(res, messages);
   }),
 };
 

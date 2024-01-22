@@ -8,7 +8,7 @@ import tokenHandler from "../core/utils/token.handler.js";
 const userController = {
   register: asyncHandler(async (req, res) => {
     const error = authValidator.register(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { firstName, lastName, email, password } = req.body;
     const hashedPW = await hashHandler.has(password);
@@ -35,7 +35,7 @@ const userController = {
   }),
   login: asyncHandler(async (req, res) => {
     const error = authValidator.login(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
@@ -85,7 +85,7 @@ const userController = {
   }),
   changePassword: asyncHandler(async (req, res) => {
     const error = authValidator.changePassword(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { oldPassword, password } = req.body;
     const user = await UserModel.findOne({ _id: req.user._id });
@@ -107,6 +107,18 @@ const userController = {
     await UserModel.updateOne({ _id: user._id }, { name: name });
 
     successRes(res, "Name changed");
+  }),
+  search: asyncHandler(async (req, res) => {
+    const name = req.body.name;
+    if (!name || name.trim() === "") return errorRes(res, "Name is required");
+
+    const user = req.user;
+    const users = await UserModel.find({
+      _id: { $ne: user._id },
+      name: { $regex: name, $options: "i" },
+    });
+
+    return successRes(res, users);
   }),
 };
 

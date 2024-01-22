@@ -6,24 +6,18 @@ import tokenHandler from "../utils/token.handler.js";
 const authMiddleware = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
-    if (!authorization) {
+    if (!authorization)
       return errorRes(res, "Bearer token is not provided", undefined, 401);
-    }
 
     const [bearer, token] = authorization.split(" ");
-    if (bearer !== "Bearer") {
+    if (bearer !== "Bearer")
       return errorRes(res, "Invalid bearer token", undefined, 401);
-    }
 
     const { id, type } = tokenHandler.verifyToken(token);
-    if (type !== "token") {
-      return errorRes(res, "Invalid token", undefined, 401);
-    }
+    if (type !== "token") return errorRes(res, "Invalid token", undefined, 401);
 
     const user = await UserModel.findOne({ _id: id }, "-password");
-    if (user === null) {
-      return errorRes(res, "Invalid token", undefined, 401);
-    }
+    if (user === null) return errorRes(res, "Invalid token", undefined, 401);
 
     req.user = user;
     next();

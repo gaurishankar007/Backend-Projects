@@ -35,6 +35,14 @@ const messageValidator = {
 
     return undefined;
   },
+  fetch: (json) => {
+    const { chatId, page } = json;
+    if (!chatId || chatId.trim() === "") return "Chat id is required";
+    if (!page) return "Page is required";
+    if (!Number.isInteger(page)) return "Page must be integer";
+
+    return undefined;
+  },
 };
 
 export default messageValidator;

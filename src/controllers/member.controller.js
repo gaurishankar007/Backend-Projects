@@ -8,7 +8,7 @@ import memberValidator from "../core/validators/member.validator.js";
 const memberController = {
   add: asyncHandler(async (req, res) => {
     const error = memberValidator.add(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { chatId, userIds } = req.body;
     const user = req.user;
@@ -37,7 +37,7 @@ const memberController = {
   }),
   remove: asyncHandler(async (req, res) => {
     const error = memberValidator.remove(req.body);
-    if (error) return errorRes(res, error, "Validation Error");
+    if (error) return errorRes(res, error);
 
     const { chatId, memberId } = req.body;
 

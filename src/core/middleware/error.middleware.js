@@ -1,4 +1,3 @@
-import { MulterError } from "multer";
 import { errorRes } from "../utils/response.js";
 
 const urlNotFound = (req, res, next) => {

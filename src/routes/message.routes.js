@@ -45,5 +45,6 @@ messageRouter.post(
   videoUpload,
   MessageController.replyFile
 );
+messageRouter.post("/fetch", authMiddleWare, MessageController.fetch);
 
 export default messageRouter;

@@ -20,5 +20,6 @@ userRouter.put(
   userController.changePassword
 );
 userRouter.put("/changeName", authMiddleware, userController.changeName);
+userRouter.post("/searchUser", authMiddleware, userController.search);
 
 export default userRouter;

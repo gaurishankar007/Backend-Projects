@@ -4,7 +4,7 @@ import chatController from "../controllers/chat.controller.js";
 
 const chatRouter = express.Router();
 
-chatRouter.get("/fetch", authMiddleware, chatController.fetch);
 chatRouter.post("/create", authMiddleware, chatController.create);
+chatRouter.get("/fetch", authMiddleware, chatController.fetch);
 
 export default chatRouter;
