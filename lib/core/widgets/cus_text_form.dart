@@ -1,4 +1,4 @@
-import 'package:chat/core/extensions/int_extension.dart';
+import '../extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/text_styles.dart';

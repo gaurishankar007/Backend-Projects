@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chat/config/routes/route_transitions.dart';
-import 'package:chat/core/constants/routes_data.dart';
+import 'route_transitions.dart';
+import '../../core/constants/routes_data.dart';
 import 'package:flutter/material.dart';
 import 'routes.gr.dart';
 

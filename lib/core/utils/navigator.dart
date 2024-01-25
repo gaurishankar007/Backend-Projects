@@ -1,8 +1,9 @@
-import 'package:chat/config/routes/routes.gr.dart';
-import 'package:chat/injection/injector.dart';
 import 'package:flutter/material.dart' show debugPrint;
 
+import '../../config/routes/routes.gr.dart';
+import '../../injection/injector.dart';
 import '../constants/routes_data.dart';
+
 
 popPage() => appRouter.popTop();
 

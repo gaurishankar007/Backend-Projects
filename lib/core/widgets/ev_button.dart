@@ -1,38 +1,38 @@
 import 'dart:io';
-
-import 'package:chat/core/extensions/context_extension.dart';
-import 'package:chat/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/Cupertino.dart' show CupertinoActivityIndicator;
 
-import '../constants/colors.dart';
+import '../extensions/int_extension.dart';
+import '../../injection/injector.dart';
 import '../utils/text_styles.dart';
 
-class CusButton extends StatelessWidget {
+class EvButton extends StatelessWidget {
   final Function() onTap;
   final double? height;
   final double? width;
   final String text;
   final IconData? icon;
   final bool disabled;
-  final bool loadableButton;
+  final bool showLoading;
   final TextStyle? textStyle;
+  final Color? textColor;
   final Color? color;
   final Color? borderColor;
   final BorderRadius? borderRadius;
   final double? elevation;
   final bool expandWidth;
 
-  const CusButton({
+  const EvButton({
     super.key,
     required this.onTap,
     this.text = "",
     this.height,
     this.width,
     this.textStyle,
+    this.textColor,
     this.color,
     this.disabled = false,
-    this.loadableButton = false,
+    this.showLoading = false,
     this.icon,
     this.borderColor,
     this.borderRadius,
@@ -41,9 +41,9 @@ class CusButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     bool loading = false;
-    Color? tColor;
+    Color? tColor = textColor;
 
     Widget child = Text(text, style: textStyle ?? lgSemibold(tColor));
     if (icon != null) {
@@ -65,9 +65,10 @@ class CusButton extends StatelessWidget {
 
     Widget loadingChild = Center(
       child: SizedBox(
-          height: 25.pH,
-          width: 25.pH,
-          child: CircularProgressIndicator(color: tdColor(ctx), strokeWidth: 2)),
+        height: 25.pH,
+        width: 25.pH,
+        child: psLoading(themeBloc.tColor()),
+      ),
     );
 
     return SizedBox(
@@ -80,9 +81,9 @@ class CusButton extends StatelessWidget {
 
           if (!loading && !disabled) {
             onPressed = () async {
-              if (loadableButton) setState(() => loading = true);
+              if (showLoading) setState(() => loading = true);
               await onTap();
-              if (loadableButton) setState(() => loading = false);
+              if (showLoading) setState(() => loading = false);
             };
           }
 
@@ -94,6 +95,8 @@ class CusButton extends StatelessWidget {
                 borderRadius: borderRadius ?? BorderRadius.circular(10),
               ),
               elevation: elevation ?? 0,
+              shadowColor: elevation != null ? null : Colors.transparent,
+              splashFactory: NoSplash.splashFactory,
             ),
             child: loading ? loadingChild : child,
           );
@@ -102,9 +105,7 @@ class CusButton extends StatelessWidget {
     );
   }
 
-  Color tdColor(BuildContext ctx) => ctx.brt == Brightness.light ? kWhite : kBlack;
-  Widget psLoading(ctx) {
-    if (Platform.isIOS) return CupertinoActivityIndicator(color: tdColor(ctx));
-    return CircularProgressIndicator(color: tdColor(ctx), strokeWidth: 2);
-  }
+  Widget psLoading(Color color) => Platform.isIOS
+      ? CupertinoActivityIndicator(color: color)
+      : CircularProgressIndicator(color: color, strokeWidth: 2);
 }

@@ -1,9 +1,13 @@
-import 'package:chat/core/constants/colors.dart';
+import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 // InputDecoration
-const outlineBorder = OutlineInputBorder(borderSide: BorderSide.none);
-const inputDecorationTheme = InputDecorationTheme(
+final outlineBorder = OutlineInputBorder(
+  borderSide: BorderSide.none,
+  borderRadius: BorderRadius.circular(10),
+);
+
+final inputDecorationTheme = InputDecorationTheme(
   isDense: true,
   filled: true,
   enabledBorder: outlineBorder,
@@ -19,3 +23,4 @@ final textButtonTheme = TextButtonThemeData(
     foregroundColor: kPrimary,
   ),
 );
+

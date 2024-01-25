@@ -14,3 +14,5 @@ const Color kEBgL = Color(0XFFF5F5F5);
 const Color kEBgD = Color(0XFF4B4B4B);
 
 const Color kPrimary = Colors.indigo;
+
+const Color kError = Color(0XFFD92D20);

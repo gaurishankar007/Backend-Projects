@@ -1,4 +1,4 @@
-import 'package:chat/injection/injector.dart';
+import '../../injection/injector.dart';
 
 extension IntegerExtension on int {
   double get pH => sCon.pHeight(toDouble());

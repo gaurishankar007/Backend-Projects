@@ -1,5 +1,7 @@
-import 'package:chat/injection/injector.dart';
+import 'features/global/blocs/theme_bloc.dart';
+import 'injection/injector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
@@ -18,14 +20,23 @@ class ChatApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         sCon.init(constraints);
-        return MaterialApp.router(
-          title: 'Chat App',
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: ThemeMode.light,
-          routerDelegate: appRouter.delegate(),
-          routeInformationParser: appRouter.defaultRouteParser(),
-          debugShowCheckedModeBanner: false,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => themeBloc),
+          ],
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                title: 'Chat App',
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: state.themeMode,
+                routerDelegate: appRouter.delegate(),
+                routeInformationParser: appRouter.defaultRouteParser(),
+                debugShowCheckedModeBanner: false,
+              );
+            },
+          ),
         );
       },
     );

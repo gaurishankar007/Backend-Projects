@@ -1,4 +1,4 @@
-import 'package:chat/injection/injector.dart';
+import 'injection/injector.dart';
 
 class AppData {
   AppData._();

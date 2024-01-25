@@ -66,18 +66,18 @@ TextStyle xsMedium([Color? color]) =>
 TextStyle xsRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w400);
 
-// Mini
-TextStyle mnSemibold([Color? color]) =>
+// 2x Small
+TextStyle x2sSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600);
-TextStyle mnMedium([Color? color]) =>
+TextStyle x2sMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w500);
-TextStyle mnRegular([Color? color]) =>
+TextStyle x2sRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w400);
 
-// Extra Mini
-TextStyle xmSemibold([Color? color]) =>
+// 3x Small
+TextStyle x3sSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w600);
-TextStyle xmMedium([Color? color]) =>
+TextStyle x3sMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w500);
-TextStyle xmRegular([Color? color]) =>
+TextStyle x3sRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w400);

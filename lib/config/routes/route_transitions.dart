@@ -29,7 +29,7 @@ CustomRoute autoRouteTransition({
   return CustomRoute(
     page: page,
     path: path,
-    durationInMilliseconds: 250,
+    durationInMilliseconds: 500,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SlideTransition(
         position: Tween<Offset>(
