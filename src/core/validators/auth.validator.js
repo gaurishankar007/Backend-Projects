@@ -1,13 +1,12 @@
-import { emailRegex, passwordRegex } from "../constants/regex.js";
+import { emailRegex, nameRegex, passwordRegex } from "../constants/regex.js";
 
 const authValidator = {
   register: (json) => {
-    const { firstName, lastName, email, password } = json;
+    const { name, email, password } = json;
 
-    if (firstName === undefined || firstName.trim() === "")
-      return "First name is required";
-    if (lastName === undefined || lastName.trim() === "")
-      return "Last name is required";
+    if (name === undefined || name.trim() === "") return "Name is required";
+    if (!nameRegex.test(name)) return "Invalid name";
+    if (name.length <= 3) return "Name is too short";
     if (email === undefined || email.trim() === "") return "Email is required";
     if (!emailRegex.test(email)) return "Invalid email";
     if (password === undefined || password.trim() === "")

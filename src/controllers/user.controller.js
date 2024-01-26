@@ -10,7 +10,7 @@ const userController = {
     const error = authValidator.register(req.body);
     if (error) return errorRes(res, error);
 
-    const { firstName, lastName, email, password } = req.body;
+    const { name, email, password } = req.body;
     const hashedPW = await hashHandler.has(password);
 
     const user = await UserModel.findOne({ email: email });
@@ -19,8 +19,7 @@ const userController = {
     }
 
     const newUser = await UserModel.create({
-      firstName: firstName,
-      lastName: lastName,
+      name: name,
       email: email,
       password: hashedPW,
     });
@@ -31,7 +30,7 @@ const userController = {
     const refresh = tokenHandler.generateRefreshToken({ id: newUser._id });
     const data = { user: newUser, accessToken: token, refreshToken: refresh };
 
-    successRes(res, data, "User created");
+    successRes(res, data);
   }),
   login: asyncHandler(async (req, res) => {
     const error = authValidator.login(req.body);
@@ -40,10 +39,10 @@ const userController = {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
     const errorMsg = "User credential did not matched";
-    if (user === null) return errorRes(res, errorMsg);
+    if (user === null) return errorRes(res, errorMsg, undefined, 401);
 
     const pWValid = await hashHandler.compare(password, user.password);
-    if (!pWValid) return errorRes(res, errorMsg);
+    if (!pWValid) return errorRes(res, errorMsg, undefined, 401);
     user.password = undefined;
 
     const token = tokenHandler.generateToken({ id: user._id });
@@ -81,6 +80,7 @@ const userController = {
       { _id: req.user._id },
       { profilePic: file.filename }
     );
+
     successRes(res, user);
   }),
   changePassword: asyncHandler(async (req, res) => {

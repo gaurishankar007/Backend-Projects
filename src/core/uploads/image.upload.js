@@ -17,7 +17,7 @@ const filter = (req, file, cb) => {
 
   if (!types.includes(file.mimetype)) {
     cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
-  } else if (fileSize > 10 * 1e6) {
+  } else if (fileSize > 50 * 1e6) {
     cb(new multer.MulterError("LIMIT_FILE_SIZE"), false);
   } else {
     cb(null, true);
@@ -27,7 +27,7 @@ const filter = (req, file, cb) => {
 const imageMulter = multer({
   storage: storage,
   fileFilter: filter,
-  limits: { fileSize: 10 * 1e6 },
+  limits: { fileSize: 50 * 1e6 },
 }).single("image");
 
 const imageUpload = (req, res, next) =>
