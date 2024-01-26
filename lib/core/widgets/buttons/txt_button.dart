@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/text_styles.dart';
+import '../../utils/text_styles.dart';
 
 class TButton extends StatelessWidget {
   final Function() onPressed;

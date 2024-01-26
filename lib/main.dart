@@ -1,4 +1,4 @@
-import 'features/global/blocs/theme_bloc.dart';
+import 'features/global/blocs/theme_cubit.dart';
 import 'injection/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +22,10 @@ class ChatApp extends StatelessWidget {
         sCon.init(constraints);
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => themeBloc),
+            BlocProvider(create: (_) => themeCubit),
+            BlocProvider(create: (_) => authCubit),
           ],
-          child: BlocBuilder<ThemeBloc, ThemeState>(
+          child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp.router(
                 title: 'Chat App',

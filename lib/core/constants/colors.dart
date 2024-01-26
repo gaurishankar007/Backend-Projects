@@ -13,6 +13,10 @@ const Color kHintD = Color(0XFF888888);
 const Color kEBgL = Color(0XFFF5F5F5);
 const Color kEBgD = Color(0XFF4B4B4B);
 
+// Popup
+const Color kPopUpL = Colors.white;
+const Color kPopUpD = Color(0XFF222222);
+
 const Color kPrimary = Colors.indigo;
 
 const Color kError = Color(0XFFD92D20);

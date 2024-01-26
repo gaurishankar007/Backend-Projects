@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/Cupertino.dart' show CupertinoActivityIndicator;
 
-import '../extensions/int_extension.dart';
-import '../../injection/injector.dart';
-import '../utils/text_styles.dart';
+import 'package:flutter/Cupertino.dart' show CupertinoActivityIndicator;
+import 'package:flutter/material.dart';
+
+import '../../../injection/injector.dart';
+import '../../extensions/int_extension.dart';
+import '../../utils/text_styles.dart';
 
 class EvButton extends StatelessWidget {
   final Function() onTap;
@@ -15,7 +16,7 @@ class EvButton extends StatelessWidget {
   final bool disabled;
   final bool showLoading;
   final TextStyle? textStyle;
-  final Color? textColor;
+  final Color? foregroundColor;
   final Color? color;
   final Color? borderColor;
   final BorderRadius? borderRadius;
@@ -29,7 +30,7 @@ class EvButton extends StatelessWidget {
     this.height,
     this.width,
     this.textStyle,
-    this.textColor,
+    this.foregroundColor,
     this.color,
     this.disabled = false,
     this.showLoading = false,
@@ -43,7 +44,7 @@ class EvButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool loading = false;
-    Color? tColor = textColor;
+    Color? tColor = foregroundColor;
 
     Widget child = Text(text, style: textStyle ?? lgSemibold(tColor));
     if (icon != null) {
@@ -67,7 +68,7 @@ class EvButton extends StatelessWidget {
       child: SizedBox(
         height: 25.pH,
         width: 25.pH,
-        child: psLoading(themeBloc.tColor()),
+        child: psLoading(foregroundColor ?? themeCubit.tColor()),
       ),
     );
 

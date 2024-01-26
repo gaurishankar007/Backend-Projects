@@ -8,34 +8,90 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:chat/features/auth/presentation/pages/sign_in.dart' as _i1;
-import 'package:chat/features/auth/presentation/pages/sign_up.dart' as _i2;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:chat/features/auth/presentation/pages/sign_in.dart' as _i3;
+import 'package:chat/features/auth/presentation/pages/sign_up.dart' as _i4;
+import 'package:chat/features/auth/presentation/pages/update_profile.dart'
+    as _i5;
+import 'package:chat/features/chat/presentation/pages/chats.dart' as _i1;
+import 'package:chat/features/dashboard/presentation/pages/dashboard.dart'
+    as _i2;
+import 'package:flutter/material.dart' as _i7;
 
-abstract class $AppRouter extends _i3.RootStackRouter {
+abstract class $AppRouter extends _i6.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
-    SignInRoute.name: (routeData) {
-      return _i3.AutoRoutePage<dynamic>(
+  final Map<String, _i6.PageFactory> pagesMap = {
+    ChatsRoute.name: (routeData) {
+      return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.SignIn(),
+        child: const _i1.Chats(),
+      );
+    },
+    DashboardRoute.name: (routeData) {
+      return _i6.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.Dashboard(),
+      );
+    },
+    SignInRoute.name: (routeData) {
+      return _i6.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.SignIn(),
       );
     },
     SignUpRoute.name: (routeData) {
-      return _i3.AutoRoutePage<dynamic>(
+      final args = routeData.argsAs<SignUpRouteArgs>(
+          orElse: () => const SignUpRouteArgs());
+      return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.SignUp(),
+        child: _i4.SignUp(key: args.key),
+      );
+    },
+    UpdatePRoute.name: (routeData) {
+      final args = routeData.argsAs<UpdatePRouteArgs>(
+          orElse: () => const UpdatePRouteArgs());
+      return _i6.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i5.UpdateProfile(key: args.key),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.SignIn]
-class SignInRoute extends _i3.PageRouteInfo<void> {
-  const SignInRoute({List<_i3.PageRouteInfo>? children})
+/// [_i1.Chats]
+class ChatsRoute extends _i6.PageRouteInfo<void> {
+  const ChatsRoute({List<_i6.PageRouteInfo>? children})
+      : super(
+          ChatsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatsRoute';
+
+  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i2.Dashboard]
+class DashboardRoute extends _i6.PageRouteInfo<void> {
+  const DashboardRoute({List<_i6.PageRouteInfo>? children})
+      : super(
+          DashboardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardRoute';
+
+  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.SignIn]
+class SignInRoute extends _i6.PageRouteInfo<void> {
+  const SignInRoute({List<_i6.PageRouteInfo>? children})
       : super(
           SignInRoute.name,
           initialChildren: children,
@@ -43,19 +99,63 @@ class SignInRoute extends _i3.PageRouteInfo<void> {
 
   static const String name = 'SignInRoute';
 
-  static const _i3.PageInfo<void> page = _i3.PageInfo<void>(name);
+  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.SignUp]
-class SignUpRoute extends _i3.PageRouteInfo<void> {
-  const SignUpRoute({List<_i3.PageRouteInfo>? children})
-      : super(
+/// [_i4.SignUp]
+class SignUpRoute extends _i6.PageRouteInfo<SignUpRouteArgs> {
+  SignUpRoute({
+    _i7.Key? key,
+    List<_i6.PageRouteInfo>? children,
+  }) : super(
           SignUpRoute.name,
+          args: SignUpRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'SignUpRoute';
 
-  static const _i3.PageInfo<void> page = _i3.PageInfo<void>(name);
+  static const _i6.PageInfo<SignUpRouteArgs> page =
+      _i6.PageInfo<SignUpRouteArgs>(name);
+}
+
+class SignUpRouteArgs {
+  const SignUpRouteArgs({this.key});
+
+  final _i7.Key? key;
+
+  @override
+  String toString() {
+    return 'SignUpRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i5.UpdateProfile]
+class UpdatePRoute extends _i6.PageRouteInfo<UpdatePRouteArgs> {
+  UpdatePRoute({
+    _i7.Key? key,
+    List<_i6.PageRouteInfo>? children,
+  }) : super(
+          UpdatePRoute.name,
+          args: UpdatePRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'UpdatePRoute';
+
+  static const _i6.PageInfo<UpdatePRouteArgs> page =
+      _i6.PageInfo<UpdatePRouteArgs>(name);
+}
+
+class UpdatePRouteArgs {
+  const UpdatePRouteArgs({this.key});
+
+  final _i7.Key? key;
+
+  @override
+  String toString() {
+    return 'UpdatePRouteArgs{key: $key}';
+  }
 }

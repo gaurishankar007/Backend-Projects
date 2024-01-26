@@ -41,7 +41,7 @@ class ImageBuilder extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              border: Border.all(color: themeBloc.tColor()),
+              border: Border.all(color: themeCubit.tColor()),
               borderRadius: borderRadius,
               shape: circular ? BoxShape.circle : BoxShape.rectangle,
             ),
@@ -56,7 +56,6 @@ class ImageBuilder extends StatelessWidget {
         image: imageProvider!,
         fit: fit,
         errorBuilder: (context, error, stackTrace) {
-          print(error);
           return const Center(child: CupertinoActivityIndicator());
         },
       );

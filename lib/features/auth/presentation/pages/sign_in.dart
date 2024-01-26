@@ -1,15 +1,19 @@
+import '../../../../core/resources/data_state.dart';
+import '../../domain/parameters/sign_in_param.dart';
+import '../../../../injection/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../core/constants/colors.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../core/constants/routes_data.dart';
-import '../../../../core/widgets/ev_button.dart';
+import '../../../../core/widgets/buttons/ev_button.dart';
 import '../../../../core/widgets/cus_text_form.dart';
 import '../../../../core/constants/padding.dart';
-import '../../../../core/widgets/txt_button.dart';
+import '../../../../core/widgets/buttons/txt_button.dart';
 
 @RoutePage(name: signInR)
 class SignIn extends StatefulWidget {
@@ -39,6 +43,8 @@ class _SignInState extends State<SignIn> {
     ),
   );
 
+  final ValueNotifier<String> errorNtf = ValueNotifier<String>("");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +59,26 @@ class _SignInState extends State<SignIn> {
                 margin: EdgeInsets.only(top: 40.pH, bottom: 25.pH),
                 child: Text("Sign in with your email", style: x3lSemibold()),
               ),
+              ValueListenableBuilder(
+                valueListenable: errorNtf,
+                builder: (context, value, child) {
+                  if (value.isEmpty) return const SizedBox();
+
+                  return Container(
+                    margin: EdgeInsets.only(top: 5.pH, bottom: 30.pH),
+                    child: Text(
+                      value,
+                      textAlign: TextAlign.center,
+                      style: mdRegular(kError),
+                    ),
+                  );
+                },
+              ),
               StreamBuilder<String>(
                 stream: emailCtr.stream,
                 builder: (context, snapshot) {
                   return CusTextForm(
+                    keyboardType: TextInputType.emailAddress,
                     onChanged: (value) => emailCtr.sink.add(value ?? ""),
                     inputDecoration: InputDecoration(
                       hintText: "Email",
@@ -72,6 +94,7 @@ class _SignInState extends State<SignIn> {
                 builder: (context, snapshot) {
                   return CusTextForm(
                     onChanged: (value) => passwordCtr.sink.add(value ?? ""),
+                    obscureText: true,
                     inputDecoration: InputDecoration(
                       hintText: "Password",
                       enabledBorder: passwordBorder,
@@ -93,10 +116,16 @@ class _SignInState extends State<SignIn> {
                   bool disabled = (email ?? "").isEmpty || (password ?? "").isEmpty;
 
                   return EvButton(
-                    onTap: () {},
-                    expandWidth: true,
-                    disabled: disabled,
+                    onTap: () async {
+                      errorNtf.value = "";
+                      final param = SignInPrm(email: email!, password: password!);
+                      final dState = await authCubit.signIn(param);
+                      if (dState is! SuccessState) errorNtf.value = dState.error!.message;
+                    },
                     text: "Sign In",
+                    expandWidth: true,
+                    showLoading: true,
+                    disabled: disabled,
                   );
                 },
               ),

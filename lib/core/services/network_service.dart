@@ -13,19 +13,18 @@ class NetworkService {
   bool _online = true;
   bool get online => _online;
 
-  init() async {
+  listen() async {
     if (_subscription != null) return;
     _changeStatus(await _connectivity.checkConnectivity());
     _subscription = _conStream.listen((event) => _changeStatus(event));
   }
 
-  _changeStatus(ConnectivityResult result) {
-    bool isOnline = result == ConnectivityResult.mobile || result == ConnectivityResult.wifi;
-    if (isOnline) return _online = true;
-    _online = false;
-  }
+  _changeStatus(ConnectivityResult result) =>
+      _online = result == ConnectivityResult.mobile || result == ConnectivityResult.wifi;
 
-  void get cancelSub => _subscription?.cancel();
+  void get cancelSub {
+    if (_subscription != null) _subscription!.cancel();
+  }
 
   Stream<bool> streamNetwork(StreamController<bool> ctr) async* {
     _connectivity.onConnectivityChanged.listen((event) {

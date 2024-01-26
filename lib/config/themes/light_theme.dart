@@ -1,10 +1,12 @@
-import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+
+import '../../core/constants/colors.dart';
 import 'theme_data.dart';
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
+  colorScheme: ColorScheme.fromSeed(seedColor: kPrimary),
   scaffoldBackgroundColor: kWhite,
   useMaterial3: false,
   appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),

@@ -1,3 +1,5 @@
+typedef FDState<T> = Future<DataState<T>>;
+
 abstract class DataState<T> {
   final T? data;
   final DError? error;
@@ -39,10 +41,10 @@ enum ErrorType {
   unknown,
   dioException,
   isarException,
-  sharedPreferenceException,
   noNetwork,
   socketTimeOut,
   tokenExpired,
   invalidUserCredential,
   server,
+  badRequest,
 }

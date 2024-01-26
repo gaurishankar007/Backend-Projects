@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'auth_guard.dart';
 import 'route_transitions.dart';
 import '../../core/constants/routes_data.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,22 @@ class AppRouter extends $AppRouter {
         AutoRoute(
           page: SignInRoute.page,
           path: signInP,
-          initial: true,
         ),
         autoRouteTransition(
           page: SignUpRoute.page,
           path: signUpP,
           direction: AxisDirection.left,
+        ),
+        autoRouteTransition(
+          page: UpdatePRoute.page,
+          path: updatePP,
+          direction: AxisDirection.left,
+        ),
+        AutoRoute(
+          page: DashboardRoute.page,
+          path: dashboardP,
+          initial: true,
+          guards: [AuthGuard()],
         ),
       ];
 }

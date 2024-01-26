@@ -4,12 +4,13 @@ import '../../config/routes/routes.gr.dart';
 import '../../injection/injector.dart';
 import '../constants/routes_data.dart';
 
-
 popPage() => appRouter.popTop();
 
 pushName(String path) => appRouter.pushNamed(path);
 
-popToSignIn() => appRouter.replaceAll([const SignInRoute()]);
+replaceToDashboard() => appRouter.replaceAll([const DashboardRoute()]);
+
+replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);
 
 pushRoute(String route, {dynamic arg}) {
   try {

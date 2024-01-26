@@ -1,31 +1,36 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show debugPrint;
 import 'package:dio/dio.dart';
+import 'package:isar/isar.dart';
 import '../resources/data_state.dart';
 
-Future<DataState<T>> exceptionHandler<T>(
+FDState<T> exceptionHandler<T>(
   Future Function() cb, {
   DError? error,
 }) async {
   try {
     return await cb();
   } on DioException catch (error) {
-    bool socketException = error.type == DioExceptionType.connectionError ||
-        error.type == DioExceptionType.connectionTimeout;
-
-    if (socketException) return const NetworkFailureState();
-
     debugPrint(error.toString());
     // debugPrint(error.response.toString());
 
-    return FailureState(
+    bool socketException = error.type == DioExceptionType.connectionError ||
+        error.type == DioExceptionType.connectionTimeout;
+
+    if (socketException) return NetworkFailureState<T>();
+
+    return FailureState<T>(
       error: DError(
         error: error.toString(),
         message: "Server request failed",
         type: ErrorType.dioException,
       ),
     );
+  } on IsarError catch (er) {
+    debugPrint(er.toString());
+    final err = error ?? DError(error: er.toString(), type: ErrorType.isarException);
+    return FailureState<T>(error: err);
   } catch (er) {
-    debugPrint(error.toString());
-    return FailureState(error: error ?? DError(error: er.toString()));
+    debugPrint(er.toString());
+    return FailureState<T>(error: error ?? DError(error: er.toString()));
   }
 }

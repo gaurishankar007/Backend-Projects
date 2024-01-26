@@ -5,6 +5,10 @@ import 'theme_data.dart';
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: kPrimary,
+    brightness: Brightness.dark,
+  ),
   scaffoldBackgroundColor: kBlack,
   useMaterial3: false,
   appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
