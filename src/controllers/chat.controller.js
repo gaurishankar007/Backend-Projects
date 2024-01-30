@@ -3,33 +3,28 @@ import { errorRes, successRes } from "../core/utils/response.js";
 import ChatModel from "../models/chat.model.js";
 import MemberModel from "../models/member.model.js";
 import UserModel from "../models/user.model.js";
+import chatVdr from "../core/validators/chat.validator.js";
 import "../models/message.model.js";
 
 const chatController = {
   create: asyncHandler(async (req, res) => {
-    const { userIds, group } = req.body;
+    const { userIds, name, group } = req.body;
     if (!userIds || userIds.length === 0)
       return errorRes(res, "Users id are required");
 
     const user = req.user;
-    const users = [
-      { user: `${user._id}`, groupCreator: true, admin: true },
+    const members = [
+      { user: `${user._id}`, superAdmin: true, admin: true },
       ...userIds.map(function (id) {
         return { user: id };
       }),
     ];
 
-    const members = await MemberModel.create(users);
     let chat = await ChatModel.create({
       members: members,
+      name: name,
       group: group,
-      creator: user._id,
     });
-
-    chat = await UserModel.populate(chat, [
-      { path: "members.user", select: "-password" },
-      { path: "lastMessage.sender", select: "-password" },
-    ]);
 
     successRes(res, chat);
   }),
@@ -39,22 +34,47 @@ const chatController = {
     if (!page) return errorRes(res, "Page is required");
     if (!Number.isInteger(page)) return errorRes(res, "Page must be integer");
 
-    const members = await MemberModel.find({ user: user._id });
     let chats = await ChatModel.find({
-      members: { $elemMatch: { $in: members } },
+      members: { $elemMatch: { user: user._id } },
     })
       .sort({ createdAt: -1 })
       .skip((page - 1) * 10)
       .limit(10)
-      .populate("members")
+      .populate("members.user", "-password")
       .populate("lastMessage");
 
-    chats = await UserModel.populate(chats, [
-      { path: "members.user", select: "-password" },
-      { path: "lastMessage.sender", select: "-password" },
-    ]);
-
     successRes(res, chats);
+  }),
+  addMember: asyncHandler(async (req, res) => {
+    const error = chatVdr.addMbr(req.body);
+    if (error) return errorRes(res, error);
+
+    const { chatId, userIds } = req.body;
+    const members = userIds.map(function (id) {
+      return { user: id };
+    });
+
+    const chat = await ChatModel.findOneAndUpdate(
+      { _id: chatId },
+      { $push: { members: members } }
+    );
+    if (chat === null) return errorRes(res, "Invalid chat id");
+
+    successRes(res, members);
+  }),
+  removeMember: asyncHandler(async (req, res) => {
+    const error = chatVdr.removeMbr(req.body);
+    if (error) return errorRes(res, error);
+
+    const { chatId, userId } = req.body;
+
+    const chat = await ChatModel.findOneAndUpdate(
+      { _id: chatId },
+      { $pull: { members: { user: userId } } }
+    );
+    if (chat === null) return errorRes(res, "Invalid chat id");
+
+    successRes(res, "Member removed");
   }),
 };
 

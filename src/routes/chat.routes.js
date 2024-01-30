@@ -6,5 +6,7 @@ const chatRouter = express.Router();
 
 chatRouter.post("/create", authMiddleware, chatController.create);
 chatRouter.get("/fetch", authMiddleware, chatController.fetch);
+chatRouter.put("/addMember", authMiddleware, chatController.addMember);
+chatRouter.delete("/removeMember", authMiddleware, chatController.removeMember);
 
 export default chatRouter;

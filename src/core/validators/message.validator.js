@@ -1,4 +1,4 @@
-const messageValidator = {
+const msgVdr = {
   text: (json) => {
     const { chatId, content, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
@@ -35,6 +35,21 @@ const messageValidator = {
 
     return undefined;
   },
+  react: (json) => {
+    const { reaction, messageId } = json;
+    if (!reaction || reaction.trim() === "") return "Reaction is required";
+    if (!messageId || messageId.trim() === "") return "Message id is required";
+
+    return undefined;
+  },
+  removeReaction: (json) => {
+    const { reactionId, messageId } = json;
+    if (!reactionId || reactionId.trim() === "")
+      return "Reaction id is required";
+    if (!messageId || messageId.trim() === "") return "Message id is required";
+
+    return undefined;
+  },
   fetch: (json) => {
     const { chatId, page } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
@@ -45,4 +60,4 @@ const messageValidator = {
   },
 };
 
-export default messageValidator;
+export default msgVdr;

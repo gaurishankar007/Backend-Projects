@@ -2,7 +2,23 @@ import mongoose from "mongoose";
 
 const ChatScheme = new mongoose.Schema(
   {
-    members: [{ type: mongoose.Types.ObjectId, ref: "Member" }],
+    members: [
+      {
+        type: new mongoose.Schema(
+          {
+            user: { type: mongoose.Types.ObjectId, ref: "User" },
+            admin: { type: Boolean, default: false },
+            superAdmin: { type: Boolean, default: false },
+            lastSeenMessage: {
+              type: mongoose.Types.ObjectId,
+              ref: "Message",
+              default: null,
+            },
+          },
+          { timestamps: true }
+        ),
+      },
+    ],
     name: { type: String, default: null },
     profilePic: { type: String, default: null },
     lastMessage: {

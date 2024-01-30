@@ -10,7 +10,21 @@ const MessageSchema = new mongoose.Schema(
       enum: ["text", "image", "audio", "video", "link"],
       default: "text",
     },
-    reactions: [{ type: mongoose.Types.ObjectId, ref: "Reaction" }],
+    reactions: [
+      {
+        type: new mongoose.Schema(
+          {
+            reaction: { type: String, required: true },
+            user: {
+              type: mongoose.Types.ObjectId,
+              ref: "User",
+              required: true,
+            },
+          },
+          { timestamps: true }
+        ),
+      },
+    ],
     repliedTo: {
       type: mongoose.Types.ObjectId,
       ref: "Message",
