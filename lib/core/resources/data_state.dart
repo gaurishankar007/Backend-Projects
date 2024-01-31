@@ -12,7 +12,7 @@ class SuccessState<T> extends DataState<T> {
 }
 
 class FailureState<T> extends DataState<T> {
-  const FailureState({required DError error}) : super(error: error);
+  const FailureState({DError error = const DError()}) : super(error: error);
 }
 
 class NetworkFailureState<T> extends DataState<T> {
@@ -31,8 +31,8 @@ class DError {
   final ErrorType type;
 
   const DError({
-    required this.error,
-    this.message = "Error Occurred",
+    this.error = "Operation failed",
+    this.message = "Error occurred",
     this.type = ErrorType.unknown,
   });
 }
@@ -41,6 +41,7 @@ enum ErrorType {
   unknown,
   dioException,
   isarException,
+  formatException,
   noNetwork,
   socketTimeOut,
   tokenExpired,

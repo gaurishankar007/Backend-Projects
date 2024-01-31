@@ -1,3 +1,6 @@
+import 'package:chat/features/auth/data/repositories/auth_repo_impl.dart';
+import 'package:chat/features/auth/domain/repositories/auth_repo.dart';
+
 import '../features/auth/presentation/cubit/auth_cubit.dart';
 
 import '../app_data.dart';

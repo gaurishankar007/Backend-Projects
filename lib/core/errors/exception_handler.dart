@@ -29,6 +29,10 @@ FDState<T> exceptionHandler<T>(
     debugPrint(er.toString());
     final err = error ?? DError(error: er.toString(), type: ErrorType.isarException);
     return FailureState<T>(error: err);
+  } on FormatException catch (er) {
+    debugPrint(er.toString());
+    final err = error ?? DError(error: er.toString(), type: ErrorType.formatException);
+    return FailureState<T>(error: err);
   } catch (er) {
     debugPrint(er.toString());
     return FailureState<T>(error: error ?? DError(error: er.toString()));

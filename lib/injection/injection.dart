@@ -3,19 +3,27 @@ part of "injector.dart";
 final getIt = GetIt.instance;
 
 initDependencies() {
-  getIt.registerSingleton<AppRouter>(AppRouter());
-  getIt.registerSingleton<Dio>(Dio());
+  getIt.registerLazySingleton<AppRouter>(() => AppRouter());
+  getIt.registerLazySingleton<Dio>(() => Dio());
 
-  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
-  getIt.registerSingleton<AuthCubit>(AuthCubit());
+  // Bloc
+  getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+  getIt.registerLazySingleton<AuthCubit>(() => AuthCubit());
+
+  // RepoImpl
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
 }
 
-final appRouter = getIt<AppRouter>();
-final dio = getIt<Dio>();
-final appData = AppData();
-final sCon = SConstraint();
-final network = NetworkService();
+AppData get appData => AppData();
+NetworkService get network => NetworkService();
+SConstraint get sCon => SConstraint();
+
+AppRouter get appRouter => getIt<AppRouter>();
+Dio get dio => getIt<Dio>();
 
 // Bloc
-final themeCubit = getIt<ThemeCubit>();
-final authCubit = getIt<AuthCubit>();
+ThemeCubit get themeCubit => getIt<ThemeCubit>();
+AuthCubit get authCubit => getIt<AuthCubit>();
+
+// RepoImpl
+AuthRepo get authRepoImpl => getIt<AuthRepo>();

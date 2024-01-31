@@ -8,7 +8,7 @@ import '../models/userData/user_data_model.dart';
 
 abstract class AuthLocalSource {
   FDState<bool> saveUserData(UserDataModel userData);
-  FDState<UserDataModel?> getUserData();
+  FDState<UserDataModel> getUserData();
 }
 
 class AuthLocalSourceImpl implements AuthLocalSource {
@@ -29,14 +29,16 @@ class AuthLocalSourceImpl implements AuthLocalSource {
   }
 
   @override
-  FDState<UserDataModel?> getUserData() async {
+  FDState<UserDataModel> getUserData() async {
     return await exceptionHandler(() async {
       final isar = await _db;
       UserDataC? userDataC = await isar.userDataCs.where().findFirst();
-      UserDataModel? userData;
-      if (userDataC != null) userData = userDataC.toModel();
+      if (userDataC != null) {
+        UserDataModel userData = userDataC.toModel();
+        return SuccessState(data: userData);
+      }
 
-      return SuccessState(data: userData);
+      return const FailureState<UserDataModel>();
     });
   }
 }

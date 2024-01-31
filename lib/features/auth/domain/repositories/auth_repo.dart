@@ -7,7 +7,7 @@ import '../parameters/sign_up_param.dart';
 abstract class AuthRepo {
   FDState<UserDataModel> signIn(SignInPrm param);
   FDState<UserDataModel> signUp(SignUpPrm param);
-  FDState<UserDataModel?> getUserData();
+  FDState<UserDataModel> getUserData();
   FDState<bool> saveUserData(UserDataModel userData);
   FDState<UserModel> updateProfile(String imagePath);
 }

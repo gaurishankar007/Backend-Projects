@@ -6,7 +6,7 @@ Map<String, String> authHeader({bool formData = false}) {
     "Authorization": "Bearer $accessToken",
   };
 
-  if (formData) header["Content-Type"] = "multipart/form-data";
+  header["Content-Type"] = formData ? "multipart/form-data" : "application/json";
 
   return header;
 }

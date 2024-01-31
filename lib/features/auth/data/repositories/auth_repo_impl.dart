@@ -40,8 +40,8 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  FDState<UserDataModel?> getUserData() async => local.getUserData();
+  FDState<UserDataModel> getUserData() => local.getUserData();
 
   @override
-  FDState<bool> saveUserData(UserDataModel userData) async => local.saveUserData(userData);
+  FDState<bool> saveUserData(UserDataModel userData) => local.saveUserData(userData);
 }
