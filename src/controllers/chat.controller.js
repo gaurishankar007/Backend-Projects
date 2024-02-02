@@ -1,31 +1,43 @@
 import asyncHandler from "express-async-handler";
 import { errorRes, successRes } from "../core/utils/response.js";
 import ChatModel from "../models/chat.model.js";
-import MemberModel from "../models/member.model.js";
-import UserModel from "../models/user.model.js";
 import chatVdr from "../core/validators/chat.validator.js";
 import "../models/message.model.js";
+import MessageModel from "../models/message.model.js";
 
 const chatController = {
   create: asyncHandler(async (req, res) => {
-    const { userIds, name, group } = req.body;
-    if (!userIds || userIds.length === 0)
-      return errorRes(res, "Users id are required");
+    const userId = req.body.userId;
+    if (!userId || userId.trim() === "")
+      return errorRes(res, "User id is required");
+
+    const user = req.user;
+    const members = [{ user: `${user._id}` }, { user: userId }];
+
+    const chat = await ChatModel.create({ members: members });
+
+    successRes(res, chat);
+  }),
+  createGroup: asyncHandler(async (req, res) => {
+    const { userIds, name } = req.body;
+    if (!userIds || userIds.length <= 1)
+      return errorRes(res, "At least 2 users' id are required");
 
     const user = req.user;
     const members = [
-      { user: `${user._id}`, superAdmin: true, admin: true },
+      { user: `${user._id}`, admin: true },
       ...userIds.map(function (id) {
-        return { user: id };
+        return { user: id, addedBy: user };
       }),
     ];
 
-    let chat = await ChatModel.create({
+    const chat = await ChatModel.create({
       members: members,
       name: name,
-      group: group,
+      group: true,
+      creator: user,
     });
-
+    
     successRes(res, chat);
   }),
   fetch: asyncHandler(async (req, res) => {
@@ -50,8 +62,9 @@ const chatController = {
     if (error) return errorRes(res, error);
 
     const { chatId, userIds } = req.body;
+    const user = req.user;
     const members = userIds.map(function (id) {
-      return { user: id };
+      return { user: id, addedBy: user.id };
     });
 
     const chat = await ChatModel.findOneAndUpdate(

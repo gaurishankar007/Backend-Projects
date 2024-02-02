@@ -16,7 +16,7 @@ const messageController = {
 
     const message = await MessageModel.create({
       chat: chatId,
-      sender: user,
+      user: user,
       content: content,
       contentType: contentType,
     });
@@ -38,7 +38,7 @@ const messageController = {
 
     let message = await MessageModel.create({
       chat: chatId,
-      sender: user,
+      user: user,
       content: content,
       contentType: contentType,
       repliedTo: messageId,
@@ -65,7 +65,7 @@ const messageController = {
 
     const message = await MessageModel.create({
       chat: chatId,
-      sender: user,
+      user: user,
       content: file.filename,
       contentType: contentType,
     });
@@ -91,7 +91,7 @@ const messageController = {
 
     let message = await MessageModel.create({
       chat: chatId,
-      sender: user._id,
+      user: user._id,
       content: file.filename,
       contentType: contentType,
       repliedTo: messageId,
@@ -118,6 +118,7 @@ const messageController = {
       { $push: { reactions: reactionScheme } }
     );
     if (message === null) return errorRes(res, "Invalid message id");
+
     successRes(res, message);
   }),
   removeReaction: asyncHandler(async (req, res) => {
@@ -143,9 +144,7 @@ const messageController = {
       .sort({ createdAt: -1 })
       .skip((page - 1) * 10)
       .limit(10)
-      .populate("sender", "-password")
-      .populate("repliedTo")
-      .populate("reactions.user", "-password");
+      .populate("repliedTo");
 
     return successRes(res, messages);
   }),

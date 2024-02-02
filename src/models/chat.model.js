@@ -7,9 +7,14 @@ const ChatScheme = new mongoose.Schema(
         type: new mongoose.Schema(
           {
             user: { type: mongoose.Types.ObjectId, ref: "User" },
+            nickName: { type: String, default: "" },
+            addedBy: {
+              type: mongoose.Types.ObjectId,
+              ref: "User",
+              default: null,
+            },
             admin: { type: Boolean, default: false },
-            superAdmin: { type: Boolean, default: false },
-            lastSeenMessage: {
+            seenMessage: {
               type: mongoose.Types.ObjectId,
               ref: "Message",
               default: null,
@@ -27,6 +32,11 @@ const ChatScheme = new mongoose.Schema(
       default: null,
     },
     group: { type: Boolean, default: false },
+    creator: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
     theme: { type: String, default: null },
   },
   { timestamps: true }

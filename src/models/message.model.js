@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const MessageSchema = new mongoose.Schema(
   {
     chat: { type: mongoose.Types.ObjectId, ref: "Chat", required: true },
-    sender: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
     contentType: {
       type: String,
-      enum: ["text", "image", "audio", "video", "link"],
+      enum: ["text", "url", "image", "audio", "video", "activity"],
       default: "text",
     },
     reactions: [
