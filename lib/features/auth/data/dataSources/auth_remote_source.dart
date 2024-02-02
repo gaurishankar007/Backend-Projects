@@ -90,7 +90,7 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
         kUpdateProfileUrl,
         data: data,
         options: Options(
-          headers: authHeader(formData: true),
+          headers: reqHeaders(isFormData: true),
           validateStatus: (status) => status == 200 || status == 400,
         ),
       );

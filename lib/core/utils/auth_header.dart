@@ -1,12 +1,12 @@
 import '../../injection/injector.dart';
 
-Map<String, String> authHeader({bool formData = false}) {
+Map<String, String> reqHeaders({bool isFormData = false}) {
   String accessToken = appData.userData.accessToken;
   Map<String, String> header = {
     "Authorization": "Bearer $accessToken",
   };
 
-  header["Content-Type"] = formData ? "multipart/form-data" : "application/json";
+  header["Content-Type"] = isFormData ? "multipart/form-data" : "application/json";
 
   return header;
 }

@@ -28,7 +28,7 @@ class ChatApp extends StatelessWidget {
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp.router(
-                title: 'Chat App',
+                title: 'ChatEntity App',
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 themeMode: state.themeMode,

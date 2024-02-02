@@ -9,7 +9,7 @@ part 'user_data_model.freezed.dart';
 part 'user_data_model.g.dart';
 
 @freezed
-class UserDataModel extends UserData with _$UserDataModel {
+class UserDataModel extends UserDataEntity with _$UserDataModel {
   const factory UserDataModel({
     required UserModel user,
     required String accessToken,

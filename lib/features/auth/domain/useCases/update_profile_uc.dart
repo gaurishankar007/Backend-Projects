@@ -4,7 +4,7 @@ import '../../data/models/user/user_model.dart';
 import '../entities/user_entity.dart';
 import '../repositories/auth_repo.dart';
 
-class UpdateProfileUseCase implements UCP<User, String> {
+class UpdateProfileUseCase implements UCP<UserEntity, String> {
   final AuthRepo authRepo;
   UpdateProfileUseCase(this.authRepo);
 

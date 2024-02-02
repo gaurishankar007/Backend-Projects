@@ -34,7 +34,7 @@ migration:
       create_revision: 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
       base_revision: 78666c8dc57e9f7548ca9f8dd0740fbf0c658dc9
 
-  # User provided section
+  # UserEntity provided section
 
   # List of Local paths (relative to this file) that should be
   # ignored by the migrate tool.

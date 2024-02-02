@@ -5,7 +5,7 @@ import '../../data/models/userData/user_data_model.dart';
 import '../entities/user_data_entity.dart';
 import '../repositories/auth_repo.dart';
 
-class GetUserDataUseCase implements UC<UserData?> {
+class GetUserDataUseCase implements UC<UserDataEntity?> {
   final AuthRepo authRepo;
   GetUserDataUseCase(this.authRepo);
 

@@ -6,7 +6,7 @@ import '../entities/user_data_entity.dart';
 import '../parameters/sign_up_param.dart';
 import '../repositories/auth_repo.dart';
 
-class SignUpUseCase implements UCP<UserData, SignUpPrm> {
+class SignUpUseCase implements UCP<UserDataEntity, SignUpPrm> {
   final AuthRepo authRepo;
   SignUpUseCase(this.authRepo);
 
