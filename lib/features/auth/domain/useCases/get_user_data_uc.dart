@@ -5,10 +5,10 @@ import '../../data/models/userData/user_data_model.dart';
 import '../entities/user_data_entity.dart';
 import '../repositories/auth_repo.dart';
 
-class GetUserDataUseCase implements UC<UserDataEntity?> {
-  final AuthRepo authRepo;
+class GetUserDataUseCase implements UseCase2<UserDataEntity?> {
+  final AuthRepository authRepo;
   GetUserDataUseCase(this.authRepo);
 
   @override
-  FDState<UserDataModel?> call() async => await authRepo.getUserData();
+  FutureData<UserDataModel?> call() async => await authRepo.getUserData();
 }

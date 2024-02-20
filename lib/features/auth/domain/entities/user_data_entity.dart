@@ -1,3 +1,4 @@
+import '../../../global/domain/enums/theme_style_enum.dart';
 import 'user_entity.dart';
 
 class UserDataEntity {
@@ -13,5 +14,3 @@ class UserDataEntity {
     required this.themeStyle,
   });
 }
-
-enum ThemeStyle { system, light, dark }

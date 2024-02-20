@@ -23,7 +23,7 @@ abstract class $AppRouter extends _i6.RootStackRouter {
 
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
-    ChatsRoute.name: (routeData) {
+    ChatRoute.name: (routeData) {
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.Chats(),
@@ -49,9 +49,9 @@ abstract class $AppRouter extends _i6.RootStackRouter {
         child: _i4.SignUp(key: args.key),
       );
     },
-    UpdatePRoute.name: (routeData) {
-      final args = routeData.argsAs<UpdatePRouteArgs>(
-          orElse: () => const UpdatePRouteArgs());
+    UpdateProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<UpdateProfileRouteArgs>(
+          orElse: () => const UpdateProfileRouteArgs());
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i5.UpdateProfile(key: args.key),
@@ -62,14 +62,14 @@ abstract class $AppRouter extends _i6.RootStackRouter {
 
 /// generated route for
 /// [_i1.Chats]
-class ChatsRoute extends _i6.PageRouteInfo<void> {
-  const ChatsRoute({List<_i6.PageRouteInfo>? children})
+class ChatRoute extends _i6.PageRouteInfo<void> {
+  const ChatRoute({List<_i6.PageRouteInfo>? children})
       : super(
-          ChatsRoute.name,
+          ChatRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ChatsRoute';
+  static const String name = 'ChatRoute';
 
   static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
 }
@@ -133,29 +133,29 @@ class SignUpRouteArgs {
 
 /// generated route for
 /// [_i5.UpdateProfile]
-class UpdatePRoute extends _i6.PageRouteInfo<UpdatePRouteArgs> {
-  UpdatePRoute({
+class UpdateProfileRoute extends _i6.PageRouteInfo<UpdateProfileRouteArgs> {
+  UpdateProfileRoute({
     _i7.Key? key,
     List<_i6.PageRouteInfo>? children,
   }) : super(
-          UpdatePRoute.name,
-          args: UpdatePRouteArgs(key: key),
+          UpdateProfileRoute.name,
+          args: UpdateProfileRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'UpdatePRoute';
+  static const String name = 'UpdateProfileRoute';
 
-  static const _i6.PageInfo<UpdatePRouteArgs> page =
-      _i6.PageInfo<UpdatePRouteArgs>(name);
+  static const _i6.PageInfo<UpdateProfileRouteArgs> page =
+      _i6.PageInfo<UpdateProfileRouteArgs>(name);
 }
 
-class UpdatePRouteArgs {
-  const UpdatePRouteArgs({this.key});
+class UpdateProfileRouteArgs {
+  const UpdateProfileRouteArgs({this.key});
 
   final _i7.Key? key;
 
   @override
   String toString() {
-    return 'UpdatePRouteArgs{key: $key}';
+    return 'UpdateProfileRouteArgs{key: $key}';
   }
 }

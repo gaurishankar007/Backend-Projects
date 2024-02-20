@@ -6,25 +6,28 @@ import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/utils/auth_header.dart';
 
 import '../../../../core/resources/data_state.dart';
-import '../../../../injection/injector.dart';
 import '../../data/models/userData/user_data_model.dart';
 import '../../domain/parameters/sign_in_param.dart';
 import '../../domain/parameters/sign_up_param.dart';
 import '../models/user/user_model.dart';
 
 abstract class AuthRemoteSource {
-  FDState<UserDataModel> signIn(SignInPrm param);
-  FDState<UserDataModel> signUp(SignUpPrm param);
-  FDState<UserModel> updateProfile(String imagePath);
+  FutureData<UserDataModel> signIn(SignInParameter parameter);
+  FutureData<UserDataModel> signUp(SignUpParameter parameter);
+  FutureData<UserModel> updateProfile(String imagePath);
 }
 
-class AuthRemoteSourceImpl implements AuthRemoteSource {
+class AuthRemoteSourceImplementation implements AuthRemoteSource {
+  final Dio dio;
+
+  AuthRemoteSourceImplementation({required this.dio});
+
   @override
-  FDState<UserDataModel> signIn(SignInPrm param) async {
+  FutureData<UserDataModel> signIn(SignInParameter parameter) async {
     return await exceptionHandler(() async {
       final res = await dio.post(
-        kSignInUrl,
-        data: param.toJson,
+        signInUrl,
+        data: parameter.toJson,
         options: Options(
           validateStatus: (status) => status == 200 || status == 401,
         ),
@@ -34,11 +37,11 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
 
       if (status) {
         UserDataModel userData = UserDataModel.fromJson(res.data["data"]);
-        return SuccessState(data: userData);
+        return DataSuccessSate(data: userData);
       }
 
-      return FailureState<UserDataModel>(
-        error: DError(
+      return DataFailureSate<UserDataModel>(
+        error: ErrorData(
           error: "Authentication error",
           message: res.data["error"],
           type: ErrorType.invalidUserCredential,
@@ -48,11 +51,11 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
   }
 
   @override
-  FDState<UserDataModel> signUp(SignUpPrm param) async {
+  FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
     return await exceptionHandler(() async {
       final res = await dio.post(
-        kSignUpUrl,
-        data: param.toJson,
+        signUpUrl,
+        data: parameter.toJson,
         options: Options(
           validateStatus: (status) => status == 200 || status == 400,
         ),
@@ -62,11 +65,11 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
 
       if (status) {
         UserDataModel userData = UserDataModel.fromJson(res.data["data"]);
-        return SuccessState(data: userData);
+        return DataSuccessSate(data: userData);
       }
 
-      return FailureState<UserDataModel>(
-        error: DError(
+      return DataFailureSate<UserDataModel>(
+        error: ErrorData(
           error: "Registration error",
           message: res.data["error"],
           type: ErrorType.badRequest,
@@ -76,7 +79,7 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
   }
 
   @override
-  FDState<UserModel> updateProfile(String imagePath) async {
+  FutureData<UserModel> updateProfile(String imagePath) async {
     return await exceptionHandler(() async {
       FormData data = FormData.fromMap({
         "profilePic": await MultipartFile.fromFile(
@@ -87,7 +90,7 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
       });
 
       final res = await dio.put(
-        kUpdateProfileUrl,
+        updateProfileUrl,
         data: data,
         options: Options(
           headers: reqHeaders(isFormData: true),
@@ -98,11 +101,11 @@ class AuthRemoteSourceImpl implements AuthRemoteSource {
       bool status = res.data["status"];
       if (status) {
         UserModel user = UserModel.fromJson(res.data["data"]);
-        return SuccessState(data: user);
+        return DataSuccessSate(data: user);
       }
 
-      return FailureState<UserModel>(
-        error: DError(
+      return DataFailureSate<UserModel>(
+        error: ErrorData(
           error: "Profile upload error",
           message: res.data["error"],
         ),

@@ -11,15 +11,15 @@ class AppData {
 
   UserDataModel? _userData;
 
-  Future<void> init() async {
-    initDependencies();
-    await network.listen();
-    await _checkLogin();
+  Future<void> initialize() async {
+    initializeDependencies();
+    await network.checkConnection();
+    await _authenticate();
   }
 
-  _checkLogin() async {
-    final dState = await getUserDataUC.call();
-    if (dState is SuccessState) _userData = dState.data!;
+  _authenticate() async {
+    final dataState = await getUserDataUseCase.call();
+    if (dataState is DataSuccessSate) _userData = dataState.data!;
   }
 
   bool get isLoggedIn => _userData != null;

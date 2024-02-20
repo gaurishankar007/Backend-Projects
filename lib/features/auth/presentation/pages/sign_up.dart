@@ -1,128 +1,97 @@
-import '../../../../core/constants/colors.dart';
-import '../../domain/parameters/sign_up_param.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../core/utils/navigator.dart';
+import '../../domain/parameters/sign_up_param.dart';
 import '../../../../core/constants/padding.dart';
 import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../core/widgets/buttons/ev_button.dart';
-import '../../../../core/widgets/cus_text_form.dart';
+import '../../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../../widgets/custom_text_form.dart';
 import '../../../../injection/injector.dart';
+import '../../injection/auth_injector.dart';
+import '../widgets/error_text_notifier.dart';
 
-@RoutePage(name: signUpR)
+@RoutePage(name: kSignUpRoute)
 class SignUp extends StatelessWidget {
   SignUp({super.key});
 
-  final nameCtr = BehaviorSubject<String>();
-  final emailCtr = BehaviorSubject<String>();
-  final passwordCtr = BehaviorSubject<String>();
-  final confirmPCtr = BehaviorSubject<String>();
+  final nameStreamController = BehaviorSubject<String>();
+  final emailStreamController = BehaviorSubject<String>();
+  final passwordStreamController = BehaviorSubject<String>();
+  final confirmPStreamController = BehaviorSubject<String>();
 
-  final ValueNotifier<String> errorNtf = ValueNotifier<String>("");
+  final ValueNotifier<String> errorNotifier = ValueNotifier<String>("");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: sHPad),
+          padding: EdgeInsets.symmetric(horizontal: pageHorizontalPadding),
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 40.pH, bottom: 60.pH),
-                child: Text("Welcome to chat app", style: x3lSemibold()),
+                margin: EdgeInsets.only(top: 40.pHeight, bottom: 60.pHeight),
+                child: Text("Welcome to chat app", style: x3LargeSemibold()),
               ),
-              ValueListenableBuilder(
-                valueListenable: errorNtf,
-                builder: (context, value, child) {
-                  if (value.isEmpty) return const SizedBox();
-
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 30.pH),
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.center,
-                      style: mdRegular(kError),
-                    ),
-                  );
-                },
-              ),
-              StreamBuilder<String>(
-                stream: nameCtr.stream,
-                builder: (context, snapshot) {
-                  return CusTextForm(
-                    onChanged: (value) => nameCtr.sink.add(value ?? ""),
-                    inputDecoration: const InputDecoration(hintText: "Name"),
-                  );
-                },
+              ErrorTextNotifier(errorNotifier: errorNotifier),
+              SizedBox(height: 30.pHeight),
+              CustomTextForm(
+                onChanged: (value) => nameStreamController.sink.add(value ?? ""),
+                inputDecoration: const InputDecoration(hintText: "Name"),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20.pH),
-                child: StreamBuilder<String>(
-                  stream: emailCtr.stream,
-                  builder: (context, snapshot) {
-                    return CusTextForm(
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => emailCtr.sink.add(value ?? ""),
-                      inputDecoration: const InputDecoration(hintText: "Email"),
-                    );
-                  },
+                margin: EdgeInsets.symmetric(vertical: 20.pHeight),
+                child: CustomTextForm(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) => emailStreamController.sink.add(value ?? ""),
+                  inputDecoration: const InputDecoration(hintText: "Email"),
                 ),
               ),
-              StreamBuilder<String>(
-                stream: passwordCtr.stream,
-                builder: (context, snapshot) {
-                  return CusTextForm(
-                    onChanged: (value) => passwordCtr.sink.add(value ?? ""),
-                    obscureText: true,
-                    inputDecoration: const InputDecoration(hintText: "Password"),
-                  );
-                },
+              CustomTextForm(
+                onChanged: (value) => passwordStreamController.sink.add(value ?? ""),
+                obscureText: true,
+                inputDecoration: const InputDecoration(hintText: "Password"),
               ),
               Container(
-                margin: EdgeInsets.only(top: 20.pH),
-                child: StreamBuilder<String>(
-                  stream: confirmPCtr.stream,
-                  builder: (context, snapshot) {
-                    return CusTextForm(
-                      onChanged: (value) => confirmPCtr.sink.add(value ?? ""),
-                      obscureText: true,
-                      inputDecoration: const InputDecoration(hintText: "Confirm Password"),
-                    );
-                  },
+                margin: EdgeInsets.only(top: 20.pHeight),
+                child: CustomTextForm(
+                  onChanged: (value) => confirmPStreamController.sink.add(value ?? ""),
+                  obscureText: true,
+                  inputDecoration: const InputDecoration(hintText: "Confirm Password"),
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 50.pH),
+                margin: EdgeInsets.symmetric(vertical: 50.pHeight),
                 child: StreamBuilder(
                   stream: Rx.combineLatest4(
-                    nameCtr,
-                    emailCtr,
-                    passwordCtr,
-                    confirmPCtr,
+                    nameStreamController,
+                    emailStreamController,
+                    passwordStreamController,
+                    confirmPStreamController,
                     (a, b, c, d) => true,
                   ),
                   builder: (context, snapshot) {
-                    String? name = nameCtr.stream.valueOrNull;
-                    String? email = emailCtr.stream.valueOrNull;
-                    String? password = passwordCtr.stream.valueOrNull;
-                    String? confirmP = confirmPCtr.stream.valueOrNull;
+                    String? name = nameStreamController.stream.valueOrNull;
+                    String? email = emailStreamController.stream.valueOrNull;
+                    String? password = passwordStreamController.stream.valueOrNull;
+                    String? confirmPassword = confirmPStreamController.stream.valueOrNull;
 
                     bool disabled = (name ?? "").isEmpty ||
                         (email ?? "").isEmpty ||
                         (password ?? "").isEmpty ||
-                        (confirmP ?? "").isEmpty;
+                        (confirmPassword ?? "").isEmpty;
 
-                    return EvButton(
+                    return CustomElevatedButton(
                       onTap: () => signUp(
                         name: name!,
                         email: email!,
                         password: password!,
-                        confirmP: confirmP!,
+                        confirmP: confirmPassword!,
                       ),
                       text: "Sign Up",
                       expandWidth: true,
@@ -141,12 +110,17 @@ class SignUp extends StatelessWidget {
 
   signUp({required String name, email, password, confirmP}) async {
     if (password != confirmP) {
-      return errorNtf.value = "Password did not matched with confirm password";
+      return errorNotifier.value = "Password did not matched with confirm password";
     }
 
-    errorNtf.value = "";
-    final param = SignUpPrm(name: name, email: email, password: password);
-    final dState = await authCubit.signUp(param);
-    if (dState is! SuccessState) errorNtf.value = dState.error!.message;
+    errorNotifier.value = "";
+    final parameter = SignUpParameter(name: name, email: email, password: password);
+    final dataState = await signUpUC.call(parameter);
+    if (dataState is DataSuccessSate) {
+      appData.setUserData = dataState.data!;
+      return pushName(kUpdateProfilePath);
+    }
+
+    errorNotifier.value = dataState.error!.message;
   }
 }

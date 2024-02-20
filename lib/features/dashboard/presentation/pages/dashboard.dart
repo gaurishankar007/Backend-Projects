@@ -4,9 +4,9 @@ import '../../../../injection/injector.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../core/widgets/buttons/ev_button.dart';
+import '../../../../widgets/buttons/custom_elevated_button.dart';
 
-@RoutePage(name: dashboardR)
+@RoutePage(name: kDashboardRoute)
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -20,11 +20,11 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: EvButton(
+          child: CustomElevatedButton(
             onTap: () => authCubit.signOut(),
             text: "Sign Out",
-            color: kPrimary,
-            foregroundColor: kWhite,
+            color: primaryColor,
+            foregroundColor: whiteColor,
           ),
         ),
       ),

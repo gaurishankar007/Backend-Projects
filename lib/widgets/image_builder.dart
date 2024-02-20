@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../constants/colors.dart';
-import '../../injection/injector.dart';
+import '../core/constants/colors.dart';
+import '../injection/injector.dart';
 
 class ImageBuilder extends StatelessWidget {
   final String imageUrl;
@@ -41,11 +41,11 @@ class ImageBuilder extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              border: Border.all(color: themeCubit.tColor()),
+              border: Border.all(color: themeCubit.themeColor()),
               borderRadius: borderRadius,
               shape: circular ? BoxShape.circle : BoxShape.rectangle,
             ),
-            child: const Icon(Icons.error, color: kError, size: 12),
+            child: Icon(Icons.error, color: errorColor, size: 12),
           );
         },
       );

@@ -6,8 +6,8 @@ import '../domain/useCases/sign_in_uc.dart';
 import '../domain/useCases/sign_up_uc.dart';
 import '../domain/useCases/update_profile_uc.dart';
 
-SignInUseCase get signInUC => SignInUseCase(authRepoImpl);
-SignUpUseCase get signUpUC => SignUpUseCase(authRepoImpl);
-GetUserDataUseCase get getUserDataUC => GetUserDataUseCase(authRepoImpl);
-SaveUserDataUseCase get saveUserDataUC => SaveUserDataUseCase(authRepoImpl);
-UpdateProfileUseCase get updateProfileUC => UpdateProfileUseCase(authRepoImpl);
+get signInUseCase => SignInUseCase(authRepositoryImplementation);
+get signUpUC => SignUpUseCase(authRepositoryImplementation);
+get getUserDataUseCase => GetUserDataUseCase(authRepositoryImplementation);
+get saveUserDataUseCase => SaveUserDataUseCase(authRepositoryImplementation);
+get updateProfileUseCase => UpdateProfileUseCase(authRepositoryImplementation);

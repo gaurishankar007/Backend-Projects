@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../injection/injector.dart';
-import '../../constants/colors.dart';
-import '../../utils/pick_image.dart';
-import '../buttons/ev_button.dart';
+import '../../injection/injector.dart';
+import '../../core/constants/colors.dart';
+import '../../core/utils/image_picker.dart';
+import '../buttons/custom_elevated_button.dart';
 
-imageSource(BuildContext ctx, {required Function(String path) onImagePicked}) {
+imagePickerBottomSheet(BuildContext context, {required Function(String path) onImagePicked}) {
   showModalBottomSheet(
-    context: ctx,
+    context: context,
     backgroundColor: Colors.transparent,
-    builder: (_) {
+    builder: (modalSheetContext) {
       return Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: themeCubit.tColor(light: kPopUpL, dark: kPopUpD),
+          color: themeCubit.themeColor(light: popUpLightColor, dark: popUpDarkColor),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
@@ -23,10 +23,10 @@ imageSource(BuildContext ctx, {required Function(String path) onImagePicked}) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            EvButton(
+            CustomElevatedButton(
               onTap: () async {
-                Navigator.pop(_);
-                String? imagePath = await pickImage(ImageSource.camera);
+                Navigator.pop(modalSheetContext);
+                String? imagePath = await imagePicker(ImageSource.camera);
                 if (imagePath == null) return;
 
                 onImagePicked(imagePath);
@@ -34,10 +34,10 @@ imageSource(BuildContext ctx, {required Function(String path) onImagePicked}) {
               text: "Camera",
               icon: Icons.camera_alt_rounded,
             ),
-            EvButton(
+            CustomElevatedButton(
               onTap: () async {
-                Navigator.pop(_);
-                String? imagePath = await pickImage(ImageSource.gallery);
+                Navigator.pop(modalSheetContext);
+                String? imagePath = await imagePicker(ImageSource.gallery);
                 if (imagePath == null) return;
 
                 onImagePicked(imagePath);

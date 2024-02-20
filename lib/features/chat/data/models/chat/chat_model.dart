@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../message/data/models/message/message_model.dart';
@@ -10,7 +12,7 @@ part 'chat_model.g.dart';
 @freezed
 class ChatModel extends ChatEntity with _$ChatModel {
   const factory ChatModel({
-    required String id,
+    @JsonKey(name: "_id") required String id,
     required List<MemberModel> members,
     required String name,
     required String profilePic,

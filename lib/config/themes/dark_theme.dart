@@ -6,28 +6,28 @@ import 'theme_data.dart';
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: kPrimary,
+    seedColor: primaryColor,
     brightness: Brightness.dark,
   ),
-  scaffoldBackgroundColor: kBlack,
+  scaffoldBackgroundColor: blackColor,
   useMaterial3: false,
   appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
   inputDecorationTheme: inputDecorationTheme.copyWith(
-    fillColor: kFillD,
-    hintStyle: const TextStyle(color: kHintD),
+    fillColor: textFormFillDarkColor,
+    hintStyle: TextStyle(color: textFormHintTextDarkColor),
   ),
   textButtonTheme: textButtonTheme,
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(
-      foregroundColor: kWhite,
+      foregroundColor: whiteColor,
       padding: EdgeInsets.zero,
       visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: kEBgD,
-      foregroundColor: kWhite,
+      backgroundColor: elevatedButtonBackgroundDarkColor,
+      foregroundColor: whiteColor,
       splashFactory: NoSplash.splashFactory,
     ),
   ),

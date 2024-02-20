@@ -1,13 +1,13 @@
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/useCase/use_case_param.dart';
+import '../../../../core/useCase/use_case.dart';
 import '../../data/models/user/user_model.dart';
 import '../entities/user_entity.dart';
 import '../repositories/auth_repo.dart';
 
-class UpdateProfileUseCase implements UCP<UserEntity, String> {
-  final AuthRepo authRepo;
+class UpdateProfileUseCase implements UseCase<UserEntity, String> {
+  final AuthRepository authRepo;
   UpdateProfileUseCase(this.authRepo);
 
   @override
-  FDState<UserModel> call(String param) async => await authRepo.updateProfile(param);
+  FutureData<UserModel> call(String parameter) async => await authRepo.updateProfile(parameter);
 }

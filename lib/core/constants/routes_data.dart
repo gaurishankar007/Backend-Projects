@@ -1,15 +1,15 @@
 // Route names and paths
-const String signInR = "SignInRoute";
-const String signInP = "/signIn";
+const String kSignInRoute = "SignInRoute";
+const String kSignInPath = "/signIn";
 
-const String signUpR = "SignUpRoute";
-const String signUpP = "/signUp";
+const String kSignUpRoute = "SignUpRoute";
+const String kSignUpPath = "/signUp";
 
-const String updatePR = "UpdatePRoute";
-const String updatePP = "/updateProfile";
+const String kUpdateProfileRoute = "UpdateProfileRoute";
+const String kUpdateProfilePath = "/updateProfile";
 
-const String dashboardR = "DashboardRoute";
-const String dashboardP = "/dashboard";
+const String kDashboardRoute = "DashboardRoute";
+const String kDashboardPath = "/dashboard";
 
-const String chatsR = "ChatsRoute";
-const String chatsP = "/chats";
+const String kChatRoute = "ChatRoute";
+const String kChatPath = "/chat";

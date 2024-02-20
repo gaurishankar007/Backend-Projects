@@ -8,7 +8,7 @@ part of 'user_data_model.dart';
 
 _$UserDataModelImpl _$$UserDataModelImplFromJson(Map<String, dynamic> json) =>
     _$UserDataModelImpl(
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      user: UserModel.fromJson(json['user']),
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
     );

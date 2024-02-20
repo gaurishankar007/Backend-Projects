@@ -1,10 +1,10 @@
-const String kBaseUrl = "http://192.168.3.133:8080";
-const String kApiUrl = "$kBaseUrl/api";
-const String kAuthUrl = "$kApiUrl/auth";
-const String kChatUrl = "$kApiUrl/chat";
-const String kMessageUrl = "$kApiUrl/message";
+String get baseUrl => "http://192.168.3.133:8080";
+String get apiUrl => "$baseUrl/api";
+String get authUrl => "$apiUrl/auth";
+String get chatUrl => "$apiUrl/chat";
+String get messageUrl => "$apiUrl/message";
 
 // Auth
-const String kSignInUrl = "$kAuthUrl/login";
-const String kSignUpUrl = "$kAuthUrl/register";
-const String kUpdateProfileUrl = "$kAuthUrl/updateProfilePic";
+String get signInUrl => "$authUrl/login";
+String get signUpUrl => "$authUrl/register";
+String get updateProfileUrl => "$authUrl/updateProfilePic";

@@ -1,5 +1,5 @@
-import '../types/content_type.dart';
-import 'content_entity.dart';
+import '../../../global/domain/enums/content_type.dart';
+import 'message_short_entity.dart';
 import 'reaction_entity.dart';
 
 class MessageEntity {
@@ -9,7 +9,7 @@ class MessageEntity {
   final String content;
   final ContentType contentType;
   final List<ReactionEntity> reactions;
-  final ContentEntity repliedTo;
+  final MessageShortEntity repliedTo;
   final bool pinned;
 
   const MessageEntity({

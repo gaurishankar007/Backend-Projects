@@ -1,23 +1,23 @@
-typedef FDState<T> = Future<DataState<T>>;
+typedef FutureData<T> = Future<DataState<T>>;
 
 abstract class DataState<T> {
   final T? data;
-  final DError? error;
+  final ErrorData? error;
 
   const DataState({this.data, this.error});
 }
 
-class SuccessState<T> extends DataState<T> {
-  const SuccessState({required T data}) : super(data: data);
+class DataSuccessSate<T> extends DataState<T> {
+  const DataSuccessSate({required T data}) : super(data: data);
 }
 
-class FailureState<T> extends DataState<T> {
-  const FailureState({DError error = const DError()}) : super(error: error);
+class DataFailureSate<T> extends DataState<T> {
+  const DataFailureSate({ErrorData error = const ErrorData()}) : super(error: error);
 }
 
-class NetworkFailureState<T> extends DataState<T> {
-  const NetworkFailureState({
-    super.error = const DError(
+class NetworkFailureSate<T> extends DataState<T> {
+  const NetworkFailureSate({
+    super.error = const ErrorData(
       error: "Network Connection Error",
       message: "Network connection failed",
       type: ErrorType.noNetwork,
@@ -25,12 +25,12 @@ class NetworkFailureState<T> extends DataState<T> {
   });
 }
 
-class DError {
+class ErrorData {
   final String error;
   final String message;
   final ErrorType type;
 
-  const DError({
+  const ErrorData({
     this.error = "Operation failed",
     this.message = "Error occurred",
     this.type = ErrorType.unknown,

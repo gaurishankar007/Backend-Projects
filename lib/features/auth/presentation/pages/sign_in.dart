@@ -1,21 +1,22 @@
-import '../../../../core/resources/data_state.dart';
-import '../../domain/parameters/sign_in_param.dart';
-import '../../../../injection/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/constants/colors.dart';
+import '../../domain/parameters/sign_in_param.dart';
+import '../../../../core/resources/data_state.dart';
+import '../../../../injection/injector.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../core/constants/routes_data.dart';
-import '../../../../core/widgets/buttons/ev_button.dart';
-import '../../../../core/widgets/cus_text_form.dart';
+import '../../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../../widgets/custom_text_form.dart';
 import '../../../../core/constants/padding.dart';
-import '../../../../core/widgets/buttons/txt_button.dart';
+import '../../../../widgets/buttons/custom_text_button.dart';
+import '../../injection/auth_injector.dart';
+import '../widgets/error_text_notifier.dart';
 
-@RoutePage(name: signInR)
+@RoutePage(name: kSignInRoute)
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
@@ -24,10 +25,10 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final emailCtr = BehaviorSubject<String>();
-  final passwordCtr = BehaviorSubject<String>();
+  final emailStreamController = BehaviorSubject<String>();
+  final passwordStreamController = BehaviorSubject<String>();
 
-  final emailBorder = const OutlineInputBorder(
+  final emailTextFormBorder = const OutlineInputBorder(
     borderSide: BorderSide.none,
     borderRadius: BorderRadius.only(
       topLeft: Radius.circular(10),
@@ -35,7 +36,7 @@ class _SignInState extends State<SignIn> {
     ),
   );
 
-  final passwordBorder = const OutlineInputBorder(
+  final passwordTextFormBorder = const OutlineInputBorder(
     borderSide: BorderSide.none,
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(10),
@@ -43,7 +44,7 @@ class _SignInState extends State<SignIn> {
     ),
   );
 
-  final ValueNotifier<String> errorNtf = ValueNotifier<String>("");
+  final ValueNotifier<String> errorNotifier = ValueNotifier<String>("");
 
   @override
   Widget build(BuildContext context) {
@@ -51,76 +52,61 @@ class _SignInState extends State<SignIn> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: sHPad),
+          padding: EdgeInsets.symmetric(horizontal: pageHorizontalPadding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 40.pH, bottom: 25.pH),
-                child: Text("Sign in with your email", style: x3lSemibold()),
+                margin: EdgeInsets.only(top: 40.pHeight, bottom: 25.pHeight),
+                child: Text("Sign in with your email", style: x3LargeSemibold()),
               ),
-              ValueListenableBuilder(
-                valueListenable: errorNtf,
-                builder: (context, value, child) {
-                  if (value.isEmpty) return const SizedBox();
-
-                  return Container(
-                    margin: EdgeInsets.only(top: 5.pH, bottom: 30.pH),
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.center,
-                      style: mdRegular(kError),
-                    ),
-                  );
-                },
+              Container(
+                margin: EdgeInsets.only(top: 5.pHeight, bottom: 30.pHeight),
+                child: ErrorTextNotifier(errorNotifier: errorNotifier),
               ),
-              StreamBuilder<String>(
-                stream: emailCtr.stream,
-                builder: (context, snapshot) {
-                  return CusTextForm(
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) => emailCtr.sink.add(value ?? ""),
-                    inputDecoration: InputDecoration(
-                      hintText: "Email",
-                      enabledBorder: emailBorder,
-                      focusedBorder: emailBorder,
-                    ),
-                  );
-                },
+              CustomTextForm(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) => emailStreamController.sink.add(value ?? ""),
+                inputDecoration: InputDecoration(
+                  hintText: "Email",
+                  enabledBorder: emailTextFormBorder,
+                  focusedBorder: emailTextFormBorder,
+                ),
               ),
               const SizedBox(height: 5),
-              StreamBuilder<String>(
-                stream: passwordCtr.stream,
-                builder: (context, snapshot) {
-                  return CusTextForm(
-                    onChanged: (value) => passwordCtr.sink.add(value ?? ""),
-                    obscureText: true,
-                    inputDecoration: InputDecoration(
-                      hintText: "Password",
-                      enabledBorder: passwordBorder,
-                      focusedBorder: passwordBorder,
-                    ),
-                  );
-                },
+              CustomTextForm(
+                onChanged: (value) => passwordStreamController.sink.add(value ?? ""),
+                obscureText: true,
+                inputDecoration: InputDecoration(
+                  hintText: "Password",
+                  enabledBorder: passwordTextFormBorder,
+                  focusedBorder: passwordTextFormBorder,
+                ),
               ),
-              SizedBox(height: 50.pH),
+              SizedBox(height: 50.pHeight),
               StreamBuilder(
                 stream: Rx.combineLatest2(
-                  emailCtr,
-                  passwordCtr,
+                  emailStreamController,
+                  passwordStreamController,
                   (a, b) => true,
                 ),
                 builder: (context, snapshot) {
-                  String? email = emailCtr.stream.valueOrNull;
-                  String? password = passwordCtr.stream.valueOrNull;
+                  String? email = emailStreamController.stream.valueOrNull;
+                  String? password = passwordStreamController.stream.valueOrNull;
                   bool disabled = (email ?? "").isEmpty || (password ?? "").isEmpty;
 
-                  return EvButton(
+                  return CustomElevatedButton(
                     onTap: () async {
-                      errorNtf.value = "";
-                      final param = SignInPrm(email: email!, password: password!);
-                      final dState = await authCubit.signIn(param);
-                      if (dState is! SuccessState) errorNtf.value = dState.error!.message;
+                      errorNotifier.value = "";
+                      final parameter = SignInParameter(email: email!, password: password!);
+                      final dataState = await signInUseCase.call(parameter);
+
+                      if (dataState is DataSuccessSate) {
+                        appData.setUserData = dataState.data!;
+                        return replaceToDashboard();
+                      }
+
+                      errorNotifier.value = dataState.error!.message;
                     },
                     text: "Sign In",
                     expandWidth: true,
@@ -130,16 +116,16 @@ class _SignInState extends State<SignIn> {
                 },
               ),
               const SizedBox(height: 10),
-              EvButton(
-                onTap: () => pushName(signUpP),
+              CustomElevatedButton(
+                onTap: () => pushName(kSignUpPath),
                 expandWidth: true,
                 text: "Create new account",
               ),
-              SizedBox(height: 45.pH),
-              TButton(
+              SizedBox(height: 45.pHeight),
+              CustomTextButton(
                 onPressed: () {},
                 text: "Forget Password?",
-                textStyle: smMedium(),
+                textStyle: smallMedium(),
               ),
             ],
           ),

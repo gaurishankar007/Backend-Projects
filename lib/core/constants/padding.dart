@@ -1,3 +1,3 @@
-import '../../injection/injector.dart';
+import 'package:chat/core/extensions/int_extension.dart';
 
-final sHPad = sCon.wP(.05);
+double get pageHorizontalPadding => 5.wPercentage;

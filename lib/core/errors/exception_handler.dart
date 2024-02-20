@@ -3,38 +3,41 @@ import 'package:dio/dio.dart';
 import 'package:isar/isar.dart';
 import '../resources/data_state.dart';
 
-FDState<T> exceptionHandler<T>(
-  Future Function() cb, {
-  DError? error,
-}) async {
+FutureData<T> exceptionHandler<T>(Future Function() callBack) async {
   try {
-    return await cb();
+    return await callBack();
   } on DioException catch (error) {
     debugPrint(error.toString());
     // debugPrint(error.response.toString());
 
-    bool socketException = error.type == DioExceptionType.connectionError ||
-        error.type == DioExceptionType.connectionTimeout;
+    bool socketException = [
+      DioExceptionType.connectionError,
+      DioExceptionType.connectionError,
+      DioExceptionType.sendTimeout,
+      DioExceptionType.receiveTimeout,
+    ].contains(error.type);
 
-    if (socketException) return NetworkFailureState<T>();
+    if (socketException) return NetworkFailureSate<T>();
 
-    return FailureState<T>(
-      error: DError(
-        error: error.toString(),
-        message: "Server request failed",
-        type: ErrorType.dioException,
-      ),
+    final errorData = ErrorData(
+      error: error.toString(),
+      message: "Server request failed",
+      type: ErrorType.dioException,
     );
-  } on IsarError catch (er) {
-    debugPrint(er.toString());
-    final err = error ?? DError(error: er.toString(), type: ErrorType.isarException);
-    return FailureState<T>(error: err);
-  } on FormatException catch (er) {
-    debugPrint(er.toString());
-    final err = error ?? DError(error: er.toString(), type: ErrorType.formatException);
-    return FailureState<T>(error: err);
-  } catch (er) {
-    debugPrint(er.toString());
-    return FailureState<T>(error: error ?? DError(error: er.toString()));
+
+    return DataFailureSate<T>(error: errorData);
+  } on IsarError catch (error) {
+    final errorString = error.toString();
+    debugPrint(errorString);
+    return DataFailureSate<T>(error: ErrorData(error: errorString, type: ErrorType.isarException));
+  } on FormatException catch (error) {
+    final errorString = error.toString();
+    debugPrint(errorString);
+    return DataFailureSate<T>(
+        error: ErrorData(error: errorString, type: ErrorType.formatException));
+  } catch (error) {
+    final errorString = error.toString();
+    debugPrint(errorString);
+    return DataFailureSate<T>(error: ErrorData(error: errorString));
   }
 }

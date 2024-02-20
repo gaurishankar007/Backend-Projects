@@ -1,5 +1,9 @@
 import '../resources/data_state.dart';
 
-abstract class UC<T> {
-  FDState<T> call();
+abstract class UseCase<T, P> {
+  FutureData<T> call(P parameter);
+}
+
+abstract class UseCase2<T> {
+  FutureData<T> call();
 }

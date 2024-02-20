@@ -3,6 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/entities/user_data_entity.dart';
+import '../../../../global/domain/enums/theme_style_enum.dart';
 import '../user/user_model.dart';
 
 part 'user_data_model.freezed.dart';

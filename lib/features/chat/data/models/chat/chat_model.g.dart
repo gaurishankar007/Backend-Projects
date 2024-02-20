@@ -8,7 +8,7 @@ part of 'chat_model.dart';
 
 _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
     _$ChatModelImpl(
-      id: json['id'] as String,
+      id: json['_id'] as String,
       members: (json['members'] as List<dynamic>)
           .map((e) => MemberModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -23,7 +23,7 @@ _$ChatModelImpl _$$ChatModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ChatModelImplToJson(_$ChatModelImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'members': instance.members,
       'name': instance.name,
       'profilePic': instance.profilePic,

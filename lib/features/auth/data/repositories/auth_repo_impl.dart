@@ -9,39 +9,41 @@ import '../../../../injection/injector.dart';
 import '../dataSources/auth_local_source.dart';
 import '../models/user/user_model.dart';
 
-class AuthRepoImpl implements AuthRepo {
-  final remote = AuthRemoteSourceImpl();
-  final local = AuthLocalSourceImpl();
+class AuthRepositoryImplementation implements AuthRepository {
+  final AuthRemoteSourceImplementation remote;
+  final AuthLocalSourceImplementation local;
+
+  AuthRepositoryImplementation({required this.remote, required this.local});
 
   @override
-  FDState<UserDataModel> signIn(SignInPrm param) async {
-    if (network.online) {
-      final dState = await remote.signIn(param);
-      if (dState is SuccessState) local.saveUserData(dState.data!);
-      return dState;
+  FutureData<UserDataModel> signIn(SignInParameter parameter) async {
+    if (network.isOnline) {
+      final dataState = await remote.signIn(parameter);
+      if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
+      return dataState;
     }
-    return const NetworkFailureState();
+    return const NetworkFailureSate();
   }
 
   @override
-  FDState<UserDataModel> signUp(SignUpPrm param) async {
-    if (network.online) {
-      final dState = await remote.signUp(param);
-      if (dState is SuccessState) local.saveUserData(dState.data!);
-      return dState;
+  FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
+    if (network.isOnline) {
+      final dataState = await remote.signUp(parameter);
+      if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
+      return dataState;
     }
-    return const NetworkFailureState();
+    return const NetworkFailureSate();
   }
 
   @override
-  FDState<UserModel> updateProfile(String imagePath) async {
-    if (network.online) return remote.updateProfile(imagePath);
-    return const NetworkFailureState();
+  FutureData<UserModel> updateProfile(String imagePath) async {
+    if (network.isOnline) return remote.updateProfile(imagePath);
+    return const NetworkFailureSate();
   }
 
   @override
-  FDState<UserDataModel> getUserData() => local.getUserData();
+  FutureData<UserDataModel> getUserData() => local.getUserData();
 
   @override
-  FDState<bool> saveUserData(UserDataModel userData) => local.saveUserData(userData);
+  FutureData<bool> saveUserData(UserDataModel userData) => local.saveUserData(userData);
 }

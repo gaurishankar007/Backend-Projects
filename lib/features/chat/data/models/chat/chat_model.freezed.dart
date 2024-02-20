@@ -12,7 +12,7 @@ part of 'chat_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ChatModel _$ChatModelFromJson(Map<String, dynamic> json) {
   return _ChatModel.fromJson(json);
@@ -20,6 +20,7 @@ ChatModel _$ChatModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatModel {
+  @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   List<MemberModel> get members => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $ChatModelCopyWith<$Res> {
       _$ChatModelCopyWithImpl<$Res, ChatModel>;
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: "_id") String id,
       List<MemberModel> members,
       String name,
       String profilePic,
@@ -129,7 +130,7 @@ abstract class _$$ChatModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {@JsonKey(name: "_id") String id,
       List<MemberModel> members,
       String name,
       String profilePic,
@@ -203,7 +204,7 @@ class __$$ChatModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChatModelImpl implements _ChatModel {
   const _$ChatModelImpl(
-      {required this.id,
+      {@JsonKey(name: "_id") required this.id,
       required final List<MemberModel> members,
       required this.name,
       required this.profilePic,
@@ -217,6 +218,7 @@ class _$ChatModelImpl implements _ChatModel {
       _$$ChatModelImplFromJson(json);
 
   @override
+  @JsonKey(name: "_id")
   final String id;
   final List<MemberModel> _members;
   @override
@@ -290,7 +292,7 @@ class _$ChatModelImpl implements _ChatModel {
 
 abstract class _ChatModel implements ChatModel {
   const factory _ChatModel(
-      {required final String id,
+      {@JsonKey(name: "_id") required final String id,
       required final List<MemberModel> members,
       required final String name,
       required final String profilePic,
@@ -303,6 +305,7 @@ abstract class _ChatModel implements ChatModel {
       _$ChatModelImpl.fromJson;
 
   @override
+  @JsonKey(name: "_id")
   String get id;
   @override
   List<MemberModel> get members;

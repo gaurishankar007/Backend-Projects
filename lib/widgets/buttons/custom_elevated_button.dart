@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/Cupertino.dart' show CupertinoActivityIndicator;
 import 'package:flutter/material.dart';
 
-import '../../../injection/injector.dart';
-import '../../extensions/int_extension.dart';
-import '../../utils/text_styles.dart';
+import '../../injection/injector.dart';
+import '../../core/extensions/int_extension.dart';
+import '../../core/utils/text_styles.dart';
 
-class EvButton extends StatelessWidget {
+class CustomElevatedButton extends StatelessWidget {
   final Function() onTap;
   final double? height;
   final double? width;
@@ -23,7 +23,7 @@ class EvButton extends StatelessWidget {
   final double? elevation;
   final bool expandWidth;
 
-  const EvButton({
+  const CustomElevatedButton({
     super.key,
     required this.onTap,
     this.text = "",
@@ -46,7 +46,7 @@ class EvButton extends StatelessWidget {
     bool loading = false;
     Color? tColor = foregroundColor;
 
-    Widget child = Text(text, style: textStyle ?? lgSemibold(tColor));
+    Widget child = Text(text, style: textStyle ?? largeSemibold(tColor));
     if (icon != null) {
       if (text.isEmpty) {
         child = Icon(icon!, color: tColor);
@@ -66,14 +66,14 @@ class EvButton extends StatelessWidget {
 
     Widget loadingChild = Center(
       child: SizedBox(
-        height: 25.pH,
-        width: 25.pH,
-        child: psLoading(foregroundColor ?? themeCubit.tColor()),
+        height: 25.pHeight,
+        width: 25.pHeight,
+        child: psLoading(foregroundColor ?? themeCubit.themeColor()),
       ),
     );
 
     return SizedBox(
-      height: height ?? 70.pH,
+      height: height ?? 70.pHeight,
       width: expandWidth ? width ?? double.maxFinite : null,
       child: StatefulBuilder(
         builder: (context, setState) {

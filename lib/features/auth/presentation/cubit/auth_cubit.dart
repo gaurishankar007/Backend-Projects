@@ -13,38 +13,38 @@ import '../../domain/parameters/sign_up_param.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState());
+class AuthCubit extends Cubit<AuthState?> {
+  AuthCubit() : super(null);
 
-  Future<DataState<UserDataModel>> signIn(SignInPrm param) async {
-    final dState = await signInUC.call(param);
-    if (dState is SuccessState) {
-      appData.setUserData = dState.data!;
+  FutureData<UserDataModel> signIn(SignInParameter parameter) async {
+    final dataState = await signInUseCase.call(parameter);
+    if (dataState is DataSuccessSate) {
+      appData.setUserData = dataState.data!;
       replaceToDashboard();
     }
 
-    return dState;
+    return dataState;
   }
 
-  Future<DataState<UserDataModel>> signUp(SignUpPrm param) async {
-    final dState = await signUpUC.call(param);
-    if (dState is SuccessState) {
-      appData.setUserData = dState.data!;
-      pushName(updatePP);
+  FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
+    final dataState = await signUpUC.call(parameter);
+    if (dataState is DataSuccessSate) {
+      appData.setUserData = dataState.data!;
+      pushName(kUpdateProfilePath);
     }
 
-    return dState;
+    return dataState;
   }
 
   updateProfile(String imagePath) async {
-    final dState = await updateProfileUC.call(imagePath);
-    if (dState is SuccessState) {
-      appData.setUserData = appData.userData.copyWith(user: dState.data!);
-      saveUserDataUC.call(appData.userData);
+    final dataState = await updateProfileUseCase.call(imagePath);
+    if (dataState is DataSuccessSate) {
+      appData.setUserData = appData.userData.copyWith(user: dataState.data!);
+      saveUserDataUseCase.call(appData.userData);
       replaceToDashboard();
     }
 
-    return dState;
+    return dataState;
   }
 
   signOut() async {

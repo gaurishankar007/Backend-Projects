@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 
-Future<String?> pickImage(ImageSource source) async {
+Future<String?> imagePicker(ImageSource source) async {
   String? path;
   final xImage = await ImagePicker().pickImage(source: source);
 

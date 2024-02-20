@@ -3,14 +3,16 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<Isar> openIsarDB() async {
+  /// Open an isar instance if not opened
   if (Isar.instanceNames.isEmpty) {
-    final dir = await getApplicationDocumentsDirectory();
+    final directory = await getApplicationDocumentsDirectory();
     return await Isar.open(
-      [UserDataCSchema],
-      directory: dir.path,
+      [UserDataCollectionSchema],
+      directory: directory.path,
       inspector: true,
     );
   }
 
+  /// Get the opened isar instance
   return Future.value(Isar.getInstance());
 }

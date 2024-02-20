@@ -13,25 +13,15 @@ class UserModel extends UserEntity with _$UserModel {
     @JsonKey(name: "_id") required String id,
     required String name,
     required String email,
-    required String profilePic,
+    required String profile,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$$UserModelImplFromJson(json);
-  factory UserModel.dynamic({
-    String? id,
-    String? name,
-    String? email,
-    String? profilePic,
-  }) =>
-      UserModel(
-        id: id ?? "",
-        name: name ?? "",
-        email: email ?? "",
-        profilePic: profilePic ?? "",
-      );
+  factory UserModel.fromJson(dynamic value) => UserModel.fromIdOrJson(value);
 
-  factory UserModel.fromIdOrJson(dynamic dValue) {
-    if (dValue is String) return UserModel.dynamic(id: dValue);
-    return UserModel.fromJson(dValue);
-  }
+  /// Get user model when only id is available
+  /// Other instance properties are empty
+  factory UserModel.fromId(String id) => UserModel(id: id, name: "", email: "", profile: "");
+
+  factory UserModel.fromIdOrJson(dynamic value) =>
+      value is String ? UserModel.fromId(value) : _$$UserModelImplFromJson(value);
 }

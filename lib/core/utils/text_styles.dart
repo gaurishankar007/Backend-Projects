@@ -1,83 +1,83 @@
 import 'package:flutter/material.dart';
 
 // 4X Large
-TextStyle x4lBold([Color? color]) =>
+TextStyle x4LargeBold([Color? color]) =>
     TextStyle(color: color, fontSize: 26, fontWeight: FontWeight.w700);
-TextStyle x4lSemibold([Color? color]) =>
+TextStyle x4LargeSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 26, fontWeight: FontWeight.w700);
 
 // 3X Large
-TextStyle x3lSemibold([Color? color]) =>
+TextStyle x3LargeSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w600);
-TextStyle x3lMedium([Color? color]) =>
+TextStyle x3LargeMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w500);
-TextStyle x3lRegular([Color? color]) =>
+TextStyle x3LargeRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w400);
 
 // 2X Large
-TextStyle x2lBold([Color? color]) =>
+TextStyle x2LargeBold([Color? color]) =>
     TextStyle(color: color, fontSize: 22, fontWeight: FontWeight.w700);
-TextStyle x2lSemibold([Color? color]) =>
+TextStyle x2LargeSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 22, fontWeight: FontWeight.w600);
-TextStyle x2lMedium([Color? color]) =>
+TextStyle x2LargeMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 22, fontWeight: FontWeight.w500);
 
 // Extra Large
-TextStyle xlBold([Color? color]) =>
+TextStyle xLargeBold([Color? color]) =>
     TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w700);
-TextStyle xlSemibold([Color? color]) =>
+TextStyle xLargeSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w600);
-TextStyle xlMedium([Color? color]) =>
+TextStyle xLargeMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w500);
-TextStyle xlRegular([Color? color]) =>
+TextStyle xLargeRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w400);
 
 // Large
-TextStyle lgSemibold([Color? color]) =>
+TextStyle largeSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.w600);
-TextStyle lgMedium([Color? color]) =>
+TextStyle largeMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.w500);
-TextStyle lgRegular([Color? color]) =>
+TextStyle largeRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.w400);
 
 // Medium
-TextStyle mdBold([Color? color]) =>
+TextStyle mediumBold([Color? color]) =>
     TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w700);
-TextStyle mdSemibold([Color? color]) =>
+TextStyle mediumSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w600);
-TextStyle mdMedium([Color? color]) =>
+TextStyle mediumMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle mdRegular([Color? color]) =>
+TextStyle mediumRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 16, fontWeight: FontWeight.w400);
 
 // Small
-TextStyle smSemibold([Color? color]) =>
+TextStyle smallSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 14, fontWeight: FontWeight.w600);
-TextStyle smMedium([Color? color]) =>
+TextStyle smallMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 14, fontWeight: FontWeight.w500);
-TextStyle smRegular([Color? color]) =>
+TextStyle smallRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 14, fontWeight: FontWeight.w400);
 
 // Extra Small
-TextStyle xsSemibold([Color? color]) =>
+TextStyle xSmallSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600);
-TextStyle xsMedium([Color? color]) =>
+TextStyle xSmallMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w500);
-TextStyle xsRegular([Color? color]) =>
+TextStyle xSmallRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w400);
 
 // 2x Small
-TextStyle x2sSemibold([Color? color]) =>
+TextStyle x2SmallSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600);
-TextStyle x2sMedium([Color? color]) =>
+TextStyle x2SmallMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w500);
-TextStyle x2sRegular([Color? color]) =>
+TextStyle x2SmallRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w400);
 
 // 3x Small
-TextStyle x3sSemibold([Color? color]) =>
+TextStyle x3SmallSemibold([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w600);
-TextStyle x3sMedium([Color? color]) =>
+TextStyle x3SmallMedium([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w500);
-TextStyle x3sRegular([Color? color]) =>
+TextStyle x3SmallRegular([Color? color]) =>
     TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w400);

@@ -1,15 +1,16 @@
 import '../../data/models/userData/user_data_model.dart';
 
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/useCase/use_case_param.dart';
+import '../../../../core/useCase/use_case.dart';
 import '../entities/user_data_entity.dart';
 import '../parameters/sign_in_param.dart';
 import '../repositories/auth_repo.dart';
 
-class SignInUseCase implements UCP<UserDataEntity, SignInPrm> {
-  final AuthRepo authRepo;
+class SignInUseCase implements UseCase<UserDataEntity, SignInParameter> {
+  final AuthRepository authRepo;
   SignInUseCase(this.authRepo);
 
   @override
-  FDState<UserDataModel> call(SignInPrm param) async => await authRepo.signIn(param);
+  FutureData<UserDataModel> call(SignInParameter parameter) async =>
+      await authRepo.signIn(parameter);
 }

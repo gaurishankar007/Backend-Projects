@@ -9,7 +9,7 @@ part of 'member_model.dart';
 _$MemberModelImpl _$$MemberModelImplFromJson(Map<String, dynamic> json) =>
     _$MemberModelImpl(
       id: json['_id'] as String,
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      user: UserModel.fromJson(json['user']),
       nickName: json['nickName'] as String,
       addedBy: json['addedBy'] as String,
       admin: json['admin'] as bool,

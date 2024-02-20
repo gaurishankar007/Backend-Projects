@@ -6,71 +6,60 @@ import 'package:auto_route/auto_route.dart';
 import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/widgets/popUps/image_source.dart';
+import '../../../../widgets/popUps/image_picker_bottom_sheet.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/padding.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../core/widgets/buttons/ev_button.dart';
-import '../../../../core/widgets/image_builder.dart';
-import '../../../../core/widgets/buttons/txt_button.dart';
+import '../../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../../widgets/image_builder.dart';
+import '../../../../widgets/buttons/custom_text_button.dart';
 import '../../../../injection/injector.dart';
+import '../../injection/auth_injector.dart';
+import '../widgets/error_text_notifier.dart';
 
-@RoutePage(name: updatePR)
+@RoutePage(name: kUpdateProfileRoute)
 class UpdateProfile extends StatelessWidget {
   UpdateProfile({super.key});
 
-  final ValueNotifier<String> imagePath = ValueNotifier<String>("");
-  final ValueNotifier<String> errorNtf = ValueNotifier<String>("");
+  final ValueNotifier<String> imagePathNotifier = ValueNotifier<String>("");
+  final ValueNotifier<String> errorNotifier = ValueNotifier<String>("");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: sHPad),
+          padding: EdgeInsets.symmetric(horizontal: pageHorizontalPadding),
           child: Column(
             children: [
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(top: 40.pH, bottom: 60.pH),
+                margin: EdgeInsets.only(top: 40.pHeight, bottom: 60.pHeight),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Text("Select Profile", style: x3lSemibold()),
+                    Text("Select Profile", style: x3LargeSemibold()),
                   ],
                 ),
               ),
-              ValueListenableBuilder(
-                valueListenable: errorNtf,
-                builder: (context, value, child) {
-                  if (value.isEmpty) return const SizedBox();
-
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 30.pH),
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.center,
-                      style: mdRegular(kError),
-                    ),
-                  );
-                },
-              ),
+              ErrorTextNotifier(errorNotifier: errorNotifier),
+              SizedBox(height: 30.pHeight),
               GestureDetector(
-                onTap: () => imageSource(
+                onTap: () => imagePickerBottomSheet(
                   context,
                   onImagePicked: (path) {
-                    errorNtf.value = "";
-                    imagePath.value = path;
+                    errorNotifier.value = "";
+                    imagePathNotifier.value = path;
                   },
                 ),
                 child: ValueListenableBuilder(
-                  valueListenable: imagePath,
+                  valueListenable: imagePathNotifier,
                   builder: (context, value, child) {
                     if (value.isEmpty) {
                       return ImageBuilder(
-                        height: sCon.wP(.5),
-                        width: sCon.wP(.5),
+                        height: 50.wPercentage,
+                        width: 50.wPercentage,
                         circular: true,
                         fit: BoxFit.cover,
                         imageProvider: const AssetImage("assets/images/user.png"),
@@ -78,8 +67,8 @@ class UpdateProfile extends StatelessWidget {
                     }
 
                     return ImageBuilder(
-                      height: sCon.wP(.5),
-                      width: sCon.wP(.5),
+                      height: 50.wPercentage,
+                      width: 50.wPercentage,
                       circular: true,
                       fit: BoxFit.cover,
                       imageProvider: FileImage(File(value)),
@@ -88,24 +77,33 @@ class UpdateProfile extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 50.pH, bottom: 20.pH),
-                child: EvButton(
+                margin: EdgeInsets.only(top: 50.pHeight, bottom: 20.pHeight),
+                child: CustomElevatedButton(
                   onTap: () async {
-                    if (imagePath.value.isEmpty) return errorNtf.value = "Select an image";
+                    if (imagePathNotifier.value.isEmpty) {
+                      return errorNotifier.value = "Select an image";
+                    }
 
-                    errorNtf.value = "";
-                    final dState = await authCubit.updateProfile(imagePath.value);
-                    if (dState is! SuccessState) errorNtf.value = dState.error!.message;
+                    errorNotifier.value = "";
+                    final dataState = await updateProfileUseCase.call(imagePathNotifier.value);
+
+                    if (dataState is DataSuccessSate) {
+                      appData.setUserData = appData.userData.copyWith(user: dataState.data!);
+                      saveUserDataUseCase.call(appData.userData);
+                      return replaceToDashboard();
+                    }
+
+                    errorNotifier.value = dataState.error!.message;
                   },
                   text: "Update",
-                  color: kPrimary,
-                  foregroundColor: kWhite,
+                  color: primaryColor,
+                  foregroundColor: whiteColor,
                   expandWidth: true,
                   showLoading: true,
                 ),
               ),
-              TButton(
-                onPressed: () => pushName(dashboardP),
+              CustomTextButton(
+                onPressed: () => pushName(kDashboardPath),
                 text: "Skip",
                 compressSize: false,
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../utils/text_styles.dart';
+import '../../core/utils/text_styles.dart';
 
-class TButton extends StatelessWidget {
+class CustomTextButton extends StatelessWidget {
   final Function() onPressed;
   final String text;
   final Color? color;
@@ -9,7 +9,7 @@ class TButton extends StatelessWidget {
   final bool compressSize;
   final double? elevation;
 
-  const TButton({
+  const CustomTextButton({
     super.key,
     required this.onPressed,
     this.text = "",
@@ -28,7 +28,7 @@ class TButton extends StatelessWidget {
         visualDensity: compressSize ? null : const VisualDensity(),
         elevation: elevation,
       ),
-      child: Text(text, style: textStyle ?? lgSemibold()),
+      child: Text(text, style: textStyle ?? largeSemibold()),
     );
   }
 }

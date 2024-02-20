@@ -16,7 +16,7 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       reactions: (json['reactions'] as List<dynamic>)
           .map((e) => ReactionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      repliedTo: ContentModel.fromDynamic(json['repliedTo']),
+      repliedTo: MessageRepliedUponModel.fromJson(json['repliedTo']),
       pinned: json['pinned'] as bool,
     );
 

@@ -2,7 +2,7 @@ part of "injector.dart";
 
 final getIt = GetIt.instance;
 
-initDependencies() {
+initializeDependencies() {
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
   getIt.registerLazySingleton<Dio>(() => Dio());
 
@@ -10,20 +10,11 @@ initDependencies() {
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   getIt.registerLazySingleton<AuthCubit>(() => AuthCubit());
 
+  // DataSources
+  getIt.registerLazySingleton<AuthRemoteSource>(() => AuthRemoteSourceImplementation(dio: getIt()));
+  getIt.registerLazySingleton<AuthLocalSource>(() => AuthLocalSourceImplementation());
+
   // RepoImpl
-  getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl());
+  getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImplementation(remote: getIt(), local: getIt()));
 }
-
-AppData get appData => AppData();
-NetworkService get network => NetworkService();
-SConstraint get sCon => SConstraint();
-
-AppRouter get appRouter => getIt<AppRouter>();
-Dio get dio => getIt<Dio>();
-
-// Bloc
-ThemeCubit get themeCubit => getIt<ThemeCubit>();
-AuthCubit get authCubit => getIt<AuthCubit>();
-
-// RepoImpl
-AuthRepo get authRepoImpl => getIt<AuthRepo>();

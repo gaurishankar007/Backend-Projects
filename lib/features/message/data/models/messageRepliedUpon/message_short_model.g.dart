@@ -1,21 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'content_model.dart';
+part of 'message_short_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ContentModelImpl _$$ContentModelImplFromJson(Map<String, dynamic> json) =>
-    _$ContentModelImpl(
-      messageId: json['messageId'] as String,
+_$MessageRepliedUponModelImpl _$$MessageRepliedUponModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MessageRepliedUponModelImpl(
+      messageId: json['_id'] as String,
       content: json['content'] as String,
       contentType: json['contentType'] as String,
     );
 
-Map<String, dynamic> _$$ContentModelImplToJson(_$ContentModelImpl instance) =>
+Map<String, dynamic> _$$MessageRepliedUponModelImplToJson(
+        _$MessageRepliedUponModelImpl instance) =>
     <String, dynamic>{
-      'messageId': instance.messageId,
+      '_id': instance.messageId,
       'content': instance.content,
       'contentType': instance.contentType,
     };

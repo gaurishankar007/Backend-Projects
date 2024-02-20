@@ -12,7 +12,7 @@ part of 'message_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MessageModel _$MessageModelFromJson(Map<String, dynamic> json) {
   return _MessageModel.fromJson(json);
@@ -27,8 +27,7 @@ mixin _$MessageModel {
   String get content => throw _privateConstructorUsedError;
   ContentType get contentType => throw _privateConstructorUsedError;
   List<ReactionModel> get reactions => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: ContentModel.fromDynamic)
-  ContentModel get repliedTo => throw _privateConstructorUsedError;
+  MessageRepliedUponModel get repliedTo => throw _privateConstructorUsedError;
   bool get pinned => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,10 +49,10 @@ abstract class $MessageModelCopyWith<$Res> {
       String content,
       ContentType contentType,
       List<ReactionModel> reactions,
-      @JsonKey(fromJson: ContentModel.fromDynamic) ContentModel repliedTo,
+      MessageRepliedUponModel repliedTo,
       bool pinned});
 
-  $ContentModelCopyWith<$Res> get repliedTo;
+  $MessageRepliedUponModelCopyWith<$Res> get repliedTo;
 }
 
 /// @nodoc
@@ -106,7 +105,7 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
       repliedTo: null == repliedTo
           ? _value.repliedTo
           : repliedTo // ignore: cast_nullable_to_non_nullable
-              as ContentModel,
+              as MessageRepliedUponModel,
       pinned: null == pinned
           ? _value.pinned
           : pinned // ignore: cast_nullable_to_non_nullable
@@ -116,8 +115,8 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $ContentModelCopyWith<$Res> get repliedTo {
-    return $ContentModelCopyWith<$Res>(_value.repliedTo, (value) {
+  $MessageRepliedUponModelCopyWith<$Res> get repliedTo {
+    return $MessageRepliedUponModelCopyWith<$Res>(_value.repliedTo, (value) {
       return _then(_value.copyWith(repliedTo: value) as $Val);
     });
   }
@@ -138,11 +137,11 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       String content,
       ContentType contentType,
       List<ReactionModel> reactions,
-      @JsonKey(fromJson: ContentModel.fromDynamic) ContentModel repliedTo,
+      MessageRepliedUponModel repliedTo,
       bool pinned});
 
   @override
-  $ContentModelCopyWith<$Res> get repliedTo;
+  $MessageRepliedUponModelCopyWith<$Res> get repliedTo;
 }
 
 /// @nodoc
@@ -193,7 +192,7 @@ class __$$MessageModelImplCopyWithImpl<$Res>
       repliedTo: null == repliedTo
           ? _value.repliedTo
           : repliedTo // ignore: cast_nullable_to_non_nullable
-              as ContentModel,
+              as MessageRepliedUponModel,
       pinned: null == pinned
           ? _value.pinned
           : pinned // ignore: cast_nullable_to_non_nullable
@@ -212,7 +211,7 @@ class _$MessageModelImpl implements _MessageModel {
       required this.content,
       required this.contentType,
       required final List<ReactionModel> reactions,
-      @JsonKey(fromJson: ContentModel.fromDynamic) required this.repliedTo,
+      required this.repliedTo,
       required this.pinned})
       : _reactions = reactions;
 
@@ -239,8 +238,7 @@ class _$MessageModelImpl implements _MessageModel {
   }
 
   @override
-  @JsonKey(fromJson: ContentModel.fromDynamic)
-  final ContentModel repliedTo;
+  final MessageRepliedUponModel repliedTo;
   @override
   final bool pinned;
 
@@ -302,8 +300,7 @@ abstract class _MessageModel implements MessageModel {
       required final String content,
       required final ContentType contentType,
       required final List<ReactionModel> reactions,
-      @JsonKey(fromJson: ContentModel.fromDynamic)
-      required final ContentModel repliedTo,
+      required final MessageRepliedUponModel repliedTo,
       required final bool pinned}) = _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
@@ -323,8 +320,7 @@ abstract class _MessageModel implements MessageModel {
   @override
   List<ReactionModel> get reactions;
   @override
-  @JsonKey(fromJson: ContentModel.fromDynamic)
-  ContentModel get repliedTo;
+  MessageRepliedUponModel get repliedTo;
   @override
   bool get pinned;
   @override

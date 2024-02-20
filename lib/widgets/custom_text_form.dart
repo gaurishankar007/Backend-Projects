@@ -1,9 +1,9 @@
-import '../extensions/int_extension.dart';
+import '../core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/text_styles.dart';
+import '../core/utils/text_styles.dart';
 
-class CusTextForm extends StatelessWidget {
+class CustomTextForm extends StatelessWidget {
   final TextEditingController? controller;
   final String? title;
   final TextStyle? titleStyle;
@@ -14,7 +14,7 @@ class CusTextForm extends StatelessWidget {
   final String? initialValue;
   final InputDecoration? inputDecoration;
 
-  const CusTextForm({
+  const CustomTextForm({
     super.key,
     this.controller,
     this.title,
@@ -29,7 +29,7 @@ class CusTextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double newHeight = height ?? 70.pH;
+    double newHeight = height ?? 70.pHeight;
 
     Widget child = SizedBox(
       height: newHeight,
@@ -49,8 +49,8 @@ class CusTextForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(title!, style: titleStyle ?? xlSemibold()),
-        SizedBox(height: 15.pH),
+        Text(title!, style: titleStyle ?? xLargeSemibold()),
+        SizedBox(height: 15.pHeight),
         child,
       ],
     );

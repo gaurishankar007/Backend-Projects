@@ -3,8 +3,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/entities/message_entity.dart';
-import '../../../domain/types/content_type.dart';
-import '../content/content_model.dart';
+import '../../../../global/domain/enums/content_type.dart';
+import '../messageRepliedUpon/message_short_model.dart';
 import '../reaction/reaction_model.dart';
 
 part 'message_model.freezed.dart';
@@ -19,7 +19,7 @@ class MessageModel extends MessageEntity with _$MessageModel {
     required String content,
     required ContentType contentType,
     required List<ReactionModel> reactions,
-    @JsonKey(fromJson: ContentModel.fromDynamic) required ContentModel repliedTo,
+    required MessageRepliedUponModel repliedTo,
     required bool pinned,
   }) = _MessageModel;
 

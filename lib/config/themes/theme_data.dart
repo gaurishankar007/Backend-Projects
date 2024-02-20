@@ -1,12 +1,14 @@
 import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-// InputDecoration
+/// <===== TextFormField InputDecoration =====>
+/// Border
 final outlineBorder = OutlineInputBorder(
   borderSide: BorderSide.none,
   borderRadius: BorderRadius.circular(10),
 );
 
+/// Input Decoration
 final inputDecorationTheme = InputDecorationTheme(
   isDense: true,
   filled: true,
@@ -17,10 +19,10 @@ final inputDecorationTheme = InputDecorationTheme(
   disabledBorder: outlineBorder,
 );
 
+/// <===== TextButton Theme Style =====>
 final textButtonTheme = TextButtonThemeData(
   style: TextButton.styleFrom(
     visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-    foregroundColor: kPrimary,
+    foregroundColor: primaryColor,
   ),
 );
-

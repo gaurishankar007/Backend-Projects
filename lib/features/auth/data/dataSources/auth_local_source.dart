@@ -7,38 +7,38 @@ import 'package:isar/isar.dart';
 import '../models/userData/user_data_model.dart';
 
 abstract class AuthLocalSource {
-  FDState<bool> saveUserData(UserDataModel userData);
-  FDState<UserDataModel> getUserData();
+  FutureData<bool> saveUserData(UserDataModel userData);
+  FutureData<UserDataModel> getUserData();
 }
 
-class AuthLocalSourceImpl implements AuthLocalSource {
-  late final Future<Isar> _db;
+class AuthLocalSourceImplementation implements AuthLocalSource {
+  late final Future<Isar> _database;
 
-  AuthLocalSourceImpl() {
-    _db = openIsarDB();
+  AuthLocalSourceImplementation() {
+    _database = openIsarDB();
   }
 
   @override
-  FDState<bool> saveUserData(UserDataModel userData) async {
+  FutureData<bool> saveUserData(UserDataModel userData) async {
     return await exceptionHandler(() async {
-      final userDataC = UserDataC.fromModel(userData);
-      final isar = await _db;
-      isar.writeTxnSync(() => isar.userDataCs.putSync(userDataC));
-      return const SuccessState(data: true);
+      final userDataC = UserDataCollection.fromModel(userData);
+      final isar = await _database;
+      isar.writeTxnSync(() => isar.userDataCollections.putSync(userDataC));
+      return const DataSuccessSate(data: true);
     });
   }
 
   @override
-  FDState<UserDataModel> getUserData() async {
+  FutureData<UserDataModel> getUserData() async {
     return await exceptionHandler(() async {
-      final isar = await _db;
-      UserDataC? userDataC = await isar.userDataCs.where().findFirst();
+      final isar = await _database;
+      UserDataCollection? userDataC = await isar.userDataCollections.where().findFirst();
       if (userDataC != null) {
         UserDataModel userData = userDataC.toModel();
-        return SuccessState(data: userData);
+        return DataSuccessSate(data: userData);
       }
 
-      return const FailureState<UserDataModel>();
+      return const DataFailureSate<UserDataModel>();
     });
   }
 }
