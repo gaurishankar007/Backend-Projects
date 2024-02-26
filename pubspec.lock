@@ -414,6 +414,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_sliding_drawer:
+    dependency: "direct main"
+    description:
+      name: flutter_sliding_drawer
+      sha256: b81fdf1a5c2c997bb0aac3fc1f626d98f03c1a058f18aa6d7d70e99ed1626953
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

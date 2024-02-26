@@ -39,13 +39,14 @@ class ErrorData {
 
 enum ErrorType {
   unknown,
+  typeError,
+  formatException,
   dioException,
   isarException,
-  formatException,
   noNetwork,
   socketTimeOut,
-  tokenExpired,
   invalidUserCredential,
-  server,
+  tokenExpired,
   badRequest,
+  server,
 }

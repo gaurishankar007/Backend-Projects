@@ -21,7 +21,7 @@ class _ChatsState extends State<Chats> {
             Expanded(
               child: ListView.separated(
                 itemCount: 5,
-                separatorBuilder: (context, index) => SizedBox(height: 10.pHeight),
+                separatorBuilder: (context, index) => SizedBox(height: 10.propHeight),
                 itemBuilder: (context, index) {
                   return Container();
                 },

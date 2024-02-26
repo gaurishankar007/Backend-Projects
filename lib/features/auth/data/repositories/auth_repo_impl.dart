@@ -10,8 +10,8 @@ import '../dataSources/auth_local_source.dart';
 import '../models/user/user_model.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  final AuthRemoteSourceImplementation remote;
-  final AuthLocalSourceImplementation local;
+  final AuthRemoteSource remote;
+  final AuthLocalSource local;
 
   AuthRepositoryImplementation({required this.remote, required this.local});
 

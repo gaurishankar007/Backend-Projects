@@ -29,7 +29,7 @@ class CustomTextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double newHeight = height ?? 70.pHeight;
+    double newHeight = height ?? 60.pHConstraint(max: 60, min: 50);
 
     Widget child = SizedBox(
       height: newHeight,
@@ -50,7 +50,7 @@ class CustomTextForm extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(title!, style: titleStyle ?? xLargeSemibold()),
-        SizedBox(height: 15.pHeight),
+        SizedBox(height: 15.propHeight),
         child,
       ],
     );

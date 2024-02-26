@@ -1,28 +1,42 @@
 import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
+/// <===== AppBarTheme =====>
+AppBarTheme get appBarTheme => const AppBarTheme(
+      elevation: 0,
+      color: Colors.transparent,
+    );
+
 /// <===== TextFormField InputDecoration =====>
 /// Border
-final outlineBorder = OutlineInputBorder(
-  borderSide: BorderSide.none,
-  borderRadius: BorderRadius.circular(10),
-);
+OutlineInputBorder get outlineBorder => OutlineInputBorder(
+      borderSide: BorderSide.none,
+      borderRadius: BorderRadius.circular(10),
+    );
 
 /// Input Decoration
-final inputDecorationTheme = InputDecorationTheme(
-  isDense: true,
-  filled: true,
-  enabledBorder: outlineBorder,
-  focusedBorder: outlineBorder,
-  errorBorder: outlineBorder,
-  focusedErrorBorder: outlineBorder,
-  disabledBorder: outlineBorder,
-);
+InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
+      filled: true,
+      enabledBorder: outlineBorder,
+      focusedBorder: outlineBorder,
+      errorBorder: outlineBorder,
+      focusedErrorBorder: outlineBorder,
+      disabledBorder: outlineBorder,
+    );
 
 /// <===== TextButton Theme Style =====>
-final textButtonTheme = TextButtonThemeData(
-  style: TextButton.styleFrom(
-    visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-    foregroundColor: primaryColor,
-  ),
-);
+TextButtonThemeData get textButtonTheme => TextButtonThemeData(
+      style: TextButton.styleFrom(
+        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+        foregroundColor: kPrimary,
+      ),
+    );
+
+/// <===== TextButton Theme Style =====>
+IconButtonThemeData get iconButtonTheme => IconButtonThemeData(
+      style: IconButton.styleFrom(
+        padding: EdgeInsets.zero,
+        visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+        splashFactory: NoSplash.splashFactory,
+      ),
+    );

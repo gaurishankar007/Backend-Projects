@@ -14,7 +14,11 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   toggleTheme() => emit(state.toggle);
 
-  /// Get color according to the theme mode
-  Color themeColor({Color? light, dark}) =>
-      state.themeMode == ThemeMode.light ? light ?? blackColor : dark ?? whiteColor;
+  /// Get surface color according to the theme mode
+  Color surfaceColor({Color? light, dark}) =>
+      state.themeMode == ThemeMode.light ? light ?? kWhite : dark ?? kBlack;
+
+  /// Get color of the item lying upon surface according to the theme mode
+  Color onSurfaceColor({Color? light, dark}) =>
+      state.themeMode == ThemeMode.light ? light ?? kBlack : dark ?? kWhite;
 }

@@ -13,6 +13,7 @@ class AppData {
 
   Future<void> initialize() async {
     initializeDependencies();
+
     await network.checkConnection();
     await _authenticate();
   }

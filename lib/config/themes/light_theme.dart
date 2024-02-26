@@ -2,30 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 
 import '../../core/constants/colors.dart';
+import '../../core/utils/text_styles.dart';
 import 'theme_data.dart';
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-  scaffoldBackgroundColor: whiteColor,
+  colorScheme: ColorScheme.fromSeed(seedColor: kPrimary),
+  scaffoldBackgroundColor: kWhite,
   useMaterial3: false,
-  appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
-  inputDecorationTheme: inputDecorationTheme.copyWith(
-    fillColor: textFormFillLightColor,
-    hintStyle: TextStyle(color: textFormHintTextLightColor),
-  ),
-  textButtonTheme: textButtonTheme,
-  iconButtonTheme: IconButtonThemeData(
-    style: IconButton.styleFrom(
-      foregroundColor: blackColor,
-      padding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+  appBarTheme: appBarTheme.copyWith(
+    titleTextStyle: largeMedium(kBlack),
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: kWhite,
     ),
   ),
+  inputDecorationTheme: inputDecorationTheme.copyWith(
+    fillColor: kFormFillLight,
+    hintStyle: TextStyle(color: kFormHintLight),
+  ),
+  textButtonTheme: textButtonTheme,
+  iconButtonTheme: iconButtonTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: elevatedButtonBackgroundLightColor,
-      foregroundColor: blackColor,
+      backgroundColor: kButtonLight,
+      foregroundColor: kBlack,
       splashFactory: NoSplash.splashFactory,
       surfaceTintColor: Colors.transparent,
     ),

@@ -1,3 +1,5 @@
+import 'package:chat/core/utils/text_styles.dart';
+
 import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
@@ -6,28 +8,29 @@ import 'theme_data.dart';
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: primaryColor,
+    seedColor: kPrimary,
     brightness: Brightness.dark,
   ),
-  scaffoldBackgroundColor: blackColor,
+  scaffoldBackgroundColor: kBlack,
   useMaterial3: false,
-  appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
-  inputDecorationTheme: inputDecorationTheme.copyWith(
-    fillColor: textFormFillDarkColor,
-    hintStyle: TextStyle(color: textFormHintTextDarkColor),
-  ),
-  textButtonTheme: textButtonTheme,
-  iconButtonTheme: IconButtonThemeData(
-    style: IconButton.styleFrom(
-      foregroundColor: whiteColor,
-      padding: EdgeInsets.zero,
-      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+  appBarTheme: appBarTheme.copyWith(
+    titleTextStyle: largeMedium(kWhite),
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: kBlack,
     ),
   ),
+  inputDecorationTheme: inputDecorationTheme.copyWith(
+    fillColor: kFormFillDark,
+    hintStyle: TextStyle(color: kFormHintDark),
+  ),
+  textButtonTheme: textButtonTheme,
+  iconButtonTheme: iconButtonTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: elevatedButtonBackgroundDarkColor,
-      foregroundColor: whiteColor,
+      backgroundColor: kButtonDark,
+      foregroundColor: kWhite,
       splashFactory: NoSplash.splashFactory,
     ),
   ),

@@ -41,11 +41,11 @@ class ImageBuilder extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              border: Border.all(color: themeCubit.themeColor()),
+              border: Border.all(color: themeCubit.onSurfaceColor()),
               borderRadius: borderRadius,
               shape: circular ? BoxShape.circle : BoxShape.rectangle,
             ),
-            child: Icon(Icons.error, color: errorColor, size: 12),
+            child: Icon(Icons.error, color: kError, size: 12),
           );
         },
       );

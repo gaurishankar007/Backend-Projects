@@ -66,14 +66,14 @@ class CustomElevatedButton extends StatelessWidget {
 
     Widget loadingChild = Center(
       child: SizedBox(
-        height: 25.pHeight,
-        width: 25.pHeight,
-        child: psLoading(foregroundColor ?? themeCubit.themeColor()),
+        height: 25.propHeight,
+        width: 25.propHeight,
+        child: psLoading(foregroundColor ?? themeCubit.onSurfaceColor()),
       ),
     );
 
     return SizedBox(
-      height: height ?? 70.pHeight,
+      height: height ?? 60.pHConstraint(max: 60, min: 50),
       width: expandWidth ? width ?? double.maxFinite : null,
       child: StatefulBuilder(
         builder: (context, setState) {

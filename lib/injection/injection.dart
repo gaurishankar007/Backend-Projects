@@ -15,6 +15,8 @@ initializeDependencies() {
   getIt.registerLazySingleton<AuthLocalSource>(() => AuthLocalSourceImplementation());
 
   // RepoImpl
-  getIt.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImplementation(remote: getIt(), local: getIt()));
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImplementation(
+        remote: getIt<AuthRemoteSource>(),
+        local: getIt<AuthLocalSource>(),
+      ));
 }

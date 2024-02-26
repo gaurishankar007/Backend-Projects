@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:isar/isar.dart';
 import '../resources/data_state.dart';
 
-FutureData<T> exceptionHandler<T>(Future Function() callBack) async {
+FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorData}) async {
   try {
     return await callBack();
   } on DioException catch (error) {
@@ -24,20 +24,33 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack) async {
       message: "Server request failed",
       type: ErrorType.dioException,
     );
-
     return DataFailureSate<T>(error: errorData);
   } on IsarError catch (error) {
-    final errorString = error.toString();
-    debugPrint(errorString);
-    return DataFailureSate<T>(error: ErrorData(error: errorString, type: ErrorType.isarException));
+    debugPrint(error.toString());
+    final errorData = ErrorData(
+      error: error.toString(),
+      message: "Local database error",
+      type: ErrorType.isarException,
+    );
+    return DataFailureSate<T>(error: errorData);
+  } on TypeError catch (error) {
+    debugPrint(error.toString());
+    final errorData = ErrorData(
+      error: error.toString(),
+      message: "Unsupported data type is assigned",
+      type: ErrorType.typeError,
+    );
+    return DataFailureSate<T>(error: errorData);
   } on FormatException catch (error) {
-    final errorString = error.toString();
-    debugPrint(errorString);
-    return DataFailureSate<T>(
-        error: ErrorData(error: errorString, type: ErrorType.formatException));
+    debugPrint(error.toString());
+    final errorData = ErrorData(
+      error: error.toString(),
+      message: "Operation on unsupported data format",
+      type: ErrorType.formatException,
+    );
+    return DataFailureSate<T>(error: errorData);
   } catch (error) {
-    final errorString = error.toString();
-    debugPrint(errorString);
-    return DataFailureSate<T>(error: ErrorData(error: errorString));
+    debugPrint(error.toString());
+    return DataFailureSate<T>(error: errorData ?? ErrorData(error: error.toString()));
   }
 }

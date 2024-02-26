@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart' show Color, Colors;
 
-Color get whiteColor => Colors.white;
-Color get blackColor => Colors.black;
+Color get kWhite => Colors.white;
+Color get kBlack => Colors.black;
 
-// TextForm
-Color get textFormFillLightColor => const Color(0XFFF5F5F5);
-Color get textFormFillDarkColor => const Color(0XFF2F2F2F);
-Color get textFormHintTextLightColor => const Color(0XFF7B7B7B);
-Color get textFormHintTextDarkColor => const Color(0XFF888888);
+/// <===== Drawer =====>
+// Background Color
+Color get kDrawerLight => const Color(0XFFF5F5F5);
+Color get kDrawerDark => const Color(0XFF303030);
 
-// Elevated Button
-Color get elevatedButtonBackgroundLightColor => const Color(0XFFF5F5F5);
-Color get elevatedButtonBackgroundDarkColor => const Color(0XFF4B4B4B);
+/// <===== TextForm =====>
+// Fill Color
+Color get kFormFillLight => const Color(0XFFF5F5F5);
+Color get kFormFillDark => const Color(0XFF2F2F2F);
+// Hint Text Color
+Color get kFormHintLight => const Color(0XFF7B7B7B);
+Color get kFormHintDark => const Color(0XFF888888);
 
-// Popup
-Color get popUpLightColor => Colors.white;
-Color get popUpDarkColor => const Color(0XFF222222);
+/// <===== Button =====>
+/// Background Color
+Color get kButtonLight => const Color(0XFFF5F5F5);
+Color get kButtonDark => const Color(0XFF4B4B4B);
+Color get kButtonContainerDark => const Color(0XFF575757);
+Color get kOnButtonContainerDark => const Color(0XFF767676);
+Color get kButtonContainerLight => const Color(0XFFECECEC);
+Color get kOnButtonContainerLight => const Color(0XFFDFDFDF);
 
-Color get primaryColor => Colors.indigo;
-Color get errorColor => const Color(0XFFD92D20);
+/// <===== Popup =====>
+// Background Color
+Color get kPopUpLight => Colors.white;
+Color get kPopUpDark => const Color(0XFF222222);
+
+/// <===== Color Schemes =====>
+Color get kPrimary => Colors.indigo;
+Color get kError => const Color(0XFFD92D20);

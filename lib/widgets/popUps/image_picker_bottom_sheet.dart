@@ -14,7 +14,7 @@ imagePickerBottomSheet(BuildContext context, {required Function(String path) onI
       return Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: themeCubit.themeColor(light: popUpLightColor, dark: popUpDarkColor),
+          color: themeCubit.onSurfaceColor(light: kPopUpLight, dark: kPopUpDark),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
