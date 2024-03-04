@@ -55,17 +55,11 @@ class _SignInState extends State<SignIn> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(
-                top: 40.propHeight,
-                bottom: 25.propHeight,
-              ),
+              margin: EdgeInsets.only(top: 40.propHeight, bottom: 25.propHeight),
               child: Text("Sign in with your email", style: x3LargeSemibold()),
             ),
             Container(
-              margin: EdgeInsets.only(
-                top: 5.propHeight,
-                bottom: 30.propHeight,
-              ),
+              margin: EdgeInsets.only(top: 5.propHeight, bottom: 30.propHeight),
               child: ErrorTextNotifier(errorNotifier: errorNotifier),
             ),
             ListView(
@@ -110,7 +104,7 @@ class _SignInState extends State<SignIn> {
                         final dataState = await signInUseCase.call(parameter);
 
                         if (dataState is DataSuccessSate) {
-                          appData.setUserData = dataState.data!;
+                          appData.userData = dataState.data!;
                           return replaceToDashboard();
                         }
 

@@ -5,7 +5,7 @@ Color get kBlack => Colors.black;
 
 /// <===== Drawer =====>
 // Background Color
-Color get kDrawerLight => const Color(0XFFF5F5F5);
+Color get kDrawerLight => kWhite;
 Color get kDrawerDark => const Color(0XFF303030);
 
 /// <===== TextForm =====>
@@ -22,8 +22,8 @@ Color get kButtonLight => const Color(0XFFF5F5F5);
 Color get kButtonDark => const Color(0XFF4B4B4B);
 Color get kButtonContainerDark => const Color(0XFF575757);
 Color get kOnButtonContainerDark => const Color(0XFF767676);
-Color get kButtonContainerLight => const Color(0XFFECECEC);
-Color get kOnButtonContainerLight => const Color(0XFFDFDFDF);
+Color get kButtonContainerLight => const Color(0XFFF5F5F5);
+Color get kOnButtonContainerLight => const Color(0XFFEBEBEB);
 
 /// <===== Popup =====>
 // Background Color

@@ -6,9 +6,12 @@ extension IntegerExtension on int {
   double get hPercentage => screenSize.heightPercentage(toDouble());
   double get wPercentage => screenSize.widthPercentage(toDouble());
 
-  double pHConstraint({double? min,double? max}) =>
+  double hPConstraint({double? min, double? max}) =>
+      screenSize.heightPercentageWithConstraints(toDouble(), min: min, max: max);
+  double wPConstraint({double? min, double? max}) =>
+      screenSize.widthPercentageWithConstraints(toDouble(), min: min, max: max);
+  double pHConstraint({double? min, double? max}) =>
       screenSize.proportionateHeightWithConstraints(toDouble(), min: min, max: max);
-
-  double pWConstraint({double? min,double? max}) =>
+  double pWConstraint({double? min, double? max}) =>
       screenSize.proportionateWidthWithConstraints(toDouble(), min: min, max: max);
 }

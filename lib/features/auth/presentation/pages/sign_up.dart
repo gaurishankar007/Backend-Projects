@@ -25,6 +25,7 @@ class SignUp extends StatelessWidget {
   final confirmPStreamController = BehaviorSubject<String>();
 
   final ValueNotifier<String> errorNotifier = ValueNotifier<String>("");
+  final String confirmPasswordError = "Password did not matched with confirm password";
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +113,13 @@ class SignUp extends StatelessWidget {
   }
 
   signUp({required String name, email, password, confirmP}) async {
-    if (password != confirmP) {
-      return errorNotifier.value = "Password did not matched with confirm password";
-    }
+    if (password != confirmP) return errorNotifier.value = confirmPasswordError;
 
     errorNotifier.value = "";
     final parameter = SignUpParameter(name: name, email: email, password: password);
-    final dataState = await signUpUC.call(parameter);
+    final dataState = await signUpUseCase.call(parameter);
     if (dataState is DataSuccessSate) {
-      appData.setUserData = dataState.data!;
+      appData.userData = dataState.data!;
       return pushName(kUpdateProfilePath);
     }
 

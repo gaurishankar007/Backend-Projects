@@ -7,18 +7,18 @@ import '../../../../core/constants/colors.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeState.system());
+  ThemeCubit() : super(ThemeState.dark());
   // {
   //   platformDispatcher.onPlatformBrightnessChanged = listenPB;
   // }
 
   toggleTheme() => emit(state.toggle);
 
-  /// Get surface color according to the theme mode
+  /// Get background color according to the theme mode
   Color surfaceColor({Color? light, dark}) =>
       state.themeMode == ThemeMode.light ? light ?? kWhite : dark ?? kBlack;
 
-  /// Get color of the item lying upon surface according to the theme mode
+  /// Get color of the item lying upon background according to the theme mode
   Color onSurfaceColor({Color? light, dark}) =>
       state.themeMode == ThemeMode.light ? light ?? kBlack : dark ?? kWhite;
 }

@@ -1,6 +1,5 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BoxConstraints;
+import 'package:chat/injection/injector.dart';
 
 class ScreenSize {
   double _height = 0;
@@ -15,9 +14,7 @@ class ScreenSize {
     _height = constraints.maxHeight;
     _width = constraints.maxWidth;
 
-    final FlutterView flutterView = WidgetsBinding.instance.platformDispatcher.views.first;
-    final shortestSide = flutterView.physicalSize.shortestSide / flutterView.devicePixelRatio;
-    _isTablet = shortestSide > 600;
+    _isTablet = appData.isTablet;
   }
 
   double get height => _height;
@@ -36,21 +33,34 @@ class ScreenSize {
   /// proportionate width of the screen according the width of the Design (Figma)
   double proportionateWidth(double width) => (width / 430) * _width;
 
+  /// Get the required number
+  double _numberWithinLimitation(double number, {double? min, double? max}) {
+    if (min != null && number < min) return min;
+    if (max != null && number > max) return max;
+    return number;
+  }
+
+  /// Required percentage of height with limitation
+  double heightPercentageWithConstraints(double percentage, {double? min, double? max}) {
+    double height = percentage / 100 * _height;
+    return _numberWithinLimitation(height, min: min, max: max);
+  }
+
+  /// Required percentage of width with limitation
+  double widthPercentageWithConstraints(double percentage, {double? min, double? max}) {
+    double width = percentage / 100 * _width;
+    return _numberWithinLimitation(width, min: min, max: max);
+  }
+
   /// proportionate height with limitation
   double proportionateHeightWithConstraints(double height, {double? min, double? max}) {
     double newHeight = proportionateHeight(height);
-
-    if (min != null && newHeight < min) return min;
-    if (max != null && newHeight > max) return max;
-    return newHeight;
+    return _numberWithinLimitation(newHeight, min: min, max: max);
   }
 
   /// proportionate width with limitation
   double proportionateWidthWithConstraints(double width, {double? min, double? max}) {
     double newWidth = proportionateWidth(width);
-
-    if (min != null && newWidth < min) return min;
-    if (max != null && newWidth > max) return max;
-    return newWidth;
+    return _numberWithinLimitation(newWidth, min: min, max: max);
   }
 }

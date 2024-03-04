@@ -62,7 +62,7 @@ class UpdateProfile extends StatelessWidget {
                       imageProvider: const AssetImage("assets/images/user.png"),
                     );
                   }
-        
+
                   return ImageBuilder(
                     height: 50.wPercentage,
                     width: 50.wPercentage,
@@ -80,16 +80,16 @@ class UpdateProfile extends StatelessWidget {
                   if (imagePathNotifier.value.isEmpty) {
                     return errorNotifier.value = "Select an image";
                   }
-        
+
                   errorNotifier.value = "";
                   final dataState = await updateProfileUseCase.call(imagePathNotifier.value);
-        
+
                   if (dataState is DataSuccessSate) {
-                    appData.setUserData = appData.userData.copyWith(user: dataState.data!);
+                    appData.userData = appData.userData.copyWith(user: dataState.data!);
                     saveUserDataUseCase.call(appData.userData);
                     return replaceToDashboard();
                   }
-        
+
                   errorNotifier.value = dataState.error!.message;
                 },
                 text: "Update",

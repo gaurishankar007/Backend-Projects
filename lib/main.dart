@@ -20,11 +20,8 @@ class ChatApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         screenSize.init(constraints);
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => themeCubit),
-            BlocProvider(create: (_) => authCubit),
-          ],
+        return BlocProvider(
+          create: (_) => themeCubit,
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp.router(

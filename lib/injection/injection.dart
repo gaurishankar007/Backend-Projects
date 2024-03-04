@@ -8,7 +8,6 @@ initializeDependencies() {
 
   // Bloc
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
-  getIt.registerLazySingleton<AuthCubit>(() => AuthCubit());
 
   // DataSources
   getIt.registerLazySingleton<AuthRemoteSource>(() => AuthRemoteSourceImplementation(dio: getIt()));

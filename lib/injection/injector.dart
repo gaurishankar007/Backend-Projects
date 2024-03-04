@@ -5,7 +5,6 @@ import '../features/auth/data/dataSources/auth_local_source.dart';
 import '../features/auth/data/dataSources/auth_remote_source.dart';
 import '../features/auth/data/repositories/auth_repo_impl.dart';
 import '../features/auth/domain/repositories/auth_repo.dart';
-import '../features/auth/presentation/cubit/auth_cubit.dart';
 
 import '../app_data.dart';
 import '../config/routes/routes.dart';

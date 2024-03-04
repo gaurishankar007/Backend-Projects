@@ -17,10 +17,11 @@ class DrawerNavigationItem extends StatelessWidget {
     required this.navigationItem,
   });
 
-  final iconContainerColor = themeCubit.onSurfaceColor(
+  final Color iconContainerColor = themeCubit.onSurfaceColor(
     light: kOnButtonContainerLight,
     dark: kOnButtonContainerDark,
   );
+  final double iconContainerSize = 40.pWConstraint(max: 45, min: 38);
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +29,21 @@ class DrawerNavigationItem extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(border15),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
+            height: iconContainerSize,
+            width: iconContainerSize,
             decoration: BoxDecoration(
               color: iconContainerColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(border10),
             ),
-            child: Icon(navigationItem.iconData, size: navigatorIconSize),
+            child: Icon(navigationItem.iconData, size: 20),
           ),
-          SizedBox(width: 15.propWidth),
+          SizedBox(width: 15.pWConstraint(max: 15)),
           Text(navigationItem.name, style: largeMedium())
         ],
       ),
