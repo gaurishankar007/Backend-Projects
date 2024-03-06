@@ -9,7 +9,7 @@ userRouter.post("/register", userController.register);
 userRouter.post("/login", userController.login);
 userRouter.post("/refreshToken", userController.refreshToken);
 userRouter.put(
-  "/updateProfilePic",
+  "/updateProfile",
   authMiddleware,
   profileUpload,
   userController.changeProfile

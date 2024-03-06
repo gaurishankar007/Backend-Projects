@@ -38,7 +38,7 @@ const userController = {
 
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
-    const errorMsg = "User credential did not matched";
+    const errorMsg = "User credential did not match";
     if (user === null) return errorRes(res, errorMsg, undefined, 401);
 
     const pWValid = await hashHandler.compare(password, user.password);
@@ -78,7 +78,7 @@ const userController = {
 
     const user = await UserModel.findOneAndUpdate(
       { _id: req.user._id },
-      { profilePic: file.filename }
+      { profile: file.filename }
     );
 
     successRes(res, user);

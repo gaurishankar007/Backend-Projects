@@ -25,7 +25,7 @@ const ChatScheme = new mongoose.Schema(
       },
     ],
     name: { type: String, default: null },
-    profilePic: { type: String, default: null },
+    profile: { type: String, default: null },
     lastMessage: {
       type: mongoose.Types.ObjectId,
       ref: "Message",

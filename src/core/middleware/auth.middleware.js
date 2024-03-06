@@ -1,4 +1,3 @@
-import expressAsyncHandler from "express-async-handler";
 import UserModel from "../../models/user.model.js";
 import { errorRes } from "../utils/response.js";
 import tokenHandler from "../utils/token.handler.js";

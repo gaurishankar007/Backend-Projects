@@ -1,4 +1,4 @@
-const socketFunc = (socket) => {
+const socketFunction = (socket) => {
   socket.on("setup", (userData) => {
     const userId = userData.userId;
     const friends = userData.friends;
@@ -37,4 +37,4 @@ const socketFunc = (socket) => {
   });
 };
 
-export default socketFunc;
+export default socketFunction;

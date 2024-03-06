@@ -3,7 +3,6 @@ import { errorRes, successRes } from "../core/utils/response.js";
 import ChatModel from "../models/chat.model.js";
 import chatVdr from "../core/validators/chat.validator.js";
 import "../models/message.model.js";
-import MessageModel from "../models/message.model.js";
 
 const chatController = {
   create: asyncHandler(async (req, res) => {

@@ -28,7 +28,7 @@ const profileMulter = multer({
   storage: storage,
   fileFilter: filter,
   limits: { fileSize: 10 * 1e6 },
-}).single("profilePic");
+}).single("profile");
 
 const profileUpload = (req, res, next) =>
   profileMulter(req, res, (error) => {
