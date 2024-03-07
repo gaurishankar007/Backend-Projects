@@ -1,11 +1,10 @@
-import 'package:chat/core/constants/constant.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/colors.dart';
-import '../../../../core/extensions/int_extension.dart';
-import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
-import '../../data/models/drawer_navigation_entity.dart';
+import '../../../../../core/constants/constant.dart';
+import '../../../../../core/extensions/context_extension.dart';
+import '../../../../../core/extensions/int_extension.dart';
+import '../../../../../core/utils/text_styles.dart';
+import '../../../data/models/drawer_navigation_model.dart';
 
 class DrawerNavigationItem extends StatelessWidget {
   final Color backgroundColor;
@@ -17,16 +16,15 @@ class DrawerNavigationItem extends StatelessWidget {
     required this.navigationItem,
   });
 
-  final Color iconContainerColor = themeCubit.onSurfaceColor(
-    light: kOnButtonContainerLight,
-    dark: kOnButtonContainerDark,
-  );
   final double iconContainerSize = 40.pWConstraint(max: 45, min: 38);
 
   @override
   Widget build(BuildContext context) {
+    final Color iconContainerColor =
+        context.surfaceColor(light: const Color(0XFFEBEBEB), dark: const Color(0XFF767676));
+
     return Ink(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(padding10),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(border15),
@@ -34,7 +32,7 @@ class DrawerNavigationItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(padding8),
             height: iconContainerSize,
             width: iconContainerSize,
             decoration: BoxDecoration(

@@ -2,23 +2,33 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/colors.dart';
+import '../../../../core/services/user_service.dart';
+import '../../../../injection/injector.dart';
 
 part 'theme_state.dart';
 
-class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeState.dark());
-  // {
-  //   platformDispatcher.onPlatformBrightnessChanged = listenPB;
-  // }
+class ThemeCubit extends Cubit<ThemeState> with ThemeModeFromValue {
+  final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
 
-  toggleTheme() => emit(state.toggle);
+  ThemeCubit() : super(ThemeState(userService.themeMode)) {
+    final bool enable = userService.navigationModels.first.value == "System";
+    _platformBrightnessListener(enable: enable);
+  }
 
-  /// Get background color according to the theme mode
-  Color surfaceColor({Color? light, dark}) =>
-      state.themeMode == ThemeMode.light ? light ?? kWhite : dark ?? kBlack;
+  changeTheme(String darkMode) {
+    final themeMode = getThemeMode(darkMode);
+    emit(ThemeState(themeMode));
 
-  /// Get color of the item lying upon background according to the theme mode
-  Color onSurfaceColor({Color? light, dark}) =>
-      state.themeMode == ThemeMode.light ? light ?? kBlack : dark ?? kWhite;
+    _platformBrightnessListener(enable: darkMode == "System");
+  }
+
+  _platformBrightnessListener({bool enable = true}) {
+    platformDispatcher.onPlatformBrightnessChanged = enable ? _applySystemBrightness : () {};
+  }
+
+  _applySystemBrightness() {
+    final bool light = platformDispatcher.platformBrightness == Brightness.light;
+    if (light) return emit(ThemeState.light());
+    emit(ThemeState.dark());
+  }
 }

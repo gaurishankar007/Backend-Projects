@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/constants/constant.dart';
-import '../../../../core/utils/navigator.dart';
-import '../../domain/parameters/sign_up_param.dart';
 import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
+import '../../../../injection/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/custom_text_form.dart';
-import '../../../../injection/injector.dart';
+import '../../domain/parameters/sign_up_param.dart';
 import '../../injection/auth_injector.dart';
 import '../widgets/error_text_notifier.dart';
 
@@ -41,7 +40,7 @@ class SignUp extends StatelessWidget {
             SizedBox(height: 30.propHeight),
             ListView(
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: dynamicHorizontalPadding),
+              padding: EdgeInsets.symmetric(horizontal: screen.dynamicHorizontalPadding),
               children: [
                 CustomTextForm(
                   onChanged: (value) => nameStreamController.sink.add(value ?? ""),
@@ -119,7 +118,7 @@ class SignUp extends StatelessWidget {
     final parameter = SignUpParameter(name: name, email: email, password: password);
     final dataState = await signUpUseCase.call(parameter);
     if (dataState is DataSuccessSate) {
-      appData.userData = dataState.data!;
+      userService.userData = dataState.data!;
       return pushName(kUpdateProfilePath);
     }
 

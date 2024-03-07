@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-CustomRoute slideTransitionRoute({
+import '../../core/constants/constant.dart';
+
+CustomRoute slidingRoute({
   required PageInfo<dynamic> page,
   required String? path,
   required AxisDirection direction,
@@ -29,7 +31,7 @@ CustomRoute slideTransitionRoute({
   return CustomRoute(
     page: page,
     path: path,
-    durationInMilliseconds: 500,
+    durationInMilliseconds: pageTransitionDuration.inMilliseconds,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return SlideTransition(
         position: Tween<Offset>(

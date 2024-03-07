@@ -1,4 +1,6 @@
 typedef FutureData<T> = Future<DataState<T>>;
+typedef FutureList<T> = Future<DataState<List<T>>>;
+typedef FutureBool = Future<DataState<bool>>;
 
 abstract class DataState<T> {
   final T? data;

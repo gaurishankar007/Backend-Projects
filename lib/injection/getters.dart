@@ -1,13 +1,15 @@
 part of "injector.dart";
 
-AppData get appData => AppData();
+AppInitializer get appData => AppInitializer();
 NetworkConnection get network => NetworkConnection();
-ScreenSize get screenSize => ScreenSize();
+UserService get userService => UserService();
+ScreenSize get screen => ScreenSize();
 AppRouter get appRouter => getIt<AppRouter>();
 Dio get dio => getIt<Dio>();
 
 /// Bloc
 ThemeCubit get themeCubit => getIt<ThemeCubit>();
+SettingCubit get settingCubit => getIt<SettingCubit>();
 
 /// Repository Implementation
 AuthRepository get authRepositoryImplementation => getIt<AuthRepository>();

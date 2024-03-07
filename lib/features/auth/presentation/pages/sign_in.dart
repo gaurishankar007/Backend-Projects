@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/constants/constant.dart';
-import '../../domain/parameters/sign_in_param.dart';
-import '../../../../core/resources/data_state.dart';
-import '../../../../injection/injector.dart';
+import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
+import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../core/constants/routes_data.dart';
+import '../../../../injection/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
-import '../../../../widgets/custom_text_form.dart';
 import '../../../../widgets/buttons/custom_text_button.dart';
+import '../../../../widgets/custom_text_form.dart';
+import '../../domain/parameters/sign_in_param.dart';
 import '../../injection/auth_injector.dart';
 import '../widgets/error_text_notifier.dart';
 
@@ -64,7 +63,7 @@ class _SignInState extends State<SignIn> {
             ),
             ListView(
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: dynamicHorizontalPadding),
+              padding: EdgeInsets.symmetric(horizontal: screen.dynamicHorizontalPadding),
               children: [
                 CustomTextForm(
                   keyboardType: TextInputType.emailAddress,
@@ -104,7 +103,7 @@ class _SignInState extends State<SignIn> {
                         final dataState = await signInUseCase.call(parameter);
 
                         if (dataState is DataSuccessSate) {
-                          appData.userData = dataState.data!;
+                          userService.userData = dataState.data!;
                           return replaceToDashboard();
                         }
 

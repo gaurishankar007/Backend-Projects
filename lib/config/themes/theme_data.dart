@@ -1,5 +1,14 @@
-import '../../core/constants/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/constants/colors.dart';
+
+/// <===== Color Schemes =====>
+ColorScheme colorScheme({bool dark = false}) {
+  return ColorScheme.fromSeed(
+    brightness: dark ? Brightness.dark : Brightness.light,
+    seedColor: primaryColor,
+  );
+}
 
 /// <===== AppBarTheme =====>
 AppBarTheme get appBarTheme => const AppBarTheme(
@@ -28,7 +37,7 @@ InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
 TextButtonThemeData get textButtonTheme => TextButtonThemeData(
       style: TextButton.styleFrom(
         visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-        foregroundColor: kPrimary,
+        foregroundColor: primaryColor,
       ),
     );
 
@@ -39,4 +48,10 @@ IconButtonThemeData get iconButtonTheme => IconButtonThemeData(
         visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
         splashFactory: NoSplash.splashFactory,
       ),
+    );
+
+/// <===== ListTile Theme Style =====>
+ListTileThemeData get listTileTheme => const ListTileThemeData(
+      contentPadding: EdgeInsets.zero,
+      visualDensity: VisualDensity(horizontal: -4, vertical: -4),
     );

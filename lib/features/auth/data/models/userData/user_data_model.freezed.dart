@@ -23,8 +23,6 @@ mixin _$UserDataModel {
   UserModel get user => throw _privateConstructorUsedError;
   String get accessToken => throw _privateConstructorUsedError;
   String get refreshToken => throw _privateConstructorUsedError;
-  @JsonKey(includeFromJson: false)
-  ThemeStyle get themeStyle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +36,7 @@ abstract class $UserDataModelCopyWith<$Res> {
           UserDataModel value, $Res Function(UserDataModel) then) =
       _$UserDataModelCopyWithImpl<$Res, UserDataModel>;
   @useResult
-  $Res call(
-      {UserModel user,
-      String accessToken,
-      String refreshToken,
-      @JsonKey(includeFromJson: false) ThemeStyle themeStyle});
+  $Res call({UserModel user, String accessToken, String refreshToken});
 
   $UserModelCopyWith<$Res> get user;
 }
@@ -63,7 +57,6 @@ class _$UserDataModelCopyWithImpl<$Res, $Val extends UserDataModel>
     Object? user = null,
     Object? accessToken = null,
     Object? refreshToken = null,
-    Object? themeStyle = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -78,10 +71,6 @@ class _$UserDataModelCopyWithImpl<$Res, $Val extends UserDataModel>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
-      themeStyle: null == themeStyle
-          ? _value.themeStyle
-          : themeStyle // ignore: cast_nullable_to_non_nullable
-              as ThemeStyle,
     ) as $Val);
   }
 
@@ -102,11 +91,7 @@ abstract class _$$UserDataModelImplCopyWith<$Res>
       __$$UserDataModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {UserModel user,
-      String accessToken,
-      String refreshToken,
-      @JsonKey(includeFromJson: false) ThemeStyle themeStyle});
+  $Res call({UserModel user, String accessToken, String refreshToken});
 
   @override
   $UserModelCopyWith<$Res> get user;
@@ -126,7 +111,6 @@ class __$$UserDataModelImplCopyWithImpl<$Res>
     Object? user = null,
     Object? accessToken = null,
     Object? refreshToken = null,
-    Object? themeStyle = null,
   }) {
     return _then(_$UserDataModelImpl(
       user: null == user
@@ -141,10 +125,6 @@ class __$$UserDataModelImplCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
-      themeStyle: null == themeStyle
-          ? _value.themeStyle
-          : themeStyle // ignore: cast_nullable_to_non_nullable
-              as ThemeStyle,
     ));
   }
 }
@@ -155,8 +135,7 @@ class _$UserDataModelImpl implements _UserDataModel {
   const _$UserDataModelImpl(
       {required this.user,
       required this.accessToken,
-      required this.refreshToken,
-      @JsonKey(includeFromJson: false) this.themeStyle = ThemeStyle.system});
+      required this.refreshToken});
 
   factory _$UserDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDataModelImplFromJson(json);
@@ -167,13 +146,10 @@ class _$UserDataModelImpl implements _UserDataModel {
   final String accessToken;
   @override
   final String refreshToken;
-  @override
-  @JsonKey(includeFromJson: false)
-  final ThemeStyle themeStyle;
 
   @override
   String toString() {
-    return 'UserDataModel(user: $user, accessToken: $accessToken, refreshToken: $refreshToken, themeStyle: $themeStyle)';
+    return 'UserDataModel(user: $user, accessToken: $accessToken, refreshToken: $refreshToken)';
   }
 
   @override
@@ -185,15 +161,12 @@ class _$UserDataModelImpl implements _UserDataModel {
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
-            (identical(other.themeStyle, themeStyle) ||
-                other.themeStyle == themeStyle));
+                other.refreshToken == refreshToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, user, accessToken, refreshToken, themeStyle);
+  int get hashCode => Object.hash(runtimeType, user, accessToken, refreshToken);
 
   @JsonKey(ignore: true)
   @override
@@ -211,11 +184,9 @@ class _$UserDataModelImpl implements _UserDataModel {
 
 abstract class _UserDataModel implements UserDataModel {
   const factory _UserDataModel(
-          {required final UserModel user,
-          required final String accessToken,
-          required final String refreshToken,
-          @JsonKey(includeFromJson: false) final ThemeStyle themeStyle}) =
-      _$UserDataModelImpl;
+      {required final UserModel user,
+      required final String accessToken,
+      required final String refreshToken}) = _$UserDataModelImpl;
 
   factory _UserDataModel.fromJson(Map<String, dynamic> json) =
       _$UserDataModelImpl.fromJson;
@@ -226,9 +197,6 @@ abstract class _UserDataModel implements UserDataModel {
   String get accessToken;
   @override
   String get refreshToken;
-  @override
-  @JsonKey(includeFromJson: false)
-  ThemeStyle get themeStyle;
   @override
   @JsonKey(ignore: true)
   _$$UserDataModelImplCopyWith<_$UserDataModelImpl> get copyWith =>

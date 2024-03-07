@@ -3,9 +3,8 @@ import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/constants/api_paths.dart';
 import '../../../../core/errors/exception_handler.dart';
-import '../../../../core/utils/auth_header.dart';
-
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/utils/auth_header.dart';
 import '../../data/models/userData/user_data_model.dart';
 import '../../domain/parameters/sign_in_param.dart';
 import '../../domain/parameters/sign_up_param.dart';

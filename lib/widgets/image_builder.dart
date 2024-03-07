@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
+import 'package:flutter/material.dart';
 
 import '../core/constants/colors.dart';
-import '../injection/injector.dart';
+import '../core/extensions/context_extension.dart';
 
 class ImageBuilder extends StatelessWidget {
   final String imageUrl;
@@ -36,16 +36,16 @@ class ImageBuilder extends StatelessWidget {
         fit: BoxFit.cover,
         imageUrl: imageUrl,
         placeholder: (context, url) => const CupertinoActivityIndicator(),
-        errorWidget: (context, url, error) {
+        errorWidget: (context, url, errorData) {
           return Container(
             height: height,
             width: width,
             decoration: BoxDecoration(
-              border: Border.all(color: themeCubit.onSurfaceColor()),
+              border: Border.all(color: context.surfaceColor()),
               borderRadius: borderRadius,
               shape: circular ? BoxShape.circle : BoxShape.rectangle,
             ),
-            child: Icon(Icons.error, color: kError, size: 12),
+            child: Icon(Icons.error, color: errorColor, size: 12),
           );
         },
       );
@@ -74,5 +74,20 @@ class ImageBuilder extends StatelessWidget {
     }
 
     return child;
+  }
+
+  factory ImageBuilder.circular({
+    required double diameter,
+    String imageUrl = "",
+    ImageProvider? imageProvider,
+  }) {
+    return ImageBuilder(
+      height: diameter,
+      width: diameter,
+      fit: BoxFit.cover,
+      circular: true,
+      imageUrl: imageUrl,
+      imageProvider: imageProvider,
+    );
   }
 }

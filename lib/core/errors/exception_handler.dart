@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart' show debugPrint;
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart' show debugPrint;
 import 'package:isar/isar.dart';
+
 import '../resources/data_state.dart';
 
 FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorData}) async {

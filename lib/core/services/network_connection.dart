@@ -1,6 +1,7 @@
-import 'dart:async';
+import 'dart:async' show StreamSubscription;
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class NetworkConnection {
   NetworkConnection._();
@@ -20,7 +21,9 @@ class NetworkConnection {
   /// Changes _online variable value according the network status
   checkConnection() async {
     if (_subscription != null) return;
-    _changeStatus(await _connectivity.checkConnectivity());
+
+    /// Do manual checking for web version
+    if (kIsWeb) _changeStatus(await _connectivity.checkConnectivity());
     _subscription = _connectivityStream.listen((event) => _changeStatus(event));
   }
 

@@ -1,6 +1,6 @@
-import '../core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../core/extensions/int_extension.dart';
 import '../core/utils/text_styles.dart';
 
 class CustomTextForm extends StatelessWidget {

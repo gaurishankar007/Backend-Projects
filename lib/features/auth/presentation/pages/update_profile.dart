@@ -1,19 +1,19 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 
+import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
-import '../../../../widgets/popUps/image_picker_bottom_sheet.dart';
-import '../../../../core/constants/colors.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../widgets/buttons/custom_elevated_button.dart';
-import '../../../../widgets/image_builder.dart';
-import '../../../../widgets/buttons/custom_text_button.dart';
 import '../../../../injection/injector.dart';
+import '../../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../../widgets/buttons/custom_text_button.dart';
+import '../../../../widgets/image_builder.dart';
+import '../../../../widgets/modalSheets/image_picker_bottom_sheet.dart';
 import '../../injection/auth_injector.dart';
 import '../widgets/error_text_notifier.dart';
 
@@ -85,16 +85,16 @@ class UpdateProfile extends StatelessWidget {
                   final dataState = await updateProfileUseCase.call(imagePathNotifier.value);
 
                   if (dataState is DataSuccessSate) {
-                    appData.userData = appData.userData.copyWith(user: dataState.data!);
-                    saveUserDataUseCase.call(appData.userData);
+                    userService.userData = userService.userData.copyWith(user: dataState.data!);
+                    saveUserDataUseCase.call(userService.userData);
                     return replaceToDashboard();
                   }
 
                   errorNotifier.value = dataState.error!.message;
                 },
                 text: "Update",
-                color: kPrimary,
-                foregroundColor: kWhite,
+                color: primaryColor,
+                foregroundColor: white,
                 expandWidth: true,
                 showLoading: true,
               ),

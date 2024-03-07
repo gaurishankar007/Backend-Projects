@@ -17,7 +17,7 @@ class ErrorTextNotifier extends StatelessWidget {
         return Text(
           value,
           textAlign: TextAlign.center,
-          style: mediumRegular(kError),
+          style: mediumRegular(errorColor),
         );
       },
     );

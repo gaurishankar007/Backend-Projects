@@ -7,29 +7,30 @@ import 'theme_data.dart';
 
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: kPrimary),
-  scaffoldBackgroundColor: kWhite,
+  colorScheme: colorScheme(),
+  scaffoldBackgroundColor: white,
   useMaterial3: false,
   appBarTheme: appBarTheme.copyWith(
-    titleTextStyle: largeMedium(kBlack),
+    titleTextStyle: largeMedium(black),
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
-      statusBarColor: kWhite,
+      statusBarColor: white,
     ),
   ),
   inputDecorationTheme: inputDecorationTheme.copyWith(
-    fillColor: kFormFillLight,
-    hintStyle: TextStyle(color: kFormHintLight),
+    fillColor: formFillLight,
+    hintStyle: TextStyle(color: formHintLight),
   ),
   textButtonTheme: textButtonTheme,
   iconButtonTheme: iconButtonTheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: kButtonLight,
-      foregroundColor: kBlack,
+      backgroundColor: buttonLight,
+      foregroundColor: black,
       splashFactory: NoSplash.splashFactory,
       surfaceTintColor: Colors.transparent,
     ),
   ),
+  listTileTheme: listTileTheme,
 );

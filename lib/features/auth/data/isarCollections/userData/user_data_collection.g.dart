@@ -28,29 +28,23 @@ const UserDataCollectionSchema = CollectionSchema(
       name: r'refreshToken',
       type: IsarType.string,
     ),
-    r'themeStyle': PropertySchema(
-      id: 2,
-      name: r'themeStyle',
-      type: IsarType.byte,
-      enumMap: _UserDataCollectionthemeStyleEnumValueMap,
-    ),
     r'userEmail': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'userEmail',
       type: IsarType.string,
     ),
     r'userId': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'userId',
       type: IsarType.string,
     ),
     r'userName': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'userName',
       type: IsarType.string,
     ),
     r'userProfile': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'userProfile',
       type: IsarType.string,
     )
@@ -106,11 +100,10 @@ void _userDataCollectionSerialize(
 ) {
   writer.writeString(offsets[0], object.accessToken);
   writer.writeString(offsets[1], object.refreshToken);
-  writer.writeByte(offsets[2], object.themeStyle.index);
-  writer.writeString(offsets[3], object.userEmail);
-  writer.writeString(offsets[4], object.userId);
-  writer.writeString(offsets[5], object.userName);
-  writer.writeString(offsets[6], object.userProfile);
+  writer.writeString(offsets[2], object.userEmail);
+  writer.writeString(offsets[3], object.userId);
+  writer.writeString(offsets[4], object.userName);
+  writer.writeString(offsets[5], object.userProfile);
 }
 
 UserDataCollection _userDataCollectionDeserialize(
@@ -122,13 +115,10 @@ UserDataCollection _userDataCollectionDeserialize(
   final object = UserDataCollection(
     accessToken: reader.readString(offsets[0]),
     refreshToken: reader.readString(offsets[1]),
-    themeStyle: _UserDataCollectionthemeStyleValueEnumMap[
-            reader.readByteOrNull(offsets[2])] ??
-        ThemeStyle.system,
-    userEmail: reader.readString(offsets[3]),
-    userId: reader.readString(offsets[4]),
-    userName: reader.readString(offsets[5]),
-    userProfile: reader.readString(offsets[6]),
+    userEmail: reader.readString(offsets[2]),
+    userId: reader.readString(offsets[3]),
+    userName: reader.readString(offsets[4]),
+    userProfile: reader.readString(offsets[5]),
   );
   object.isarId = id;
   return object;
@@ -146,32 +136,17 @@ P _userDataCollectionDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (_UserDataCollectionthemeStyleValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          ThemeStyle.system) as P;
+      return (reader.readString(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
-    case 6:
-      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
-
-const _UserDataCollectionthemeStyleEnumValueMap = {
-  'system': 0,
-  'light': 1,
-  'dark': 2,
-};
-const _UserDataCollectionthemeStyleValueEnumMap = {
-  0: ThemeStyle.system,
-  1: ThemeStyle.light,
-  2: ThemeStyle.dark,
-};
 
 Id _userDataCollectionGetId(UserDataCollection object) {
   return object.isarId;
@@ -694,62 +669,6 @@ extension UserDataCollectionQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'refreshToken',
         value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterFilterCondition>
-      themeStyleEqualTo(ThemeStyle value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'themeStyle',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterFilterCondition>
-      themeStyleGreaterThan(
-    ThemeStyle value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'themeStyle',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterFilterCondition>
-      themeStyleLessThan(
-    ThemeStyle value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'themeStyle',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterFilterCondition>
-      themeStyleBetween(
-    ThemeStyle lower,
-    ThemeStyle upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'themeStyle',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
       ));
     });
   }
@@ -1336,20 +1255,6 @@ extension UserDataCollectionQuerySortBy
   }
 
   QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
-      sortByThemeStyle() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeStyle', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
-      sortByThemeStyleDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeStyle', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
       sortByUserEmail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userEmail', Sort.asc);
@@ -1451,20 +1356,6 @@ extension UserDataCollectionQuerySortThenBy
   }
 
   QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
-      thenByThemeStyle() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeStyle', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
-      thenByThemeStyleDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'themeStyle', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QAfterSortBy>
       thenByUserEmail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userEmail', Sort.asc);
@@ -1538,13 +1429,6 @@ extension UserDataCollectionQueryWhereDistinct
   }
 
   QueryBuilder<UserDataCollection, UserDataCollection, QDistinct>
-      distinctByThemeStyle() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'themeStyle');
-    });
-  }
-
-  QueryBuilder<UserDataCollection, UserDataCollection, QDistinct>
       distinctByUserEmail({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'userEmail', caseSensitive: caseSensitive);
@@ -1592,13 +1476,6 @@ extension UserDataCollectionQueryProperty
       refreshTokenProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'refreshToken');
-    });
-  }
-
-  QueryBuilder<UserDataCollection, ThemeStyle, QQueryOperations>
-      themeStyleProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'themeStyle');
     });
   }
 

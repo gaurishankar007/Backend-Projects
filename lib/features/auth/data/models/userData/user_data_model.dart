@@ -3,7 +3,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/entities/user_data_entity.dart';
-import '../../../../global/domain/enums/theme_style_enum.dart';
 import '../user/user_model.dart';
 
 part 'user_data_model.freezed.dart';
@@ -15,8 +14,12 @@ class UserDataModel extends UserDataEntity with _$UserDataModel {
     required UserModel user,
     required String accessToken,
     required String refreshToken,
-    @Default(ThemeStyle.system) @JsonKey(includeFromJson: false) ThemeStyle themeStyle,
   }) = _UserDataModel;
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) => _$$UserDataModelImplFromJson(json);
+  factory UserDataModel.empty() => UserDataModel(
+        user: UserModel.fromId(""),
+        accessToken: "",
+        refreshToken: "",
+      );
 }

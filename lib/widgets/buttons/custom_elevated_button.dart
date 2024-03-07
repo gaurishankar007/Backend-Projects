@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/Cupertino.dart' show CupertinoActivityIndicator;
 import 'package:flutter/material.dart';
 
-import '../../injection/injector.dart';
+import '../../core/extensions/context_extension.dart';
 import '../../core/extensions/int_extension.dart';
 import '../../core/utils/text_styles.dart';
 
@@ -68,7 +68,7 @@ class CustomElevatedButton extends StatelessWidget {
       child: SizedBox(
         height: 25.propHeight,
         width: 25.propHeight,
-        child: psLoading(foregroundColor ?? themeCubit.onSurfaceColor()),
+        child: psLoading(foregroundColor ?? context.onSurfaceColor()),
       ),
     );
 

@@ -3,6 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/entities/message_short_entity.dart';
+
 part 'message_short_model.freezed.dart';
 part 'message_short_model.g.dart';
 

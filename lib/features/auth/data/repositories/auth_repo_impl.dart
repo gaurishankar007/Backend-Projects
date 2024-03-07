@@ -1,3 +1,5 @@
+import '../isarCollections/userSetting/user_setting_collection.dart';
+import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../../../core/resources/data_state.dart';
 import '../dataSources/auth_remote_source.dart';
 import '../models/userData/user_data_model.dart';
@@ -45,5 +47,12 @@ class AuthRepositoryImplementation implements AuthRepository {
   FutureData<UserDataModel> getUserData() => local.getUserData();
 
   @override
-  FutureData<bool> saveUserData(UserDataModel userData) => local.saveUserData(userData);
+  FutureBool saveUserData(UserDataModel userData) => local.saveUserData(userData);
+
+  @override
+  FutureList<UserSettingCollection> getUserSettings() => local.getUserSettings();
+
+  @override
+  FutureBool saveUserSetting(SettingNavigationModel model) =>
+      local.saveUserSetting(model);
 }

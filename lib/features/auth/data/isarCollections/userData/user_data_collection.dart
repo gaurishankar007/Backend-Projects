@@ -1,13 +1,11 @@
 import 'package:isar/isar.dart';
 
-import '../../../../global/domain/enums/theme_style_enum.dart';
 import '../../models/user/user_model.dart';
 import '../../models/userData/user_data_model.dart';
 
 part 'user_data_collection.g.dart';
 
 @Collection()
-@Name("UserDataCollection")
 class UserDataCollection {
   Id isarId = Isar.autoIncrement;
   @Index(unique: true, replace: true)
@@ -17,8 +15,6 @@ class UserDataCollection {
   String userProfile;
   String accessToken;
   String refreshToken;
-  @enumerated
-  ThemeStyle themeStyle;
 
   UserDataCollection({
     required this.userId,
@@ -27,7 +23,6 @@ class UserDataCollection {
     required this.userProfile,
     required this.accessToken,
     required this.refreshToken,
-    required this.themeStyle,
   });
 
   factory UserDataCollection.fromModel(UserDataModel model) => UserDataCollection(
@@ -37,7 +32,6 @@ class UserDataCollection {
         userProfile: model.user.profile,
         accessToken: model.accessToken,
         refreshToken: model.refreshToken,
-        themeStyle: model.themeStyle,
       );
 
   UserDataModel toModel() => UserDataModel(
@@ -49,6 +43,5 @@ class UserDataCollection {
         ),
         accessToken: accessToken,
         refreshToken: refreshToken,
-        themeStyle: themeStyle,
       );
 }

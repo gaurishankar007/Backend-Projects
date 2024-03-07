@@ -11,7 +11,7 @@ popPage() => appRouter.popTop();
 pushName(String path) => appRouter.pushNamed(path);
 
 /// Pops all pages and pushes the dashboard page
-replaceToDashboard() => appRouter.replaceAll([const DashboardRoute()]);
+replaceToDashboard() => appRouter.replaceAll([DashboardRoute()]);
 
 /// Pops all pages and pushes the signIn page
 replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);
@@ -20,17 +20,19 @@ replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);
 /// with or without argument
 /// with route name
 /// For nested navigation
-pushRoute(String route, {dynamic arg}) {
+pushRoute(String routePath, {dynamic arg}) {
   try {
-    switch (route) {
-      case kSignInPath:
-        return appRouter.push(const SignInRoute());
+    switch (routePath) {
+      case kSettingPath:
+        return appRouter.push(const SettingRoute());
+
+      case kDarkModePath:
+        return appRouter.push(const DarkModeRoute());
 
       default:
         return debugPrint("Route not found.");
     }
   } catch (error) {
-    debugPrint(error.toString());
-    return;
+    return debugPrint(error.toString());
   }
 }
