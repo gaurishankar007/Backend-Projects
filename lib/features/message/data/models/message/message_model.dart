@@ -2,7 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../global/domain/enums/content_type.dart';
+import '../../../../global/domain/enums/content_type_enum.dart';
 import '../../../domain/entities/message_entity.dart';
 import '../messageRepliedUpon/message_short_model.dart';
 import '../reaction/reaction_model.dart';

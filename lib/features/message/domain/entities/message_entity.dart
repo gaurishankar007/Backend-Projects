@@ -1,4 +1,4 @@
-import '../../../global/domain/enums/content_type.dart';
+import '../../../global/domain/enums/content_type_enum.dart';
 import 'message_short_entity.dart';
 import 'reaction_entity.dart';
 

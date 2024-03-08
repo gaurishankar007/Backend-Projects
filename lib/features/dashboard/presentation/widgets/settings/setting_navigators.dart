@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/int_extension.dart';
-import '../../cubit/cubit/setting_cubit.dart';
+import '../../cubit/setting/setting_cubit.dart';
 import 'setting_navigation_item.dart';
 
 class SettingNavigators extends StatelessWidget {
@@ -12,12 +12,6 @@ class SettingNavigators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Color of the container containing setting navigation items
-    final containerColor = context.surfaceColor(
-      light: Colors.white,
-      dark: const Color(0XFF333333),
-    );
-
     return BlocBuilder<SettingCubit, SettingState>(
       builder: (context, state) {
         final settingItems = state.navigationModels;
@@ -25,7 +19,7 @@ class SettingNavigators extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 30.propHeight),
           padding: EdgeInsets.all(padding10),
           decoration: BoxDecoration(
-            color: containerColor,
+            color: onPopUpColor(context),
             borderRadius: BorderRadius.circular(border10),
           ),
           child: ListView.separated(

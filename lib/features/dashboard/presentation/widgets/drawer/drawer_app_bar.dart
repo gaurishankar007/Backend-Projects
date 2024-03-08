@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../injection/injector.dart';
 import '../../../../../widgets/buttons/custom_icon_button.dart';
@@ -16,13 +15,9 @@ class DrawerAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color drawerColor = context.surfaceColor(
-      light: Colors.white,
-      dark: const Color(0XFF303030),
-    );
     return GlassLayer(
       opacity: .05,
-      backgroundColor: drawerColor,
+      backgroundColor: drawerColor(context),
       height: kToolbarHeight + screen.statusBarHeight,
       padding: EdgeInsets.only(
         top: screen.statusBarHeight,

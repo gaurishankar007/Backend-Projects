@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/context_extension.dart';
-import '../../../../../core/utils/navigator.dart';
+import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/utils/text_styles.dart';
 import '../../../data/models/settingNavigation/setting_navigation_model.dart';
 
@@ -21,17 +21,17 @@ class SettingNavigationItem extends StatelessWidget {
         light: const Color(0XFF595959),
       );
     }
-    final Color arrowColor = context.surfaceColor(
-      dark: const Color(0XFF595959),
-      light: const Color(0XFFCCCCCC),
-    );
-    final Color valueColor = context.onSurfaceColor(
-      light: const Color(0XFF888888),
-      dark: const Color(0XFF808080),
-    );
+    Color arrowColor =
+        context.surfaceColor(dark: const Color(0XFF595959), light: const Color(0XFFCCCCCC));
+    Color valueColor =
+        context.onSurfaceColor(light: const Color(0XFF888888), dark: const Color(0XFF808080));
 
     return ListTile(
-      onTap: () => pushRoute(settingItem.routePath),
+      onTap: () => Navigator.pushNamed(
+        context,
+        settingItem.routePath,
+        arguments: settingItem,
+      ),
       horizontalTitleGap: 8,
       leading: Container(
         padding: EdgeInsets.all(padding5),
@@ -42,7 +42,7 @@ class SettingNavigationItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(settingItem.title, style: largeRegular()),
-          Text(settingItem.value, style: largeRegular(valueColor)),
+          Text(settingItem.value.capitalize, style: largeRegular(valueColor)),
         ],
       ),
       trailing: Icon(Icons.arrow_forward_ios_rounded, color: arrowColor, size: 15),

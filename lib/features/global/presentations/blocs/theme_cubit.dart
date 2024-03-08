@@ -2,12 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/user_service.dart';
 import '../../../../injection/injector.dart';
+import '../../domain/enums/dark_mode_enum.dart';
+import '../mixins/dark_mode_mixin.dart';
 
 part 'theme_state.dart';
 
-class ThemeCubit extends Cubit<ThemeState> with ThemeModeFromValue {
+class ThemeCubit extends Cubit<ThemeState> with DarkModeMixin {
   final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
 
   ThemeCubit() : super(ThemeState(userService.themeMode)) {
@@ -15,13 +16,14 @@ class ThemeCubit extends Cubit<ThemeState> with ThemeModeFromValue {
     _platformBrightnessListener(enable: enable);
   }
 
-  changeTheme(String darkMode) {
+  changeTheme(DarkMode darkMode) {
     final themeMode = getThemeMode(darkMode);
-    emit(ThemeState(themeMode));
+    if (state.themeMode != themeMode) emit(ThemeState(themeMode));
 
-    _platformBrightnessListener(enable: darkMode == "System");
+    _platformBrightnessListener(enable: darkMode == DarkMode.system);
   }
 
+  /// Change app theme whenever device theme is changed too
   _platformBrightnessListener({bool enable = true}) {
     platformDispatcher.onPlatformBrightnessChanged = enable ? _applySystemBrightness : () {};
   }

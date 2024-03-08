@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 extension ContextExtension on BuildContext {
-  Brightness get brightness => Theme.of(this).brightness;
+  /// This will help to rebuild the widget whenever app theme is changed
+  ThemeData get listenThemeChanges => Theme.of(this);
+  Brightness get brightness => listenThemeChanges.brightness;
 
   /// Get background color according to the theme mode
   Color surfaceColor({Color? light, Color? dark}) =>

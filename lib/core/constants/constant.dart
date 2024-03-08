@@ -13,6 +13,7 @@ double get border15 => 15;
 double get padding5 => 5;
 double get padding8 => 8;
 double get padding10 => 10;
+double get padding15 => 15;
 
 /// Page Transition
 Duration get pageTransitionDuration => const Duration(milliseconds: 200);

@@ -1,15 +1,14 @@
-import '../isarCollections/userSetting/user_setting_collection.dart';
-import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../../../core/resources/data_state.dart';
-import '../dataSources/auth_remote_source.dart';
-import '../models/userData/user_data_model.dart';
+import '../../../../injection/injector.dart';
+import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../domain/parameters/sign_in_param.dart';
 import '../../domain/parameters/sign_up_param.dart';
 import '../../domain/repositories/auth_repo.dart';
-import '../../../../injection/injector.dart';
-
 import '../dataSources/auth_local_source.dart';
+import '../dataSources/auth_remote_source.dart';
+import '../isarCollections/userSetting/user_setting_collection.dart';
 import '../models/user/user_model.dart';
+import '../models/userData/user_data_model.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
   final AuthRemoteSource remote;

@@ -22,17 +22,10 @@ class DrawerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color selectedColor = context.surfaceColor(
-      light: f5f5f5,
-      dark: const Color(0XFF575757),
-    );
-    final Color drawerColor = context.surfaceColor(
-      light: Colors.white,
-      dark: const Color(0XFF303030),
-    );
+    Color selectedColor = context.surfaceColor(light: f5f5f5, dark: const Color(0XFF575757));
 
     return Scaffold(
-      backgroundColor: drawerColor,
+      backgroundColor: drawerColor(context),
       appBar: const PreferredSizeAppBar(appBar: DrawerAppBar()),
       body: ValueListenableBuilder(
         valueListenable: selectedIndex,
@@ -48,7 +41,7 @@ class DrawerContent extends StatelessWidget {
             itemBuilder: (context, index) {
               final navigationItem = navigationItems[index];
               final bool selected = index == value;
-              final containerColor = selected ? selectedColor : drawerColor;
+              final containerColor = selected ? selectedColor : drawerColor(context);
 
               return InkWell(
                 borderRadius: BorderRadius.circular(15),

@@ -7,8 +7,10 @@ import '../../features/auth/data/isarCollections/userSetting/user_setting_collec
 import '../../features/auth/data/models/userData/user_data_model.dart';
 import '../../features/auth/injection/auth_injector.dart';
 import '../../features/dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../features/global/domain/enums/dark_mode_enum.dart';
+import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 
-class UserService with ThemeModeFromValue {
+class UserService with DarkModeMixin {
   UserService._();
   static final _singleton = UserService._();
   factory UserService() => _singleton;
@@ -16,14 +18,13 @@ class UserService with ThemeModeFromValue {
   bool _isLoggedIn = true;
   UserDataModel userData = UserDataModel.empty();
   List<UserSettingCollection> _userSettings = [];
-  ThemeMode themeMode = ThemeMode.light;
 
   final List<SettingNavigationModel> _navigationModels = [
     const SettingNavigationModel(
       id: 1,
       title: "Dark Mode",
       subtitle: "",
-      value: "System",
+      value: "system",
       backgroundColor: Colors.transparent,
       iconData: Icons.dark_mode_rounded,
       routePath: kDarkModePath,
@@ -32,7 +33,7 @@ class UserService with ThemeModeFromValue {
       id: 2,
       title: "Active Status",
       subtitle: "",
-      value: "On",
+      value: "on",
       backgroundColor: green,
       iconData: Icons.contactless_rounded,
       routePath: kActiveStatusPath,
@@ -41,16 +42,16 @@ class UserService with ThemeModeFromValue {
       id: 3,
       title: "App Lock",
       subtitle: "",
-      value: "Off",
+      value: "off",
       backgroundColor: primaryColor,
       iconData: Icons.lock_rounded,
-      routePath: kDarkModePath,
+      routePath: kAppLockPath,
     ),
     SettingNavigationModel(
       id: 4,
       title: "Notifications and Sound",
       subtitle: "",
-      value: "On",
+      value: "on",
       backgroundColor: purple,
       iconData: Icons.notifications_rounded,
       routePath: kDarkModePath,
@@ -87,23 +88,22 @@ class UserService with ThemeModeFromValue {
         _navigationModels[i] = model.copyWith(value: newValue);
       }
     }
+  }
 
-    themeMode = getThemeMode(navigationModels.first.value);
+  /// Set new user setting
+  changeSetting(SettingNavigationModel newModel) {
+    /// Finding Index of the old model
+    final index = _navigationModels.indexWhere((element) => element.id == newModel.id);
+    if (index == -1) return;
+
+    /// Updating data
+    _navigationModels[index] = newModel;
+
+    /// Saving new setting
+    saveUserSettingUseCase.call(newModel);
   }
 
   bool get isLoggedIn => _isLoggedIn;
   List<SettingNavigationModel> get navigationModels => _navigationModels;
-}
-
-mixin ThemeModeFromValue {
-  ThemeMode getThemeMode(String darkMode) {
-    if (darkMode == "On") {
-      return ThemeMode.dark;
-    } else if (darkMode == "Off") {
-      return ThemeMode.light;
-    }
-
-    final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    return brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
-  }
+  ThemeMode get themeMode => getThemeMode(DarkMode.values.byName(navigationModels.first.value));
 }

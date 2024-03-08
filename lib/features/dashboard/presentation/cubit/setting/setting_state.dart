@@ -1,6 +1,5 @@
 part of 'setting_cubit.dart';
 
-@freezed
 class SettingState extends Equatable {
   final bool refresh;
   final List<SettingNavigationModel> navigationModels;

@@ -1,8 +1,6 @@
-import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
-
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/useCase/use_case.dart';
-
+import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
 import '../repositories/auth_repo.dart';
 
 class SaveUserSettingUseCase implements UseCase<bool, SettingNavigationModel> {

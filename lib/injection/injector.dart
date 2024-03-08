@@ -1,19 +1,17 @@
-import '../core/services/user_service.dart';
-
-import '../features/dashboard/presentation/cubit/cubit/setting_cubit.dart';
-import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
-
-import '../features/auth/data/dataSources/auth_local_source.dart';
-import '../features/auth/data/dataSources/auth_remote_source.dart';
-import '../features/auth/data/repositories/auth_repo_impl.dart';
-import '../features/auth/domain/repositories/auth_repo.dart';
+import 'package:get_it/get_it.dart';
 
 import '../app_initializer.dart';
 import '../config/routes/routes.dart';
 import '../core/services/network_connection.dart';
+import '../core/services/user_service.dart';
 import '../core/utils/screen_size.dart';
+import '../features/auth/data/dataSources/auth_local_source.dart';
+import '../features/auth/data/dataSources/auth_remote_source.dart';
+import '../features/auth/data/repositories/auth_repo_impl.dart';
+import '../features/auth/domain/repositories/auth_repo.dart';
+import '../features/dashboard/presentation/cubit/setting/setting_cubit.dart';
 import '../features/global/presentations/blocs/theme_cubit.dart';
 
-part "injection.dart";
 part "getters.dart";
+part "injection.dart";

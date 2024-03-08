@@ -23,11 +23,8 @@ replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);
 pushRoute(String routePath, {dynamic arg}) {
   try {
     switch (routePath) {
-      case kSettingPath:
-        return appRouter.push(const SettingRoute());
-
-      case kDarkModePath:
-        return appRouter.push(const DarkModeRoute());
+      case kSignInPath:
+        return appRouter.push(const SignInRoute());
 
       default:
         return debugPrint("Route not found.");

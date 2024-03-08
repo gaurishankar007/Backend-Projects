@@ -1,0 +1,4 @@
+enum SwitchMode {
+  on,
+  off,
+}

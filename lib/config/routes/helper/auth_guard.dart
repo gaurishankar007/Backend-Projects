@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../../injection/injector.dart';
-import 'routes.gr.dart';
+import '../../../injection/injector.dart';
+import '../routes.gr.dart';
 
 class AuthGuard extends AutoRouteGuard {
   @override

@@ -32,10 +32,13 @@ class DashboardAppBar extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          CustomIconButton(
-            onPressed: () => drawerKey.open(),
-            disableSplash: true,
-            icon: Icon(Icons.menu_rounded, color: primaryColor, size: appBarIconSize),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: CustomIconButton(
+              onPressed: () => drawerKey.open(),
+              disableSplash: true,
+              icon: Icon(Icons.menu_rounded, color: primaryColor, size: appBarIconSize),
+            ),
           ),
           Align(
             alignment: Alignment.center,
