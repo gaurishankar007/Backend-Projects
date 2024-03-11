@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../injection/injector.dart';
-import '../../../data/models/settingNavigation/setting_navigation_model.dart';
-import '../../../domain/parameters/setting_parameter.dart';
-import '../../widgets/settings/setting_scaffold.dart';
-import '../../widgets/settings/setting_value_container.dart';
+import '../../../../injection/injector.dart';
+import '../../data/models/settingNavigation/setting_navigation_model.dart';
+import '../../domain/parameters/setting_parameter.dart';
+import '../widgets/setting_scaffold.dart';
+import '../widgets/setting_value_container.dart';
 
 class ActiveStatus extends StatefulWidget {
   final SettingParameter parameter;

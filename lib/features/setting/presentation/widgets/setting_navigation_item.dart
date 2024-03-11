@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/colors.dart';
-import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/context_extension.dart';
-import '../../../../../core/extensions/string_extension.dart';
-import '../../../../../core/utils/text_styles.dart';
-import '../../../data/models/settingNavigation/setting_navigation_model.dart';
-import '../../../domain/parameters/setting_parameter.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/utils/text_styles.dart';
+import '../../data/models/settingNavigation/setting_navigation_model.dart';
+import '../../domain/parameters/setting_parameter.dart';
 
 class SettingNavigationItem extends StatefulWidget {
   final SettingNavigationModel navigationItem;

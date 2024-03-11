@@ -9,7 +9,6 @@ Dio get dio => getIt<Dio>();
 
 /// Bloc
 ThemeCubit get themeCubit => getIt<ThemeCubit>();
-SettingCubit get settingCubit => getIt<SettingCubit>();
 
 /// Repository Implementation
 AuthRepository get authRepositoryImplementation => getIt<AuthRepository>();

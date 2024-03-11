@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/routes_data.dart';
-import '../../features/dashboard/domain/parameters/setting_parameter.dart';
-import '../../features/dashboard/presentation/pages/settings/active_status.dart';
-import '../../features/dashboard/presentation/pages/settings/app_lock.dart';
-import '../../features/dashboard/presentation/pages/settings/dark_mode_selection.dart';
-import '../../features/dashboard/presentation/pages/settings/page_not_found.dart';
-import '../../features/dashboard/presentation/pages/settings/settings.dart';
+import '../../features/setting/domain/parameters/setting_parameter.dart';
+import '../../features/setting/presentation/pages/active_status.dart';
+import '../../features/setting/presentation/pages/app_lock.dart';
+import '../../features/setting/presentation/pages/dark_mode_selection.dart';
+import '../../features/setting/presentation/pages/page_not_found.dart';
+import '../../features/setting/presentation/pages/settings.dart';
 import 'helper/custom_page_route.dart';
 
 class SettingRoute {

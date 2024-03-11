@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
 
 part 'user_setting_collection.g.dart';
 

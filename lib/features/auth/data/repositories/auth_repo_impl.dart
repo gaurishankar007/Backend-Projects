@@ -1,6 +1,6 @@
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection/injector.dart';
-import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../domain/parameters/sign_in_param.dart';
 import '../../domain/parameters/sign_up_param.dart';
 import '../../domain/repositories/auth_repo.dart';

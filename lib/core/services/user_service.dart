@@ -6,7 +6,7 @@ import '../../../../../core/resources/data_state.dart';
 import '../../features/auth/data/isarCollections/userSetting/user_setting_collection.dart';
 import '../../features/auth/data/models/userData/user_data_model.dart';
 import '../../features/auth/injection/auth_injector.dart';
-import '../../features/dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../features/setting/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 

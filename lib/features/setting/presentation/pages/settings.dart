@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../core/utils/text_styles.dart';
-import '../../../../../injection/injector.dart';
-import '../../../../../widgets/user/user_image.dart';
-import '../../../../../widgets/user/user_name.dart';
-import '../../widgets/settings/setting_navigators.dart';
-import '../../widgets/settings/setting_scaffold.dart';
+import '../../../../core/extensions/int_extension.dart';
+import '../../../../core/utils/text_styles.dart';
+import '../../../../injection/injector.dart';
+import '../../../../widgets/user/user_image.dart';
+import '../../../../widgets/user/user_name.dart';
+import '../widgets/setting_navigators.dart';
+import '../widgets/setting_scaffold.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});

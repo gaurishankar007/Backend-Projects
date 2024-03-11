@@ -3,7 +3,7 @@ import 'package:isar/isar.dart';
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/local_database.dart';
-import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
 import '../isarCollections/userData/user_data_collection.dart';
 import '../isarCollections/userSetting/user_setting_collection.dart';
 import '../models/userData/user_data_model.dart';

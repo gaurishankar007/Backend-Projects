@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/colors.dart';
-import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../core/extensions/string_extension.dart';
-import '../../../../../core/utils/text_styles.dart';
-import '../../../../../injection/injector.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/extensions/int_extension.dart';
+import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/utils/text_styles.dart';
+import '../../../../injection/injector.dart';
 
 class SettingValueContainer extends StatelessWidget {
   /// A listenable for rebuilding whenever value gets changed

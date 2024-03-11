@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/colors.dart';
-import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../injection/injector.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/constant.dart';
+import '../../../../core/extensions/int_extension.dart';
+import '../../../../injection/injector.dart';
 import 'setting_navigation_item.dart';
 
 class SettingNavigators extends StatelessWidget {

@@ -1,5 +1,5 @@
 import '../../../../core/resources/data_state.dart';
-import '../../../dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../data/isarCollections/userSetting/user_setting_collection.dart';
 import '../../data/models/user/user_model.dart';
 import '../../data/models/userData/user_data_model.dart';

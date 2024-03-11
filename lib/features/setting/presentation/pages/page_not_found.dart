@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/colors.dart';
-import '../../../../../core/utils/text_styles.dart';
-import '../../widgets/settings/setting_scaffold.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/utils/text_styles.dart';
+import '../widgets/setting_scaffold.dart';
 
 class PageNotFound extends StatelessWidget {
   const PageNotFound({super.key});
