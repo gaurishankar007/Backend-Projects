@@ -13,5 +13,5 @@ extension ContextExtension on BuildContext {
 
   /// Get color of the item lying upon background according to the theme mode
   Color onSurfaceColor({Color? light, Color? dark}) =>
-      brightness == Brightness.light ? dark ?? white : light ?? black;
+      brightness == Brightness.light ? dark ?? black : light ?? white;
 }

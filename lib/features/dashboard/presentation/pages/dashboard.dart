@@ -26,7 +26,7 @@ class Dashboard extends StatelessWidget {
       child: SlidingDrawer(
         key: slidingDrawerKey,
         settings: drawerSettings,
-        drawerBuilder: (_) => DrawerContent(),
+        drawerBuilder: (_) => const DrawerContent(),
         contentBuilder: (_) => const Scaffold(
           body: Chats(),
         ),

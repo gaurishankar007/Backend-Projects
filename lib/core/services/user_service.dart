@@ -82,7 +82,7 @@ class UserService with DarkModeMixin {
       final model = _navigationModels[i];
 
       /// Finding the saved value of the exact model
-      int index = _userSettings.indexWhere((element) => element.id == model.id);
+      int index = _userSettings.indexWhere((element) => element.settingId == model.id);
       if (index != -1) {
         String newValue = _userSettings[index].value;
         _navigationModels[i] = model.copyWith(value: newValue);

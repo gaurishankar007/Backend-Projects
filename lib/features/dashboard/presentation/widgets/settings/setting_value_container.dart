@@ -5,8 +5,8 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../core/extensions/string_extension.dart';
+import '../../../../../core/utils/text_styles.dart';
 import '../../../../../injection/injector.dart';
-import 'selected_setting.dart';
 
 class SettingValueContainer extends StatelessWidget {
   /// A listenable for rebuilding whenever value gets changed
@@ -49,13 +49,19 @@ class SettingValueContainer extends StatelessWidget {
               String value = values[index];
               bool selected = value == selectedValue;
 
-              return SettingSelection(
-                value: value.capitalize,
-                selected: selected,
-                onPressed: () {
+              return InkWell(
+                splashFactory: NoSplash.splashFactory,
+                onTap: () {
                   if (selected) return;
                   onValueSelected(value);
                 },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(value.capitalize, style: largeRegular()),
+                    if (selected) Icon(Icons.check_rounded, color: primaryColor, size: 18)
+                  ],
+                ),
               );
             },
           );

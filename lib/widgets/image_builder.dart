@@ -41,7 +41,7 @@ class ImageBuilder extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              border: Border.all(color: context.surfaceColor()),
+              border: Border.all(color: context.onSurfaceColor()),
               borderRadius: borderRadius,
               shape: circular ? BoxShape.circle : BoxShape.rectangle,
             ),

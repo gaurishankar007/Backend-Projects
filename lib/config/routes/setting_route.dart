@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/routes_data.dart';
-import '../../features/dashboard/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../features/dashboard/domain/parameters/setting_parameter.dart';
 import '../../features/dashboard/presentation/pages/settings/active_status.dart';
 import '../../features/dashboard/presentation/pages/settings/app_lock.dart';
 import '../../features/dashboard/presentation/pages/settings/dark_mode_selection.dart';
@@ -19,19 +19,19 @@ class SettingRoute {
 
       case kDarkModePath:
         return _customRoute(
-          child: DarkModeSelection(navigationModel: settings.arguments as SettingNavigationModel),
+          child: DarkModeSelection(parameter: settings.arguments as SettingParameter),
           direction: AxisDirection.left,
         );
 
       case kActiveStatusPath:
         return _customRoute(
-          child: ActiveStatus(navigationModel: settings.arguments as SettingNavigationModel),
+          child: ActiveStatus(parameter: settings.arguments as SettingParameter),
           direction: AxisDirection.left,
         );
 
       case kAppLockPath:
         return _customRoute(
-          child: AppLock(navigationModel: settings.arguments as SettingNavigationModel),
+          child: AppLock(parameter: settings.arguments as SettingParameter),
           direction: AxisDirection.left,
         );
     }
