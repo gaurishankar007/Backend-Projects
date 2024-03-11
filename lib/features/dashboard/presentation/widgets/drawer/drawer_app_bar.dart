@@ -5,7 +5,7 @@ import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../injection/injector.dart';
 import '../../../../../widgets/buttons/custom_icon_button.dart';
-import '../../../../../widgets/glass_layer.dart';
+import '../../../../../widgets/glass/glass_layer_container.dart';
 import '../../../../../widgets/modalSheets/setting_bottom_sheet.dart';
 import '../../../../../widgets/user/user_image.dart';
 import '../../../../../widgets/user/user_name.dart';
@@ -15,8 +15,7 @@ class DrawerAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassLayer(
-      opacity: .05,
+    return GlassLayerContainer(
       backgroundColor: drawerColor(context),
       height: kToolbarHeight + screen.statusBarHeight,
       padding: EdgeInsets.only(

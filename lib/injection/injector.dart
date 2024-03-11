@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../app_initializer.dart';
+import '../initializer.dart';
 import '../config/routes/routes.dart';
 import '../core/services/network_connection.dart';
 import '../core/services/user_service.dart';

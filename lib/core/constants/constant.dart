@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show Curve, Curves;
 
 /// Icon
-double get appBarIconSize => 22;
+double get appBarIconSize => 25;
 
 /// Border Radius
 double get border5 => 5;

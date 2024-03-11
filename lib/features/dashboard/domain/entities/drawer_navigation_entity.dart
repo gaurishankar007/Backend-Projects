@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' show IconData;
 
-class DrawerNavigationEntity {
+class NavigationDataEntity {
   final int id;
   final String name;
   final IconData iconData;
 
-  const DrawerNavigationEntity({
+  const NavigationDataEntity({
     required this.id,
     required this.name,
     required this.iconData,

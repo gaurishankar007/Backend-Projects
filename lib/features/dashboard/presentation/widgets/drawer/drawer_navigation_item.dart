@@ -8,7 +8,7 @@ import '../../../data/models/drawer_navigation_model.dart';
 
 class DrawerNavigationItem extends StatelessWidget {
   final Color backgroundColor;
-  final DrawerNavigationModel navigationItem;
+  final NavigationDataModel navigationItem;
 
   DrawerNavigationItem({
     super.key,

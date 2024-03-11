@@ -1,3 +1,4 @@
+import 'package:chat/core/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
@@ -13,7 +14,7 @@ class DrawerLogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final drawerKey = DrawerKeyInheritedWidget.of(context).drawerKey;
 
-    return FloatingActionButton.small(
+    return FloatingActionButton(
       onPressed: () async {
         drawerKey.close();
         final isar = await openLocalDatabase();
@@ -22,7 +23,7 @@ class DrawerLogoutButton extends StatelessWidget {
       },
       backgroundColor: primaryColor,
       elevation: 0,
-      child: Icon(Icons.logout_rounded, color: white, size: 18),
+      child: Icon(Icons.logout_rounded, color: white, size: appBarIconSize),
     );
   }
 }

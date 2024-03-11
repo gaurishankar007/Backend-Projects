@@ -2,10 +2,10 @@ import 'package:flutter/material.dart' show WidgetsFlutterBinding;
 
 import 'injection/injector.dart';
 
-class AppInitializer {
-  AppInitializer._();
-  static final _singleton = AppInitializer._();
-  factory AppInitializer() => _singleton;
+class Initializer {
+  Initializer._();
+  static final _singleton = Initializer._();
+  factory Initializer() => _singleton;
 
   bool _isInitialized = false;
 

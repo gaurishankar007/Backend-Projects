@@ -18,10 +18,10 @@ class DrawerContent extends StatefulWidget {
 }
 
 class _DrawerContentState extends State<DrawerContent> {
-  final List<DrawerNavigationModel> navigationItems = [
-    const DrawerNavigationModel(id: 1, name: "Chat", iconData: Icons.chat_bubble_rounded),
-    const DrawerNavigationModel(id: 2, name: "Message requests", iconData: Icons.chat_rounded),
-    const DrawerNavigationModel(id: 3, name: "Hidden", iconData: Icons.visibility_off_rounded),
+  final List<NavigationDataModel> navigationItems = [
+    const NavigationDataModel(id: 1, name: "Chats", iconData: Icons.chat_bubble_rounded),
+    const NavigationDataModel(id: 2, name: "Message requests", iconData: Icons.chat_rounded),
+    const NavigationDataModel(id: 3, name: "Hidden", iconData: Icons.visibility_off_rounded),
   ];
   final ValueNotifier<int> indexNotifier = ValueNotifier<int>(0);
 
@@ -50,7 +50,9 @@ class _DrawerContentState extends State<DrawerContent> {
 
               return InkWell(
                 borderRadius: BorderRadius.circular(15),
-                onTap: () => indexNotifier.value = index,
+                onTap: () {
+                  indexNotifier.value = index;
+                },
                 child: DrawerNavigationItem(
                   navigationItem: navigationItem,
                   backgroundColor: containerColor,

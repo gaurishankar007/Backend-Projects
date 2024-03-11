@@ -6,7 +6,7 @@ import '../../../../core/constants/constant.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../injection/injector.dart';
 import '../../../../widgets/buttons/custom_icon_button.dart';
-import '../../../../widgets/glass_layer.dart';
+import '../../../../widgets/glass/glass_layer_container.dart';
 import '../inheritedWidget/drawer_key_inherited_widget.dart';
 
 class DashboardAppBar extends StatelessWidget {
@@ -22,8 +22,7 @@ class DashboardAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final drawerKey = DrawerKeyInheritedWidget.of(context).drawerKey;
 
-    return GlassLayer(
-      opacity: .05,
+    return GlassLayerContainer(
       height: kToolbarHeight + screen.statusBarHeight,
       padding: EdgeInsets.only(
         top: screen.statusBarHeight,

@@ -7,6 +7,7 @@ import '../../../../core/constants/routes_data.dart';
 import '../../../../injection/injector.dart';
 import '../../../chat/presentation/pages/chats.dart';
 import '../inheritedWidget/drawer_key_inherited_widget.dart';
+import '../widgets/dashboard_navigation.dart';
 import 'drawer_content.dart';
 
 @RoutePage(name: kDashboardRoute)
@@ -29,6 +30,7 @@ class Dashboard extends StatelessWidget {
         drawerBuilder: (_) => const DrawerContent(),
         contentBuilder: (_) => const Scaffold(
           body: Chats(),
+          bottomNavigationBar: DashboardNavigation(),
         ),
       ),
     );
