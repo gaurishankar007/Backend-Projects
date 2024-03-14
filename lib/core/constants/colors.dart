@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart' show Color, Colors, BuildContext;
+import 'package:flutter/material.dart' show Color, Colors;
 
-import '../extensions/context_extension.dart';
+import '../../injection/injector.dart';
 
 /// <===== Base Colors  =====>
 Color get white => Colors.white;
@@ -25,10 +25,15 @@ Color get formHintDark => const Color(0XFF888888);
 Color get buttonLight => f5f5f5;
 Color get buttonDark => const Color(0XFF4B4B4B);
 
-Color drawerColor(BuildContext context) =>
-    context.surfaceColor(light: Colors.white, dark: const Color(0XFF303030));
+/// <===== Theme Colors =====>
+/// Get background color according to the theme mode
+Color surfaceColor({Color? light, Color? dark}) =>
+    themeCubit.surfaceColor(light: light, dark: dark);
 
-Color popUpColor(BuildContext context) =>
-    context.surfaceColor(light: f5f5f5, dark: const Color(0XFF222222));
-Color onPopUpColor(BuildContext context) =>
-    context.surfaceColor(light: Colors.white, dark: const Color(0XFF333333));
+/// Get color of the item lying upon background according to the theme mode
+Color onSurfaceColor({Color? light, Color? dark}) =>
+    themeCubit.onSurfaceColor(light: light, dark: dark);
+
+Color get drawerColor => surfaceColor(light: Colors.white, dark: const Color(0XFF303030));
+Color get popUpColor => surfaceColor(light: f5f5f5, dark: const Color(0XFF222222));
+Color get onPopUpColor => surfaceColor(light: Colors.white, dark: const Color(0XFF333333));

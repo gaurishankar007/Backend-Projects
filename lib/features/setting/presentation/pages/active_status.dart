@@ -4,7 +4,7 @@ import '../../../../injection/injector.dart';
 import '../../data/models/settingNavigation/setting_navigation_model.dart';
 import '../../domain/parameters/setting_parameter.dart';
 import '../widgets/setting_scaffold.dart';
-import '../widgets/setting_value_container.dart';
+import '../widgets/setting_values.dart';
 
 class ActiveStatus extends StatefulWidget {
   final SettingParameter parameter;
@@ -30,7 +30,7 @@ class _ActiveStatusState extends State<ActiveStatus> {
   Widget build(BuildContext context) {
     return SettingScaffold(
       appBarTitle: navigationItem.title,
-      body: SettingValueContainer(
+      body: SettingValues(
         valueListenable: notifier,
         values: values,
         onValueSelected: (newValue) {

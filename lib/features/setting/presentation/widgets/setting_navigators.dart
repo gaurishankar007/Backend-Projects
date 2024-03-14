@@ -11,11 +11,18 @@ class SettingNavigators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Listening Theme Changes
+    Theme.of(context);
+
+    Color arrowColor = surfaceColor(dark: const Color(0XFF595959), light: const Color(0XFFCCCCCC));
+    Color valueColor =
+        onSurfaceColor(light: const Color(0XFF888888), dark: const Color(0XFF808080));
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 30.propHeight),
       padding: EdgeInsets.all(padding10),
       decoration: BoxDecoration(
-        color: onPopUpColor(context),
+        color: onPopUpColor,
         borderRadius: BorderRadius.circular(border10),
       ),
       child: ListView.separated(
@@ -24,8 +31,11 @@ class SettingNavigators extends StatelessWidget {
         itemCount: userService.navigationModels.length,
         separatorBuilder: (context, index) => Divider(indent: 10.wPercentage),
         itemBuilder: (context, index) {
-          final navigationItem = userService.navigationModels[index];
-          return SettingNavigationItem(navigationItem: navigationItem);
+          return SettingNavigationItem(
+            navigationItem: userService.navigationModels[index],
+            arrowColor: arrowColor,
+            valueColor: valueColor,
+          );
         },
       ),
     );

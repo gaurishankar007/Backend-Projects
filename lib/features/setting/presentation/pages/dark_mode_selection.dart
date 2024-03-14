@@ -5,7 +5,7 @@ import '../../../global/domain/enums/dark_mode_enum.dart';
 import '../../data/models/settingNavigation/setting_navigation_model.dart';
 import '../../domain/parameters/setting_parameter.dart';
 import '../widgets/setting_scaffold.dart';
-import '../widgets/setting_value_container.dart';
+import '../widgets/setting_values.dart';
 
 class DarkModeSelection extends StatefulWidget {
   final SettingParameter parameter;
@@ -31,7 +31,7 @@ class _DarkModeSelectionState extends State<DarkModeSelection> {
   Widget build(BuildContext context) {
     return SettingScaffold(
       appBarTitle: navigationModel.title,
-      body: SettingValueContainer(
+      body: SettingValues(
         valueListenable: notifier,
         values: darkModes,
         onValueSelected: (newValue) {

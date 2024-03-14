@@ -15,7 +15,7 @@ imagePickerBottomSheet(BuildContext context, {required Function(String path) onI
       return Container(
         padding: EdgeInsets.all(padding10),
         decoration: BoxDecoration(
-          color: popUpColor(context),
+          color: popUpColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(border15),
             topRight: Radius.circular(border15),

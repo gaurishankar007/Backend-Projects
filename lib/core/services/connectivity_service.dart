@@ -3,10 +3,10 @@ import 'dart:async' show StreamSubscription;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-class NetworkConnection {
-  NetworkConnection._();
-  static final _singleton = NetworkConnection._();
-  factory NetworkConnection() => _singleton;
+class ConnectivityService {
+  ConnectivityService._();
+  static final _singleton = ConnectivityService._();
+  factory ConnectivityService() => _singleton;
 
   final Connectivity _connectivity = Connectivity();
   final Stream<ConnectivityResult> _connectivityStream = Connectivity().onConnectivityChanged;

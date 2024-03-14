@@ -1,7 +1,7 @@
 part of "injector.dart";
 
-Initializer get appData => Initializer();
-NetworkConnection get network => NetworkConnection();
+Initializer get initializer => Initializer();
+ConnectivityService get connectivity => ConnectivityService();
 UserService get userService => UserService();
 ScreenSize get screen => ScreenSize();
 AppRouter get appRouter => getIt<AppRouter>();

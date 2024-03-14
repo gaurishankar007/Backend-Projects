@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/colors.dart';
 import '../../../../injection/injector.dart';
 import '../../domain/enums/dark_mode_enum.dart';
 import '../mixins/dark_mode_mixin.dart';
@@ -33,4 +34,12 @@ class ThemeCubit extends Cubit<ThemeState> with DarkModeMixin {
     if (light) return emit(ThemeState.light());
     emit(ThemeState.dark());
   }
+
+  /// Get background color according to the theme mode
+  Color surfaceColor({Color? light, Color? dark}) =>
+      state.themeMode == ThemeMode.light ? light ?? white : dark ?? black;
+
+  /// Get color of the item lying upon background according to the theme mode
+  Color onSurfaceColor({Color? light, Color? dark}) =>
+      state.themeMode == ThemeMode.light ? dark ?? black : light ?? white;
 }

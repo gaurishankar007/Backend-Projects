@@ -23,7 +23,9 @@ class SettingScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = popUpColor(context);
+    /// Listening Theme Changes
+    Theme.of(context);
+    Color backgroundColor = popUpColor;
 
     return Scaffold(
       backgroundColor: backgroundColor,

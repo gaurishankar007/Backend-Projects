@@ -57,9 +57,11 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
 
   @override
   FutureBool saveUserSetting(SettingNavigationModel model) async {
-    final userSetting = UserSettingCollection.fromModel(model);
-    final isar = await _database;
-    isar.writeTxnSync(() => isar.userSettingCollections.putSync(userSetting));
-    return const DataSuccessSate(data: true);
+    return await exceptionHandler(() async {
+      final userSetting = UserSettingCollection.fromModel(model);
+      final isar = await _database;
+      isar.writeTxnSync(() => isar.userSettingCollections.putSync(userSetting));
+      return const DataSuccessSate(data: true);
+    });
   }
 }

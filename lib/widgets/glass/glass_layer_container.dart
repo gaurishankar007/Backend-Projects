@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/extensions/context_extension.dart';
+import '../../core/constants/colors.dart';
 import 'glass_layer.dart';
 
 class GlassLayerContainer extends StatelessWidget {
@@ -27,7 +27,7 @@ class GlassLayerContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color containerColor = backgroundColor ?? context.surfaceColor();
+    Color containerColor = backgroundColor ?? surfaceColor();
 
     Widget newChild = Container(
       height: height,

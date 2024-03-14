@@ -7,7 +7,7 @@ import 'features/global/presentations/blocs/theme_cubit.dart';
 import 'injection/injector.dart';
 
 Future<void> main() async {
-  await appData.initialize();
+  await initializer.initialize();
   runApp(const ChatApp());
 }
 

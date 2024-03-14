@@ -18,7 +18,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   FutureData<UserDataModel> signIn(SignInParameter parameter) async {
-    if (network.isOnline) {
+    if (connectivity.isOnline) {
       final dataState = await remote.signIn(parameter);
       if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
       return dataState;
@@ -28,7 +28,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
-    if (network.isOnline) {
+    if (connectivity.isOnline) {
       final dataState = await remote.signUp(parameter);
       if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
       return dataState;
@@ -38,7 +38,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   FutureData<UserModel> updateProfile(String imagePath) async {
-    if (network.isOnline) return remote.updateProfile(imagePath);
+    if (connectivity.isOnline) return remote.updateProfile(imagePath);
     return const NetworkFailureSate();
   }
 
@@ -52,6 +52,5 @@ class AuthRepositoryImplementation implements AuthRepository {
   FutureList<UserSettingCollection> getUserSettings() => local.getUserSettings();
 
   @override
-  FutureBool saveUserSetting(SettingNavigationModel model) =>
-      local.saveUserSetting(model);
+  FutureBool saveUserSetting(SettingNavigationModel model) => local.saveUserSetting(model);
 }

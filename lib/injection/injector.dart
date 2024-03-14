@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import '../initializer.dart';
 import '../config/routes/routes.dart';
-import '../core/services/network_connection.dart';
+import '../core/services/connectivity_service.dart';
 import '../core/services/user_service.dart';
 import '../core/utils/screen_size.dart';
 import '../features/auth/data/dataSources/auth_local_source.dart';

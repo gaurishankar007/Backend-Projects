@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
-import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../core/utils/text_styles.dart';
 import '../../../data/models/drawer_navigation_model.dart';
 
 class DrawerNavigationItem extends StatelessWidget {
-  final Color backgroundColor;
+  final bool selected;
   final NavigationDataModel navigationItem;
 
-  DrawerNavigationItem({
+  const DrawerNavigationItem({
     super.key,
-    required this.backgroundColor,
+    required this.selected,
     required this.navigationItem,
   });
 
-  final double iconContainerSize = 40.pWConstraint(max: 45, min: 38);
-
   @override
   Widget build(BuildContext context) {
-    final Color iconContainerColor =
-        context.surfaceColor(light: const Color(0XFFEBEBEB), dark: const Color(0XFF767676));
+    /// Listening theme changes
+    Theme.of(context);
+
+    /// Color of the drawer navigation item
+    Color backgroundColor = Colors.transparent;
+    if (selected) backgroundColor = surfaceColor(light: f5f5f5, dark: const Color(0XFF575757));
+
+    Color iconContainerColor =
+        surfaceColor(light: const Color(0XFFEBEBEB), dark: const Color(0XFF767676));
 
     return Ink(
       padding: EdgeInsets.all(padding10),
@@ -33,8 +38,8 @@ class DrawerNavigationItem extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(padding8),
-            height: iconContainerSize,
-            width: iconContainerSize,
+            height: 40.pWConstraint(max: 45, min: 38),
+            width: 40.pWConstraint(max: 45, min: 38),
             decoration: BoxDecoration(
               color: iconContainerColor,
               borderRadius: BorderRadius.circular(border10),
