@@ -3,7 +3,7 @@ import 'package:isar/isar.dart';
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/local_database.dart';
-import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/domain/entities/setting_navigator.dart';
 import '../isarCollections/userData/user_data_collection.dart';
 import '../isarCollections/userSetting/user_setting_collection.dart';
 import '../models/userData/user_data_model.dart';
@@ -12,7 +12,7 @@ abstract class AuthLocalSource {
   FutureBool saveUserData(UserDataModel userData);
   FutureData<UserDataModel> getUserData();
   FutureList<UserSettingCollection> getUserSettings();
-  FutureBool saveUserSetting(SettingNavigationModel model);
+  FutureBool saveUserSetting(SettingNavigator model);
 }
 
 class AuthLocalSourceImplementation implements AuthLocalSource {
@@ -56,7 +56,7 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
   }
 
   @override
-  FutureBool saveUserSetting(SettingNavigationModel model) async {
+  FutureBool saveUserSetting(SettingNavigator model) async {
     return await exceptionHandler(() async {
       final userSetting = UserSettingCollection.fromModel(model);
       final isar = await _database;

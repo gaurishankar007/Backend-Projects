@@ -2,13 +2,13 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entities/reaction_entity.dart';
+import '../../../domain/entities/reaction.dart';
 
 part 'reaction_model.freezed.dart';
 part 'reaction_model.g.dart';
 
 @freezed
-class ReactionModel extends ReactionEntity with _$ReactionModel {
+class ReactionModel extends Reaction with _$ReactionModel {
   const factory ReactionModel({
     @JsonKey(name: "_id") required String id,
     required String reaction,

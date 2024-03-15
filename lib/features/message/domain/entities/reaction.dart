@@ -1,9 +1,9 @@
-class ReactionEntity {
+class Reaction {
   final String id;
   final String reaction;
   final String user;
 
-  const ReactionEntity({
+  const Reaction({
     required this.id,
     required this.reaction,
     required this.user,

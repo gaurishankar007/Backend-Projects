@@ -6,9 +6,9 @@ import '../../../../../core/resources/data_state.dart';
 import '../../features/auth/data/isarCollections/userSetting/user_setting_collection.dart';
 import '../../features/auth/data/models/userData/user_data_model.dart';
 import '../../features/auth/injection/auth_injector.dart';
-import '../../features/setting/data/models/settingNavigation/setting_navigation_model.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
+import '../../features/setting/domain/entities/setting_navigator.dart';
 
 class UserService with DarkModeMixin {
   UserService._();
@@ -19,8 +19,8 @@ class UserService with DarkModeMixin {
   UserDataModel userData = UserDataModel.empty();
   List<UserSettingCollection> _userSettings = [];
 
-  final List<SettingNavigationModel> _navigationModels = [
-    const SettingNavigationModel(
+  final List<SettingNavigator> _navigationModels = [
+    const SettingNavigator(
       id: 1,
       title: "Dark Mode",
       subtitle: "",
@@ -29,7 +29,7 @@ class UserService with DarkModeMixin {
       iconData: Icons.dark_mode_rounded,
       routePath: kDarkModePath,
     ),
-    SettingNavigationModel(
+    SettingNavigator(
       id: 2,
       title: "Active Status",
       subtitle: "",
@@ -38,7 +38,7 @@ class UserService with DarkModeMixin {
       iconData: Icons.contactless_rounded,
       routePath: kActiveStatusPath,
     ),
-    SettingNavigationModel(
+    SettingNavigator(
       id: 3,
       title: "App Lock",
       subtitle: "",
@@ -47,7 +47,7 @@ class UserService with DarkModeMixin {
       iconData: Icons.lock_rounded,
       routePath: kAppLockPath,
     ),
-    SettingNavigationModel(
+    SettingNavigator(
       id: 4,
       title: "Notifications and Sound",
       subtitle: "",
@@ -91,7 +91,7 @@ class UserService with DarkModeMixin {
   }
 
   /// Set new user setting
-  changeSetting(SettingNavigationModel newModel) {
+  changeSetting(SettingNavigator newModel) {
     /// Finding Index of the old model
     final index = _navigationModels.indexWhere((element) => element.id == newModel.id);
     if (index == -1) return;
@@ -104,6 +104,6 @@ class UserService with DarkModeMixin {
   }
 
   bool get isLoggedIn => _isLoggedIn;
-  List<SettingNavigationModel> get navigationModels => _navigationModels;
+  List<SettingNavigator> get navigationModels => _navigationModels;
   ThemeMode get themeMode => getThemeMode(DarkMode.values.byName(navigationModels.first.value));
 }

@@ -3,13 +3,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../auth/data/models/user/user_model.dart';
-import '../../../domain/entities/member_entity.dart';
+import '../../../domain/entities/member.dart';
 
 part 'member_model.freezed.dart';
 part 'member_model.g.dart';
 
 @freezed
-class MemberModel extends MemberEntity with _$MemberModel {
+class MemberModel extends Member with _$MemberModel {
   const factory MemberModel({
     @JsonKey(name: "_id") required String id,
     required UserModel user,

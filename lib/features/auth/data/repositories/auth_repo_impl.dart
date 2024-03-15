@@ -1,6 +1,6 @@
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection/injector.dart';
-import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/parameters/sign_in_param.dart';
 import '../../domain/parameters/sign_up_param.dart';
 import '../../domain/repositories/auth_repo.dart';
@@ -52,5 +52,5 @@ class AuthRepositoryImplementation implements AuthRepository {
   FutureList<UserSettingCollection> getUserSettings() => local.getUserSettings();
 
   @override
-  FutureBool saveUserSetting(SettingNavigationModel model) => local.saveUserSetting(model);
+  FutureBool saveUserSetting(SettingNavigator model) => local.saveUserSetting(model);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../injection/injector.dart';
-import '../../data/models/settingNavigation/setting_navigation_model.dart';
+import '../../domain/entities/setting_navigator.dart';
 import '../../domain/parameters/setting_parameter.dart';
 import '../widgets/setting_scaffold.dart';
 import '../widgets/setting_values.dart';
@@ -15,7 +15,7 @@ class AppLock extends StatefulWidget {
 }
 
 class _AppLockState extends State<AppLock> {
-  late final SettingNavigationModel navigationItem;
+  late final SettingNavigator navigationItem;
   final ValueNotifier<String> notifier = ValueNotifier<String>("");
   final List<String> values = ["on", "off"];
 

@@ -5,7 +5,7 @@ import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
-import '../../data/models/drawer_navigation_model.dart';
+import '../../domain/entities/dashboard_navigator.dart';
 
 class DashboardNavigation extends StatefulWidget {
   const DashboardNavigation({super.key});
@@ -15,10 +15,10 @@ class DashboardNavigation extends StatefulWidget {
 }
 
 class _DashboardNavigationState extends State<DashboardNavigation> {
-  final List<NavigationDataModel> navigationItems = [
-    const NavigationDataModel(id: 1, name: "Chats", iconData: Icons.chat_bubble_rounded),
-    const NavigationDataModel(id: 2, name: "People", iconData: Icons.people_rounded),
-    const NavigationDataModel(id: 3, name: "Stories", iconData: Icons.video_collection_rounded),
+  final List<DashboardNavigator> navigationItems = [
+    const DashboardNavigator(id: 1, name: "Chats", iconData: Icons.chat_bubble_rounded),
+    const DashboardNavigator(id: 2, name: "People", iconData: Icons.people_rounded),
+    const DashboardNavigator(id: 3, name: "Stories", iconData: Icons.video_collection_rounded),
   ];
   final ValueNotifier<int> indexNotifier = ValueNotifier<int>(0);
 

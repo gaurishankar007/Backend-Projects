@@ -4,11 +4,11 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../core/utils/text_styles.dart';
-import '../../../data/models/drawer_navigation_model.dart';
+import '../../../domain/entities/dashboard_navigator.dart';
 
 class DrawerNavigationItem extends StatelessWidget {
   final bool selected;
-  final NavigationDataModel navigationItem;
+  final DashboardNavigator navigationItem;
 
   const DrawerNavigationItem({
     super.key,

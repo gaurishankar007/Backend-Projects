@@ -1,18 +1,18 @@
 import '../../../global/domain/enums/content_type_enum.dart';
-import 'message_short_entity.dart';
-import 'reaction_entity.dart';
+import 'message_replied_to.dart';
+import 'reaction.dart';
 
-class MessageEntity {
+class Message {
   final String id;
   final String chat;
   final String sender;
   final String content;
   final ContentType contentType;
-  final List<ReactionEntity> reactions;
-  final MessageShortEntity repliedTo;
+  final List<Reaction> reactions;
+  final MessageRepliedTo repliedTo;
   final bool pinned;
 
-  const MessageEntity({
+  const Message({
     required this.id,
     required this.chat,
     required this.sender,

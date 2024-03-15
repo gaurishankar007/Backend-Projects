@@ -1,17 +1,17 @@
-import '../../../message/domain/entities/message_entity.dart';
-import 'member_entity.dart';
+import '../../../message/domain/entities/message.dart';
+import 'member.dart';
 
-class ChatEntity {
+class Chat {
   final String id;
-  final List<MemberEntity> members;
+  final List<Member> members;
   final String name;
   final String profilePic;
-  final MessageEntity lastMessage;
+  final Message lastMessage;
   final bool group;
   final String creator;
   final String theme;
 
-  const ChatEntity({
+  const Chat({
     required this.id,
     required this.members,
     required this.name,

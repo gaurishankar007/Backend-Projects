@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../injection/injector.dart';
 import '../../../global/domain/enums/dark_mode_enum.dart';
-import '../../data/models/settingNavigation/setting_navigation_model.dart';
+import '../../domain/entities/setting_navigator.dart';
 import '../../domain/parameters/setting_parameter.dart';
 import '../widgets/setting_scaffold.dart';
 import '../widgets/setting_values.dart';
@@ -16,7 +16,7 @@ class DarkModeSelection extends StatefulWidget {
 }
 
 class _DarkModeSelectionState extends State<DarkModeSelection> {
-  late final SettingNavigationModel navigationModel;
+  late final SettingNavigator navigationModel;
   final List<String> darkModes = ["on", "off", "system"];
   final ValueNotifier<String> notifier = ValueNotifier<String>("");
 

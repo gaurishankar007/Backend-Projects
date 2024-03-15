@@ -3,14 +3,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../message/data/models/message/message_model.dart';
-import '../../../domain/entities/chat_entity.dart';
+import '../../../domain/entities/chat.dart';
 import '../member/member_model.dart';
 
 part 'chat_model.freezed.dart';
 part 'chat_model.g.dart';
 
 @freezed
-class ChatModel extends ChatEntity with _$ChatModel {
+class ChatModel extends Chat with _$ChatModel {
   const factory ChatModel({
     @JsonKey(name: "_id") required String id,
     required List<MemberModel> members,

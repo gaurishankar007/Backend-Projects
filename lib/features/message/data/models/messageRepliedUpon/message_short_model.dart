@@ -2,13 +2,13 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entities/message_short_entity.dart';
+import '../../../domain/entities/message_replied_to.dart';
 
 part 'message_short_model.freezed.dart';
 part 'message_short_model.g.dart';
 
 @freezed
-class MessageRepliedUponModel extends MessageShortEntity with _$MessageRepliedUponModel {
+class MessageRepliedUponModel extends MessageRepliedTo with _$MessageRepliedUponModel {
   const factory MessageRepliedUponModel({
     @JsonKey(name: "_id") required String messageId,
     required String content,

@@ -1,10 +1,10 @@
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/useCase/use_case.dart';
 import '../../data/models/user/user_model.dart';
-import '../entities/user_entity.dart';
+import '../entities/user.dart';
 import '../repositories/auth_repo.dart';
 
-class UpdateProfileUseCase implements UseCase<UserEntity, String> {
+class UpdateProfileUseCase implements UseCase<User, String> {
   final AuthRepository authRepo;
   UpdateProfileUseCase(this.authRepo);
 

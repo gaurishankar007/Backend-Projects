@@ -1,11 +1,11 @@
-import 'user_entity.dart';
+import 'user.dart';
 
-class UserDataEntity {
-  final UserEntity user;
+class UserData {
+  final User user;
   final String accessToken;
   final String refreshToken;
 
-  const UserDataEntity({
+  const UserData({
     required this.user,
     required this.accessToken,
     required this.refreshToken,

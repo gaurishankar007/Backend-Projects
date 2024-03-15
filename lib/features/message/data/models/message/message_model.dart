@@ -3,7 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../global/domain/enums/content_type_enum.dart';
-import '../../../domain/entities/message_entity.dart';
+import '../../../domain/entities/message.dart';
 import '../messageRepliedUpon/message_short_model.dart';
 import '../reaction/reaction_model.dart';
 
@@ -11,7 +11,7 @@ part 'message_model.freezed.dart';
 part 'message_model.g.dart';
 
 @freezed
-class MessageModel extends MessageEntity with _$MessageModel {
+class MessageModel extends Message with _$MessageModel {
   const factory MessageModel({
     @JsonKey(name: "_id") required String id,
     required String chat,

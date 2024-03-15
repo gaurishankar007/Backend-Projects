@@ -1,10 +1,10 @@
-class UserEntity {
+class User {
   final String id;
   final String name;
   final String email;
   final String profile;
 
-  const UserEntity({
+  const User({
     required this.id,
     required this.name,
     required this.email,

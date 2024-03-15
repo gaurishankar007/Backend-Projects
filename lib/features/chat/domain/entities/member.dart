@@ -1,14 +1,14 @@
-import '../../../auth/domain/entities/user_entity.dart';
+import '../../../auth/domain/entities/user.dart';
 
-class MemberEntity {
+class Member {
   final String id;
-  final UserEntity user;
+  final User user;
   final String nickName;
   final String addedBy;
   final bool admin;
   final String seenMessage;
 
-  const MemberEntity({
+  const Member({
     required this.id,
     required this.user,
     required this.nickName,

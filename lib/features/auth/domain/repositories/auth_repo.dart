@@ -1,5 +1,5 @@
 import '../../../../core/resources/data_state.dart';
-import '../../../setting/data/models/settingNavigation/setting_navigation_model.dart';
+import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../data/isarCollections/userSetting/user_setting_collection.dart';
 import '../../data/models/user/user_model.dart';
 import '../../data/models/userData/user_data_model.dart';
@@ -13,5 +13,5 @@ abstract class AuthRepository {
   FutureData<UserDataModel> getUserData();
   FutureBool saveUserData(UserDataModel userData);
   FutureList<UserSettingCollection> getUserSettings();
-  FutureBool saveUserSetting(SettingNavigationModel model);
+  FutureBool saveUserSetting(SettingNavigator model);
 }

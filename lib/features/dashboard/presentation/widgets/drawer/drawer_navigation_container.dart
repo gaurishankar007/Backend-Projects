@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../injection/injector.dart';
-import '../../../data/models/drawer_navigation_model.dart';
+import '../../../domain/entities/dashboard_navigator.dart';
 import 'drawer_navigation_item.dart';
 
 class DrawerNavigationContainer extends StatefulWidget {
@@ -13,10 +13,10 @@ class DrawerNavigationContainer extends StatefulWidget {
 }
 
 class _DrawerNavigationContainerState extends State<DrawerNavigationContainer> {
-  final List<NavigationDataModel> navigationItems = [
-    const NavigationDataModel(id: 1, name: "Chats", iconData: Icons.chat_bubble_rounded),
-    const NavigationDataModel(id: 2, name: "Message requests", iconData: Icons.chat_rounded),
-    const NavigationDataModel(id: 3, name: "Hidden", iconData: Icons.visibility_off_rounded),
+  final List<DashboardNavigator> navigationItems = [
+    const DashboardNavigator(id: 1, name: "Chats", iconData: Icons.chat_bubble_rounded),
+    const DashboardNavigator(id: 2, name: "Message requests", iconData: Icons.chat_rounded),
+    const DashboardNavigator(id: 3, name: "Hidden", iconData: Icons.visibility_off_rounded),
   ];
   final ValueNotifier<int> indexNotifier = ValueNotifier<int>(0);
 

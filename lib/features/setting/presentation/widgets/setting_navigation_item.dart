@@ -4,11 +4,11 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../data/models/settingNavigation/setting_navigation_model.dart';
+import '../../domain/entities/setting_navigator.dart';
 import '../../domain/parameters/setting_parameter.dart';
 
 class SettingNavigationItem extends StatefulWidget {
-  final SettingNavigationModel navigationItem;
+  final SettingNavigator navigationItem;
   final Color arrowColor;
   final Color valueColor;
 
@@ -24,7 +24,7 @@ class SettingNavigationItem extends StatefulWidget {
 }
 
 class _SettingNavigationItemState extends State<SettingNavigationItem> {
-  late final SettingNavigationModel navigationItem;
+  late final SettingNavigator navigationItem;
   final ValueNotifier<String> notifier = ValueNotifier<String>("");
 
   @override
