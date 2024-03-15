@@ -1,4 +1,4 @@
-import { errorRes } from "../utils/response.js";
+import { errorResponse } from "../utils/response.js";
 
 const urlNotFound = (req, res, next) => {
   const error = Error(`Url Not Found: ${req.originalUrl}`);
@@ -10,7 +10,8 @@ const errorHandler = (error, req, res, next) => {
   console.log(error);
 
   const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
-  errorRes(res, error.message, undefined, statusCode);
+  errorResponse(res, error.message, undefined, statusCode);
 };
 
-export { urlNotFound, errorHandler };
+export { errorHandler, urlNotFound };
+

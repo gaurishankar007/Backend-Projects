@@ -1,6 +1,6 @@
 import multer from "multer";
-import { errorRes } from "../utils/response.js";
 import { publicDirectory } from "../utils/directory.js";
+import { errorResponse } from "../utils/response.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -34,14 +34,14 @@ const imageUpload = (req, res, next) =>
   imageMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
-        return errorRes(res, "Unsupported image");
+        return errorResponse(res, "Unsupported image");
       } else if (error.code === "LIMIT_FILE_SIZE") {
-        return errorRes(res, "Unsupported image size");
+        return errorResponse(res, "Unsupported image size");
       }
     }
 
-    if (error) return errorRes(res, error.message);
-    if (!req.file) return errorRes(res, "Image not provided");
+    if (error) return errorResponse(res, error.message);
+    if (!req.file) return errorResponse(res, "Image not provided");
 
     next();
   });

@@ -1,6 +1,6 @@
 import multer from "multer";
 import { publicDirectory } from "../utils/directory.js";
-import { errorRes } from "../utils/response.js";
+import { errorResponse } from "../utils/response.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -34,14 +34,14 @@ const videoUpload = (req, res, next) => {
   videoMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
-        return errorRes(res, "Unsupported video");
+        return errorResponse(res, "Unsupported video");
       } else if (error.code === "LIMIT_FILE_SIZE") {
-        return errorRes(res, "Unsupported video size");
+        return errorResponse(res, "Unsupported video size");
       }
     }
 
-    if (error) return errorRes(res, error.message);
-    if (!req.file) return errorRes(res, "Video not provided");
+    if (error) return errorResponse(res, error.message);
+    if (!req.file) return errorResponse(res, "Video not provided");
 
     next();
   });

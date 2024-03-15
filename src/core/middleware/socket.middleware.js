@@ -4,7 +4,7 @@ const socketMiddleware = (socket, next) => {
     if (!token) throw Error("Authentication is not provided");
 
     const { id, type } = tokenHandler.verifyToken(token);
-    if (type !== "token") return errorRes(res, "Invalid token", undefined, 401);
+    if (type !== "token") return errorResponse(res, "Invalid token", undefined, 401);
 
     next();
   } catch (error) {

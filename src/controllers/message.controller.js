@@ -1,15 +1,15 @@
 import asyncHandler from "express-async-handler";
 import fs from "fs";
-import MessageModel from "../models/message.model.js";
-import ChatModel from "../models/chat.model.js";
-import msgVdr from "../core/validators/message.validator.js";
-import { errorRes, successRes } from "../core/utils/response.js";
 import { filePath } from "../core/utils/directory.js";
+import { errorResponse, successResponse } from "../core/utils/response.js";
+import msgVdr from "../core/validators/message.validator.js";
+import ChatModel from "../models/chat.model.js";
+import MessageModel from "../models/message.model.js";
 
 const messageController = {
   text: asyncHandler(async (req, res) => {
     const error = msgVdr.text(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { chatId, content, contentType } = req.body;
     const user = req.user;
@@ -25,13 +25,13 @@ const messageController = {
       { _id: chatId },
       { lastMessage: message }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   replyText: asyncHandler(async (req, res) => {
     const error = msgVdr.replyText(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { chatId, messageId, content, contentType } = req.body;
     const user = req.user;
@@ -48,16 +48,16 @@ const messageController = {
       { _id: chatId },
       { lastMessage: message }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   file: asyncHandler(async (req, res) => {
     const file = req.file;
     const error = msgVdr.file(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
-      return errorRes(res, error);
+      return errorResponse(res, error);
     }
 
     const { chatId, contentType } = req.body;
@@ -74,16 +74,16 @@ const messageController = {
       { _id: chatId },
       { lastMessage: message }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   replyFile: asyncHandler(async (req, res) => {
     const file = req.file;
     const error = msgVdr.replyFile(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
-      return errorRes(res, error);
+      return errorResponse(res, error);
     }
 
     const { chatId, messageId, contentType } = req.body;
@@ -101,13 +101,13 @@ const messageController = {
       { _id: chatId },
       { lastMessage: message }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   react: asyncHandler(async (req, res) => {
     const error = msgVdr.react(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { reaction, messageId } = req.body;
     const user = req.user;
@@ -117,13 +117,13 @@ const messageController = {
       { _id: messageId },
       { $push: { reactions: reactionScheme } }
     );
-    if (message === null) return errorRes(res, "Invalid message id");
+    if (message === null) return errorResponse(res, "Invalid message id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   removeReaction: asyncHandler(async (req, res) => {
     const error = msgVdr.removeReaction(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { reactionId, messageId } = req.body;
 
@@ -131,13 +131,13 @@ const messageController = {
       { _id: messageId },
       { $pull: { reactions: { _id: reactionId } } }
     );
-    if (message === null) return errorRes(res, "Invalid message id");
+    if (message === null) return errorResponse(res, "Invalid message id");
 
-    successRes(res, message);
+    successResponse(res, message);
   }),
   fetch: asyncHandler(async (req, res) => {
     const error = msgVdr.fetch(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { chatId, page } = req.body;
     const messages = await MessageModel.find({ chat: chatId })
@@ -146,7 +146,7 @@ const messageController = {
       .limit(10)
       .populate("repliedTo");
 
-    return successRes(res, messages);
+    return successResponse(res, messages);
   }),
 };
 

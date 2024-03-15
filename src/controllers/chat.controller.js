@@ -1,26 +1,26 @@
 import asyncHandler from "express-async-handler";
-import { errorRes, successRes } from "../core/utils/response.js";
-import ChatModel from "../models/chat.model.js";
+import { errorResponse, successResponse } from "../core/utils/response.js";
 import chatVdr from "../core/validators/chat.validator.js";
+import ChatModel from "../models/chat.model.js";
 import "../models/message.model.js";
 
 const chatController = {
   create: asyncHandler(async (req, res) => {
     const userId = req.body.userId;
     if (!userId || userId.trim() === "")
-      return errorRes(res, "User id is required");
+      return errorResponse(res, "User id is required");
 
     const user = req.user;
     const members = [{ user: `${user._id}` }, { user: userId }];
 
     const chat = await ChatModel.create({ members: members });
 
-    successRes(res, chat);
+    successResponse(res, chat);
   }),
   createGroup: asyncHandler(async (req, res) => {
     const { userIds, name } = req.body;
     if (!userIds || userIds.length <= 1)
-      return errorRes(res, "At least 2 users' id are required");
+      return errorResponse(res, "At least 2 users' id are required");
 
     const user = req.user;
     const members = [
@@ -37,13 +37,13 @@ const chatController = {
       creator: user,
     });
     
-    successRes(res, chat);
+    successResponse(res, chat);
   }),
   fetch: asyncHandler(async (req, res) => {
     const user = req.user;
     const page = req.body.page;
-    if (!page) return errorRes(res, "Page is required");
-    if (!Number.isInteger(page)) return errorRes(res, "Page must be integer");
+    if (!page) return errorResponse(res, "Page is required");
+    if (!Number.isInteger(page)) return errorResponse(res, "Page must be integer");
 
     let chats = await ChatModel.find({
       members: { $elemMatch: { user: user._id } },
@@ -54,11 +54,11 @@ const chatController = {
       .populate("members.user", "-password")
       .populate("lastMessage");
 
-    successRes(res, chats);
+    successResponse(res, chats);
   }),
   addMember: asyncHandler(async (req, res) => {
     const error = chatVdr.addMbr(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { chatId, userIds } = req.body;
     const user = req.user;
@@ -70,13 +70,13 @@ const chatController = {
       { _id: chatId },
       { $push: { members: members } }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, members);
+    successResponse(res, members);
   }),
   removeMember: asyncHandler(async (req, res) => {
     const error = chatVdr.removeMbr(req.body);
-    if (error) return errorRes(res, error);
+    if (error) return errorResponse(res, error);
 
     const { chatId, userId } = req.body;
 
@@ -84,9 +84,9 @@ const chatController = {
       { _id: chatId },
       { $pull: { members: { user: userId } } }
     );
-    if (chat === null) return errorRes(res, "Invalid chat id");
+    if (chat === null) return errorResponse(res, "Invalid chat id");
 
-    successRes(res, "Member removed");
+    successResponse(res, "Member removed");
   }),
 };
 
