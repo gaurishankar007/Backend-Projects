@@ -5,7 +5,7 @@ import '../../injection/injector.dart';
 import '../constants/routes_data.dart';
 
 /// Pops the page which is at the top of the pages stack
-popPage() => appRouter.popTop();
+popPage() => appRouter.maybePopTop();
 
 /// Pushes the page that matches the path name
 pushName(String path) => appRouter.pushNamed(path);
