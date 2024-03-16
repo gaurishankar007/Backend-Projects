@@ -10,7 +10,7 @@ import '../../../../core/utils/text_styles.dart';
 import '../../../../injection/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/custom_text_form.dart';
-import '../../domain/parameters/sign_up_param.dart';
+import '../../domain/forms/sign_up_form.dart';
 import '../../injection/auth_injector.dart';
 import '../widgets/error_text_notifier.dart';
 
@@ -115,7 +115,7 @@ class SignUp extends StatelessWidget {
     if (password != confirmP) return errorNotifier.value = confirmPasswordError;
 
     errorNotifier.value = "";
-    final parameter = SignUpParameter(name: name, email: email, password: password);
+    final parameter = SignUpForm(name: name, email: email, password: password);
     final dataState = await signUpUseCase.call(parameter);
     if (dataState is DataSuccessSate) {
       userService.userData = dataState.data!;

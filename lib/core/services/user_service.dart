@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/routes_data.dart';
 import '../../../../../core/resources/data_state.dart';
-import '../../features/auth/data/isarCollections/userSetting/user_setting_collection.dart';
-import '../../features/auth/data/models/userData/user_data_model.dart';
+import '../../features/auth/domain/entities/user_data.dart';
+import '../../features/auth/domain/entities/user_setting.dart';
 import '../../features/auth/injection/auth_injector.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
@@ -16,10 +16,10 @@ class UserService with DarkModeMixin {
   factory UserService() => _singleton;
 
   bool _isLoggedIn = true;
-  UserDataModel userData = UserDataModel.empty();
-  List<UserSettingCollection> _userSettings = [];
+  UserData userData = const UserData.empty();
+  List<UserSetting> _userSettings = [];
 
-  final List<SettingNavigator> _navigationModels = [
+  List<SettingNavigator> _navigators = [
     const SettingNavigator(
       id: 1,
       title: "Dark Mode",
@@ -78,32 +78,28 @@ class UserService with DarkModeMixin {
   /// Applying the setting that the user has saved before
   applyUserSetting() {
     if (_userSettings.isEmpty) return;
-    for (int i = 0; i < _navigationModels.length; i++) {
-      final model = _navigationModels[i];
+    for (int i = 0; i < _navigators.length; i++) {
+      final navigator = _navigators[i];
 
-      /// Finding the saved value of the exact model
-      int index = _userSettings.indexWhere((element) => element.settingId == model.id);
+      /// Finding the saved value of the exact navigator
+      int index = _userSettings.indexWhere((element) => element.id == navigator.id);
       if (index != -1) {
         String newValue = _userSettings[index].value;
-        _navigationModels[i] = model.copyWith(value: newValue);
+        _navigators[i] = navigator.copyWith(value: newValue);
       }
     }
   }
 
   /// Set new user setting
-  changeSetting(SettingNavigator newModel) {
-    /// Finding Index of the old model
-    final index = _navigationModels.indexWhere((element) => element.id == newModel.id);
-    if (index == -1) return;
-
+  changeSetting(SettingNavigator newNavigator) {
     /// Updating data
-    _navigationModels[index] = newModel;
+    _navigators = _navigators.map((e) => e.id == newNavigator.id ? newNavigator : e).toList();
 
     /// Saving new setting
-    saveUserSettingUseCase.call(newModel);
+    saveUserSettingUseCase.call(newNavigator);
   }
 
   bool get isLoggedIn => _isLoggedIn;
-  List<SettingNavigator> get navigationModels => _navigationModels;
-  ThemeMode get themeMode => getThemeMode(DarkMode.values.byName(navigationModels.first.value));
+  List<SettingNavigator> get navigators => _navigators;
+  ThemeMode get themeMode => getThemeMode(DarkMode.values.byName(navigators.first.value));
 }

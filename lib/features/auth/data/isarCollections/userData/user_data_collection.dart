@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 
-import '../../models/user/user_model.dart';
-import '../../models/userData/user_data_model.dart';
+import '../../../domain/entities/user_data.dart';
+import '../../models/user_model.dart';
 
 part 'user_data_collection.g.dart';
 
@@ -25,16 +25,16 @@ class UserDataCollection {
     required this.refreshToken,
   });
 
-  factory UserDataCollection.fromModel(UserDataModel model) => UserDataCollection(
-        userId: model.user.id,
-        userName: model.user.name,
-        userEmail: model.user.email,
-        userProfile: model.user.profile,
-        accessToken: model.accessToken,
-        refreshToken: model.refreshToken,
+  factory UserDataCollection.fromUserData(UserData userData) => UserDataCollection(
+        userId: userData.user.id,
+        userName: userData.user.name,
+        userEmail: userData.user.email,
+        userProfile: userData.user.profile,
+        accessToken: userData.accessToken,
+        refreshToken: userData.refreshToken,
       );
 
-  UserDataModel toModel() => UserDataModel(
+  UserData toUserData() => UserData(
         user: UserModel(
           id: userId,
           name: userName,

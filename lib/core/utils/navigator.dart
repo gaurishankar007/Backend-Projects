@@ -11,7 +11,7 @@ popPage() => appRouter.maybePopTop();
 pushName(String path) => appRouter.pushNamed(path);
 
 /// Pops all pages and pushes the dashboard page
-replaceToDashboard() => appRouter.replaceAll([DashboardRoute()]);
+replaceToDashboard() => appRouter.replaceAll([const DashboardRoute()]);
 
 /// Pops all pages and pushes the signIn page
 replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);

@@ -1,14 +1,14 @@
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection/injector.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
-import '../../domain/parameters/sign_in_param.dart';
-import '../../domain/parameters/sign_up_param.dart';
+import '../../domain/entities/user.dart';
+import '../../domain/entities/user_data.dart';
+import '../../domain/entities/user_setting.dart';
+import '../../domain/forms/sign_in_form.dart';
+import '../../domain/forms/sign_up_form.dart';
 import '../../domain/repositories/auth_repo.dart';
 import '../dataSources/auth_local_source.dart';
 import '../dataSources/auth_remote_source.dart';
-import '../isarCollections/userSetting/user_setting_collection.dart';
-import '../models/user/user_model.dart';
-import '../models/userData/user_data_model.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
   final AuthRemoteSource remote;
@@ -17,9 +17,9 @@ class AuthRepositoryImplementation implements AuthRepository {
   AuthRepositoryImplementation({required this.remote, required this.local});
 
   @override
-  FutureData<UserDataModel> signIn(SignInParameter parameter) async {
+  FutureData<UserData> signIn(SignInForm form) async {
     if (connectivity.isOnline) {
-      final dataState = await remote.signIn(parameter);
+      final dataState = await remote.signIn(form);
       if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
       return dataState;
     }
@@ -27,9 +27,9 @@ class AuthRepositoryImplementation implements AuthRepository {
   }
 
   @override
-  FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
+  FutureData<UserData> signUp(SignUpForm form) async {
     if (connectivity.isOnline) {
-      final dataState = await remote.signUp(parameter);
+      final dataState = await remote.signUp(form);
       if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
       return dataState;
     }
@@ -37,20 +37,20 @@ class AuthRepositoryImplementation implements AuthRepository {
   }
 
   @override
-  FutureData<UserModel> updateProfile(String imagePath) async {
+  FutureData<User> updateProfile(String imagePath) async {
     if (connectivity.isOnline) return remote.updateProfile(imagePath);
     return const NetworkFailureSate();
   }
 
   @override
-  FutureData<UserDataModel> getUserData() => local.getUserData();
+  FutureData<UserData> getUserData() => local.getUserData();
 
   @override
-  FutureBool saveUserData(UserDataModel userData) => local.saveUserData(userData);
+  FutureBool saveUserData(UserData userData) => local.saveUserData(userData);
 
   @override
-  FutureList<UserSettingCollection> getUserSettings() => local.getUserSettings();
+  FutureList<UserSetting> getUserSettings() => local.getUserSettings();
 
   @override
-  FutureBool saveUserSetting(SettingNavigator model) => local.saveUserSetting(model);
+  FutureBool saveUserSetting(SettingNavigator navigator) => local.saveUserSetting(navigator);
 }

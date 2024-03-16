@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 
 import '../../../../setting/domain/entities/setting_navigator.dart';
+import '../../../domain/entities/user_setting.dart';
 
 part 'user_setting_collection.g.dart';
 
@@ -18,9 +19,16 @@ class UserSettingCollection {
     required this.value,
   });
 
-  factory UserSettingCollection.fromModel(SettingNavigator navigator) => UserSettingCollection(
+  factory UserSettingCollection.fromSettingNavigator(SettingNavigator navigator) =>
+      UserSettingCollection(
         settingId: navigator.id,
         title: navigator.title,
         value: navigator.value,
+      );
+
+  UserSetting toUserSetting() => UserSetting(
+        id: settingId,
+        title: title,
+        value: value,
       );
 }

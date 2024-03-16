@@ -28,11 +28,11 @@ class SettingNavigators extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userService.navigationModels.length,
+        itemCount: userService.navigators.length,
         separatorBuilder: (context, index) => Divider(indent: 10.wPercentage),
         itemBuilder: (context, index) {
           return SettingNavigationItem(
-            navigationItem: userService.navigationModels[index],
+            navigationItem: userService.navigators[index],
             arrowColor: arrowColor,
             valueColor: valueColor,
           );

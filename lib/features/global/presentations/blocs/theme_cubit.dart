@@ -13,7 +13,7 @@ class ThemeCubit extends Cubit<ThemeState> with DarkModeMixin {
   final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
 
   ThemeCubit() : super(ThemeState(userService.themeMode)) {
-    final bool enable = userService.navigationModels.first.value == "System";
+    final bool enable = userService.navigators.first.value == "System";
     _platformBrightnessListener(enable: enable);
   }
 

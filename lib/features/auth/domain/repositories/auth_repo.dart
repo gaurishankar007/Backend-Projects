@@ -1,17 +1,17 @@
 import '../../../../core/resources/data_state.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
-import '../../data/isarCollections/userSetting/user_setting_collection.dart';
-import '../../data/models/user/user_model.dart';
-import '../../data/models/userData/user_data_model.dart';
-import '../parameters/sign_in_param.dart';
-import '../parameters/sign_up_param.dart';
+import '../entities/user.dart';
+import '../entities/user_data.dart';
+import '../entities/user_setting.dart';
+import '../forms/sign_in_form.dart';
+import '../forms/sign_up_form.dart';
 
 abstract class AuthRepository {
-  FutureData<UserDataModel> signIn(SignInParameter parameter);
-  FutureData<UserDataModel> signUp(SignUpParameter parameter);
-  FutureData<UserModel> updateProfile(String imagePath);
-  FutureData<UserDataModel> getUserData();
-  FutureBool saveUserData(UserDataModel userData);
-  FutureList<UserSettingCollection> getUserSettings();
-  FutureBool saveUserSetting(SettingNavigator model);
+  FutureData<UserData> signIn(SignInForm parameter);
+  FutureData<UserData> signUp(SignUpForm parameter);
+  FutureData<User> updateProfile(String imagePath);
+  FutureData<UserData> getUserData();
+  FutureBool saveUserData(UserData userData);
+  FutureList<UserSetting> getUserSettings();
+  FutureBool saveUserSetting(SettingNavigator navigator);
 }

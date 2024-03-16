@@ -11,7 +11,7 @@ import '../../../../injection/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/buttons/custom_text_button.dart';
 import '../../../../widgets/custom_text_form.dart';
-import '../../domain/parameters/sign_in_param.dart';
+import '../../domain/forms/sign_in_form.dart';
 import '../../injection/auth_injector.dart';
 import '../widgets/error_text_notifier.dart';
 
@@ -99,7 +99,7 @@ class _SignInState extends State<SignIn> {
                     return CustomElevatedButton(
                       onTap: () async {
                         errorNotifier.value = "";
-                        final parameter = SignInParameter(email: email!, password: password!);
+                        final parameter = SignInForm(email: email!, password: password!);
                         final dataState = await signInUseCase.call(parameter);
 
                         if (dataState is DataSuccessSate) {

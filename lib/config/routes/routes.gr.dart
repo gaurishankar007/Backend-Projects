@@ -30,11 +30,9 @@ abstract class $AppRouter extends _i6.RootStackRouter {
       );
     },
     DashboardRoute.name: (routeData) {
-      final args = routeData.argsAs<DashboardRouteArgs>(
-          orElse: () => const DashboardRouteArgs());
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.Dashboard(key: args.key),
+        child: const _i2.Dashboard(),
       );
     },
     SignInRoute.name: (routeData) {
@@ -78,31 +76,16 @@ class ChatRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.Dashboard]
-class DashboardRoute extends _i6.PageRouteInfo<DashboardRouteArgs> {
-  DashboardRoute({
-    _i7.Key? key,
-    List<_i6.PageRouteInfo>? children,
-  }) : super(
+class DashboardRoute extends _i6.PageRouteInfo<void> {
+  const DashboardRoute({List<_i6.PageRouteInfo>? children})
+      : super(
           DashboardRoute.name,
-          args: DashboardRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'DashboardRoute';
 
-  static const _i6.PageInfo<DashboardRouteArgs> page =
-      _i6.PageInfo<DashboardRouteArgs>(name);
-}
-
-class DashboardRouteArgs {
-  const DashboardRouteArgs({this.key});
-
-  final _i7.Key? key;
-
-  @override
-  String toString() {
-    return 'DashboardRouteArgs{key: $key}';
-  }
+  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
 }
 
 /// generated route for

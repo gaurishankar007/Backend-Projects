@@ -5,14 +5,14 @@ import '../../../../core/constants/api_paths.dart';
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/auth_header.dart';
-import '../../data/models/userData/user_data_model.dart';
-import '../../domain/parameters/sign_in_param.dart';
-import '../../domain/parameters/sign_up_param.dart';
-import '../models/user/user_model.dart';
+import '../models/user_data_model.dart';
+import '../../domain/forms/sign_in_form.dart';
+import '../../domain/forms/sign_up_form.dart';
+import '../models/user_model.dart';
 
 abstract class AuthRemoteSource {
-  FutureData<UserDataModel> signIn(SignInParameter parameter);
-  FutureData<UserDataModel> signUp(SignUpParameter parameter);
+  FutureData<UserDataModel> signIn(SignInForm form);
+  FutureData<UserDataModel> signUp(SignUpForm form);
   FutureData<UserModel> updateProfile(String imagePath);
 }
 
@@ -22,7 +22,7 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
   AuthRemoteSourceImplementation({required this.dio});
 
   @override
-  FutureData<UserDataModel> signIn(SignInParameter parameter) async {
+  FutureData<UserDataModel> signIn(SignInForm parameter) async {
     return await exceptionHandler(() async {
       final res = await dio.post(
         signInUrl,
@@ -50,7 +50,7 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
   }
 
   @override
-  FutureData<UserDataModel> signUp(SignUpParameter parameter) async {
+  FutureData<UserDataModel> signUp(SignUpForm parameter) async {
     return await exceptionHandler(() async {
       final res = await dio.post(
         signUpUrl,
@@ -81,7 +81,7 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
   FutureData<UserModel> updateProfile(String imagePath) async {
     return await exceptionHandler(() async {
       FormData data = FormData.fromMap({
-        "profilePic": await MultipartFile.fromFile(
+        "profile": await MultipartFile.fromFile(
           imagePath,
           filename: imagePath.split("/").last,
           contentType: MediaType("image", "jpg"),

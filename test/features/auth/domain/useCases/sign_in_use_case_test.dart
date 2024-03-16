@@ -1,6 +1,6 @@
 import 'package:chat/core/resources/data_state.dart';
-import 'package:chat/features/auth/data/models/userData/user_data_model.dart';
-import 'package:chat/features/auth/domain/parameters/sign_in_param.dart';
+import 'package:chat/features/auth/domain/entities/user_data.dart';
+import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
 import 'package:chat/features/auth/domain/repositories/auth_repo.dart';
 import 'package:chat/features/auth/domain/useCases/sign_in_uc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,16 +9,16 @@ import 'package:mocktail/mocktail.dart';
 class AuthRepositoryMock extends Mock implements AuthRepository {}
 
 void main() {
-  late final SignInParameter parameter;
+  late final SignInForm parameter;
   late final AuthRepositoryMock authRepositoryMock;
   late final SignInUseCase signInUseCase;
-  late final DataState<UserDataModel> successDataState;
+  late final DataState<UserData> successDataState;
 
   setUp(() {
-    parameter = const SignInParameter(email: "", password: "");
+    parameter = const SignInForm(email: "", password: "");
     authRepositoryMock = AuthRepositoryMock();
     signInUseCase = SignInUseCase(authRepositoryMock);
-    successDataState = DataSuccessSate(data: UserDataModel.empty());
+    successDataState = const DataSuccessSate(data: UserData.empty());
   });
 
   test("Sign in use case test", () async {
