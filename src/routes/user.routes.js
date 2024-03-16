@@ -1,7 +1,7 @@
 import express from "express";
 import userController from "../controllers/user.controller.js";
-import profileUpload from "../core/uploads/profile.upload.js";
 import authMiddleware from "../core/middleware/auth.middleware.js";
+import profileMiddleware from "../core/uploads/profile.upload.js";
 
 const userRouter = express.Router();
 
@@ -11,7 +11,7 @@ userRouter.post("/refreshToken", userController.refreshToken);
 userRouter.put(
   "/updateProfile",
   authMiddleware,
-  profileUpload,
+  profileMiddleware,
   userController.changeProfile
 );
 userRouter.put(

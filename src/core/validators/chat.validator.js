@@ -1,12 +1,12 @@
-const chatVdr = {
-  addMbr: (json) => {
+const chatValidator = {
+  addMember: (json) => {
     const { chatId, userIds } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!userIds || userIds.length === 0) return "Users id are required";
 
     return undefined;
   },
-  removeMbr: (json) => {
+  removeMember: (json) => {
     const { chatId, userId } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!userId || userId.trim() === "") return "User id is required";
@@ -15,4 +15,4 @@ const chatVdr = {
   },
 };
 
-export default chatVdr;
+export default chatValidator;

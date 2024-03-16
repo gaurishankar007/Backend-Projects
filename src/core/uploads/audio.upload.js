@@ -30,7 +30,7 @@ const audioMulter = multer({
   limits: { fileSize: 25 * 1e6 },
 }).single("audio");
 
-const audioUpload = (req, res, next) => {
+const audioMiddleware = (req, res, next) => {
   audioMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
@@ -47,4 +47,4 @@ const audioUpload = (req, res, next) => {
   });
 };
 
-export default audioUpload;
+export default audioMiddleware;

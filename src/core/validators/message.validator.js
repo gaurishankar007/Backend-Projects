@@ -1,4 +1,4 @@
-const msgVdr = {
+const messageValidator = {
   text: (json) => {
     const { chatId, content, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
@@ -60,4 +60,4 @@ const msgVdr = {
   },
 };
 
-export default msgVdr;
+export default messageValidator;

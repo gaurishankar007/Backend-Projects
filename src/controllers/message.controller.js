@@ -2,13 +2,13 @@ import asyncHandler from "express-async-handler";
 import fs from "fs";
 import { filePath } from "../core/utils/directory.js";
 import { errorResponse, successResponse } from "../core/utils/response.js";
-import msgVdr from "../core/validators/message.validator.js";
+import messageValidator from "../core/validators/message.validator.js";
 import ChatModel from "../models/chat.model.js";
 import MessageModel from "../models/message.model.js";
 
 const messageController = {
   text: asyncHandler(async (req, res) => {
-    const error = msgVdr.text(req.body);
+    const error = messageValidator.text(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, content, contentType } = req.body;
@@ -30,7 +30,7 @@ const messageController = {
     successResponse(res, message);
   }),
   replyText: asyncHandler(async (req, res) => {
-    const error = msgVdr.replyText(req.body);
+    const error = messageValidator.replyText(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, messageId, content, contentType } = req.body;
@@ -54,7 +54,7 @@ const messageController = {
   }),
   file: asyncHandler(async (req, res) => {
     const file = req.file;
-    const error = msgVdr.file(req.body);
+    const error = messageValidator.file(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
       return errorResponse(res, error);
@@ -80,7 +80,7 @@ const messageController = {
   }),
   replyFile: asyncHandler(async (req, res) => {
     const file = req.file;
-    const error = msgVdr.replyFile(req.body);
+    const error = messageValidator.replyFile(req.body);
     if (error) {
       if (file) fs.unlinkSync(filePath(file));
       return errorResponse(res, error);
@@ -106,7 +106,7 @@ const messageController = {
     successResponse(res, message);
   }),
   react: asyncHandler(async (req, res) => {
-    const error = msgVdr.react(req.body);
+    const error = messageValidator.react(req.body);
     if (error) return errorResponse(res, error);
 
     const { reaction, messageId } = req.body;
@@ -122,7 +122,7 @@ const messageController = {
     successResponse(res, message);
   }),
   removeReaction: asyncHandler(async (req, res) => {
-    const error = msgVdr.removeReaction(req.body);
+    const error = messageValidator.removeReaction(req.body);
     if (error) return errorResponse(res, error);
 
     const { reactionId, messageId } = req.body;
@@ -136,7 +136,7 @@ const messageController = {
     successResponse(res, message);
   }),
   fetch: asyncHandler(async (req, res) => {
-    const error = msgVdr.fetch(req.body);
+    const error = messageValidator.fetch(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, page } = req.body;

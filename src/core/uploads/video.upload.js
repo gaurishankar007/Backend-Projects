@@ -30,7 +30,7 @@ const videoMulter = multer({
   limits: { fileSize: 100 * 1e6 },
 }).single("video");
 
-const videoUpload = (req, res, next) => {
+const videoMiddleware = (req, res, next) => {
   videoMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
@@ -47,4 +47,4 @@ const videoUpload = (req, res, next) => {
   });
 };
 
-export default videoUpload;
+export default videoMiddleware;

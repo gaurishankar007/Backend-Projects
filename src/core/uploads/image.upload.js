@@ -30,7 +30,7 @@ const imageMulter = multer({
   limits: { fileSize: 50 * 1e6 },
 }).single("image");
 
-const imageUpload = (req, res, next) =>
+const imageMiddleware = (req, res, next) =>
   imageMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
@@ -46,4 +46,4 @@ const imageUpload = (req, res, next) =>
     next();
   });
 
-export default imageUpload;
+export default imageMiddleware;

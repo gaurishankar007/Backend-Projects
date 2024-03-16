@@ -1,9 +1,9 @@
 import express from "express";
-import authMiddleWare from "../core/middleware/auth.middleware.js";
 import messageController from "../controllers/message.controller.js";
-import imageUpload from "../core/uploads/image.upload.js";
-import audioUpload from "../core/uploads/audio.upload.js";
-import videoUpload from "../core/uploads/video.upload.js";
+import authMiddleWare from "../core/middleware/auth.middleware.js";
+import audioMiddleware from "../core/uploads/audio.upload.js";
+import imageMiddleware from "../core/uploads/image.upload.js";
+import videoMiddleware from "../core/uploads/video.upload.js";
 
 const messageRouter = express.Router();
 
@@ -12,37 +12,37 @@ messageRouter.post("/replyText", authMiddleWare, messageController.replyText);
 messageRouter.post(
   "/image",
   authMiddleWare,
-  imageUpload,
+  imageMiddleware,
   messageController.file
 );
 messageRouter.post(
   "/replyImage",
   authMiddleWare,
-  imageUpload,
+  imageMiddleware,
   messageController.replyFile
 );
 messageRouter.post(
   "/audio",
   authMiddleWare,
-  audioUpload,
+  audioMiddleware,
   messageController.file
 );
 messageRouter.post(
   "/replyAudio",
   authMiddleWare,
-  audioUpload,
+  audioMiddleware,
   messageController.replyFile
 );
 messageRouter.post(
   "/video",
   authMiddleWare,
-  videoUpload,
+  videoMiddleware,
   messageController.file
 );
 messageRouter.post(
   "/replyVideo",
   authMiddleWare,
-  videoUpload,
+  videoMiddleware,
   messageController.replyFile
 );
 messageRouter.put("/react", authMiddleWare, messageController.react);

@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { errorResponse, successResponse } from "../core/utils/response.js";
-import chatVdr from "../core/validators/chat.validator.js";
+import chatValidator from "../core/validators/chat.validator.js";
 import ChatModel from "../models/chat.model.js";
 import "../models/message.model.js";
 
@@ -57,7 +57,7 @@ const chatController = {
     successResponse(res, chats);
   }),
   addMember: asyncHandler(async (req, res) => {
-    const error = chatVdr.addMbr(req.body);
+    const error = chatValidator.addMember(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, userIds } = req.body;
@@ -75,7 +75,7 @@ const chatController = {
     successResponse(res, members);
   }),
   removeMember: asyncHandler(async (req, res) => {
-    const error = chatVdr.removeMbr(req.body);
+    const error = chatValidator.removeMember(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, userId } = req.body;

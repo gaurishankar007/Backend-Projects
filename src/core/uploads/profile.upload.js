@@ -30,7 +30,7 @@ const profileMulter = multer({
   limits: { fileSize: 10 * 1e6 },
 }).single("profile");
 
-const profileUpload = (req, res, next) =>
+const profileMiddleware = (req, res, next) =>
   profileMulter(req, res, (error) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
@@ -46,4 +46,4 @@ const profileUpload = (req, res, next) =>
     next();
   });
 
-export default profileUpload;
+export default profileMiddleware;
