@@ -14,7 +14,7 @@ class Initializer {
 
     WidgetsFlutterBinding.ensureInitialized();
     initializeDependencies();
-    await connectivity.checkConnection();
+    await connectivityService.checkConnection();
     await userService.initializeUserData();
 
     _isInitialized = true;

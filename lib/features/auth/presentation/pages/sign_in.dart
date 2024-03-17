@@ -102,7 +102,7 @@ class _SignInState extends State<SignIn> {
                         final parameter = SignInForm(email: email!, password: password!);
                         final dataState = await signInUseCase.call(parameter);
 
-                        if (dataState is DataSuccessSate) {
+                        if (dataState is DataSuccess) {
                           userService.userData = dataState.data!;
                           return replaceToDashboard();
                         }

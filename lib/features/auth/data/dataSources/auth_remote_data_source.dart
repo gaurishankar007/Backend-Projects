@@ -2,24 +2,25 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
 import '../../../../core/constants/api_paths.dart';
+import '../../../../core/errors/error_data.dart';
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/auth_header.dart';
-import '../models/user_data_model.dart';
 import '../../domain/forms/sign_in_form.dart';
 import '../../domain/forms/sign_up_form.dart';
+import '../models/user_data_model.dart';
 import '../models/user_model.dart';
 
-abstract class AuthRemoteSource {
+abstract class AuthRemoteDataSource {
   FutureData<UserDataModel> signIn(SignInForm form);
   FutureData<UserDataModel> signUp(SignUpForm form);
   FutureData<UserModel> updateProfile(String imagePath);
 }
 
-class AuthRemoteSourceImplementation implements AuthRemoteSource {
+class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
   final Dio dio;
 
-  AuthRemoteSourceImplementation({required this.dio});
+  AuthRemoteDataSourceImplementation({required this.dio});
 
   @override
   FutureData<UserDataModel> signIn(SignInForm parameter) async {
@@ -36,10 +37,10 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
 
       if (status) {
         UserDataModel userData = UserDataModel.fromJson(res.data["data"]);
-        return DataSuccessSate(data: userData);
+        return DataSuccess(data: userData);
       }
 
-      return DataFailureSate<UserDataModel>(
+      return DataFailure<UserDataModel>(
         error: ErrorData(
           error: "Authentication error",
           message: res.data["error"],
@@ -64,10 +65,10 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
 
       if (status) {
         UserDataModel userData = UserDataModel.fromJson(res.data["data"]);
-        return DataSuccessSate(data: userData);
+        return DataSuccess(data: userData);
       }
 
-      return DataFailureSate<UserDataModel>(
+      return DataFailure<UserDataModel>(
         error: ErrorData(
           error: "Registration error",
           message: res.data["error"],
@@ -100,10 +101,10 @@ class AuthRemoteSourceImplementation implements AuthRemoteSource {
       bool status = res.data["status"];
       if (status) {
         UserModel user = UserModel.fromJson(res.data["data"]);
-        return DataSuccessSate(data: user);
+        return DataSuccess(data: user);
       }
 
-      return DataFailureSate<UserModel>(
+      return DataFailure<UserModel>(
         error: ErrorData(
           error: "Profile upload error",
           message: res.data["error"],

@@ -117,7 +117,7 @@ class SignUp extends StatelessWidget {
     errorNotifier.value = "";
     final parameter = SignUpForm(name: name, email: email, password: password);
     final dataState = await signUpUseCase.call(parameter);
-    if (dataState is DataSuccessSate) {
+    if (dataState is DataSuccess) {
       userService.userData = dataState.data!;
       return pushName(kUpdateProfilePath);
     }

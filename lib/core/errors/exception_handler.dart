@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:isar/isar.dart';
 
 import '../resources/data_state.dart';
+import 'error_data.dart';
 
 FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorData}) async {
   try {
@@ -18,14 +19,14 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
       DioExceptionType.receiveTimeout,
     ].contains(error.type);
 
-    if (socketException) return NetworkFailureSate<T>();
+    if (socketException) return NetworkFailure<T>();
 
     final errorData = ErrorData(
       error: error.toString(),
       message: "Server request failed",
       type: ErrorType.dioException,
     );
-    return DataFailureSate<T>(error: errorData);
+    return DataFailure<T>(error: errorData);
   } on IsarError catch (error) {
     debugPrint(error.toString());
     final errorData = ErrorData(
@@ -33,7 +34,7 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
       message: "Local database error",
       type: ErrorType.isarException,
     );
-    return DataFailureSate<T>(error: errorData);
+    return DataFailure<T>(error: errorData);
   } on TypeError catch (error) {
     debugPrint(error.toString());
     final errorData = ErrorData(
@@ -41,7 +42,7 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
       message: "Unsupported data type is assigned",
       type: ErrorType.typeError,
     );
-    return DataFailureSate<T>(error: errorData);
+    return DataFailure<T>(error: errorData);
   } on FormatException catch (error) {
     debugPrint(error.toString());
     final errorData = ErrorData(
@@ -49,9 +50,9 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
       message: "Operation on unsupported data format",
       type: ErrorType.formatException,
     );
-    return DataFailureSate<T>(error: errorData);
+    return DataFailure<T>(error: errorData);
   } catch (error) {
     debugPrint(error.toString());
-    return DataFailureSate<T>(error: errorData ?? ErrorData(error: error.toString()));
+    return DataFailure<T>(error: errorData ?? ErrorData(error: error.toString()));
   }
 }

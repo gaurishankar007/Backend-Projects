@@ -1,5 +1,6 @@
+import '../../../../core/services/connectivity_service.dart';
+
 import '../../../../core/resources/data_state.dart';
-import '../../../../injection/injector.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/entities/user_data.dart';
@@ -7,50 +8,56 @@ import '../../domain/entities/user_setting.dart';
 import '../../domain/forms/sign_in_form.dart';
 import '../../domain/forms/sign_up_form.dart';
 import '../../domain/repositories/auth_repo.dart';
-import '../dataSources/auth_local_source.dart';
-import '../dataSources/auth_remote_source.dart';
+import '../dataSources/auth_local_data_source.dart';
+import '../dataSources/auth_remote_data_source.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  final AuthRemoteSource remote;
-  final AuthLocalSource local;
+  final ConnectivityService connectivityService;
+  final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
 
-  AuthRepositoryImplementation({required this.remote, required this.local});
+  AuthRepositoryImplementation({
+    required this.connectivityService,
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   FutureData<UserData> signIn(SignInForm form) async {
-    if (connectivity.isOnline) {
-      final dataState = await remote.signIn(form);
-      if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
+    if (connectivityService.isOnline) {
+      final dataState = await remoteDataSource.signIn(form);
+      if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
     }
-    return const NetworkFailureSate();
+    return const NetworkFailure();
   }
 
   @override
   FutureData<UserData> signUp(SignUpForm form) async {
-    if (connectivity.isOnline) {
-      final dataState = await remote.signUp(form);
-      if (dataState is DataSuccessSate) local.saveUserData(dataState.data!);
+    if (connectivityService.isOnline) {
+      final dataState = await remoteDataSource.signUp(form);
+      if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
     }
-    return const NetworkFailureSate();
+    return const NetworkFailure();
   }
 
   @override
   FutureData<User> updateProfile(String imagePath) async {
-    if (connectivity.isOnline) return remote.updateProfile(imagePath);
-    return const NetworkFailureSate();
+    if (connectivityService.isOnline) return remoteDataSource.updateProfile(imagePath);
+    return const NetworkFailure();
   }
 
   @override
-  FutureData<UserData> getUserData() => local.getUserData();
+  FutureData<UserData> getUserData() => localDataSource.getUserData();
 
   @override
-  FutureBool saveUserData(UserData userData) => local.saveUserData(userData);
+  FutureBool saveUserData(UserData userData) => localDataSource.saveUserData(userData);
 
   @override
-  FutureList<UserSetting> getUserSettings() => local.getUserSettings();
+  FutureList<UserSetting> getUserSettings() => localDataSource.getUserSettings();
 
   @override
-  FutureBool saveUserSetting(SettingNavigator navigator) => local.saveUserSetting(navigator);
+  FutureBool saveUserSetting(SettingNavigator navigator) =>
+      localDataSource.saveUserSetting(navigator);
 }

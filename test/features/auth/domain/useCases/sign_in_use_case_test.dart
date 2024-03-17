@@ -9,31 +9,36 @@ import 'package:mocktail/mocktail.dart';
 class AuthRepositoryMock extends Mock implements AuthRepository {}
 
 void main() {
-  late final SignInForm parameter;
+  late final SignInForm form;
   late final AuthRepositoryMock authRepositoryMock;
   late final SignInUseCase signInUseCase;
-  late final DataState<UserData> successDataState;
+  late final UserData userData;
 
   setUp(() {
-    parameter = const SignInForm(email: "", password: "");
+    form = const SignInForm(email: "user", password: "pwd");
     authRepositoryMock = AuthRepositoryMock();
     signInUseCase = SignInUseCase(authRepositoryMock);
-    successDataState = const DataSuccessSate(data: UserData.empty());
+    userData = const UserData.empty();
+
+    /// Register a fallback value for `SignInForm`
+    /// To use `any` or `captureAny` on a parameter of type `SignInForm`
+    registerFallbackValue(const SignInForm(email: "", password: ""));
   });
 
-  test("Sign in use case test", () async {
+  test("Should get user model after signing in", () async {
     /// Arranging
-    when(() => authRepositoryMock.signIn(parameter)).thenAnswer((_) async => successDataState);
+    when(() => authRepositoryMock.signIn(any()))
+        .thenAnswer((_) async => DataSuccess(data: userData));
     // Verify no interactions have occurred.
-    verifyNever(() => authRepositoryMock.signIn(parameter));
+    verifyNever(() => authRepositoryMock.signIn(form));
 
     /// Act (interacting)
-    final result = await signInUseCase.call(parameter);
+    final result = await signInUseCase.call(form);
 
     /// Assert
-    expect(result, successDataState);
-    verify(() => authRepositoryMock.signIn(parameter)).called(1);
+    verify(() => authRepositoryMock.signIn(form)).called(1);
+    expect(result, DataSuccess(data: userData));
     // When mocktail verifies an invocation, it is then excluded from further verifications.
-    verifyNever(() => authRepositoryMock.signIn(parameter));
+    verifyNever(() => authRepositoryMock.signIn(form));
   });
 }

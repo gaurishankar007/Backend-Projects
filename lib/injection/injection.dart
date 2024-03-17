@@ -10,12 +10,14 @@ initializeDependencies() {
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 
   // DataSources
-  getIt.registerLazySingleton<AuthRemoteSource>(() => AuthRemoteSourceImplementation(dio: getIt()));
-  getIt.registerLazySingleton<AuthLocalSource>(() => AuthLocalSourceImplementation());
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImplementation(dio: getIt()));
+  getIt.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImplementation());
 
-  // RepoImpl
+  // Repository Implementation
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImplementation(
-        remote: getIt<AuthRemoteSource>(),
-        local: getIt<AuthLocalSource>(),
+        connectivityService: connectivityService,
+        remoteDataSource: getIt<AuthRemoteDataSource>(),
+        localDataSource: getIt<AuthLocalDataSource>(),
       ));
 }

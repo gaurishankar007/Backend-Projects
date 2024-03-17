@@ -9,17 +9,17 @@ import '../../domain/entities/user_setting.dart';
 import '../isarCollections/userData/user_data_collection.dart';
 import '../isarCollections/userSetting/user_setting_collection.dart';
 
-abstract class AuthLocalSource {
+abstract class AuthLocalDataSource {
   FutureBool saveUserData(UserData userData);
   FutureData<UserData> getUserData();
   FutureList<UserSetting> getUserSettings();
   FutureBool saveUserSetting(SettingNavigator navigator);
 }
 
-class AuthLocalSourceImplementation implements AuthLocalSource {
+class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   late final Future<Isar> _database;
 
-  AuthLocalSourceImplementation() {
+  AuthLocalDataSourceImplementation() {
     _database = openLocalDatabase();
   }
 
@@ -29,7 +29,7 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
       final userDataCollection = UserDataCollection.fromUserData(userData);
       final isar = await _database;
       isar.writeTxnSync(() => isar.userDataCollections.putSync(userDataCollection));
-      return const DataSuccessSate(data: true);
+      return const DataSuccess(data: true);
     });
   }
 
@@ -40,10 +40,10 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
       final userDataCollection = await isar.userDataCollections.where().findFirst();
       if (userDataCollection != null) {
         UserData userData = userDataCollection.toUserData();
-        return DataSuccessSate(data: userData);
+        return DataSuccess(data: userData);
       }
 
-      return const DataFailureSate<UserData>();
+      return const DataFailure<UserData>();
     });
   }
 
@@ -53,7 +53,7 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
       final isar = await _database;
       final userSettingCollections = await isar.userSettingCollections.where().findAll();
       final userSettings = userSettingCollections.map((e) => e.toUserSetting());
-      return DataSuccessSate(data: userSettings);
+      return DataSuccess(data: userSettings);
     });
   }
 
@@ -63,7 +63,7 @@ class AuthLocalSourceImplementation implements AuthLocalSource {
       final userSetting = UserSettingCollection.fromSettingNavigator(navigator);
       final isar = await _database;
       isar.writeTxnSync(() => isar.userSettingCollections.putSync(userSetting));
-      return const DataSuccessSate(data: true);
+      return const DataSuccess(data: true);
     });
   }
 }

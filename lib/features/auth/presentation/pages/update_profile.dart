@@ -84,7 +84,7 @@ class UpdateProfile extends StatelessWidget {
                   errorNotifier.value = "";
                   final dataState = await updateProfileUseCase.call(imagePathNotifier.value);
 
-                  if (dataState is DataSuccessSate) {
+                  if (dataState is DataSuccess) {
                     userService.userData = userService.userData.copyWith(user: dataState.data!);
                     saveUserDataUseCase.call(userService.userData);
                     return replaceToDashboard();

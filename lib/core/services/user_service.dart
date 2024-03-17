@@ -66,13 +66,13 @@ class UserService with DarkModeMixin {
 
   getUserData() async {
     final userDataState = await getUserDataUseCase.call();
-    if (userDataState is DataSuccessSate) return userData = userDataState.data!;
+    if (userDataState is DataSuccess) return userData = userDataState.data!;
     _isLoggedIn = false;
   }
 
   getUserSetting() async {
     final dataState = await getUserSettingUseCase.call();
-    if (dataState is DataSuccessSate) _userSettings = dataState.data!;
+    if (dataState is DataSuccess) _userSettings = dataState.data!;
   }
 
   /// Applying the setting that the user has saved before
