@@ -1,9 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../initializer.dart';
 import '../config/routes/routes.dart';
-import '../core/services/connectivity_service.dart';
+import '../core/network/network_status.dart';
 import '../core/services/user_service.dart';
 import '../core/utils/screen_size.dart';
 import '../features/auth/data/dataSources/auth_local_data_source.dart';

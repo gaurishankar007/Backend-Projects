@@ -1,5 +1,5 @@
+import 'package:chat/core/network/network_status.dart';
 import 'package:chat/core/resources/data_state.dart';
-import 'package:chat/core/services/connectivity_service.dart';
 import 'package:chat/features/auth/data/dataSources/auth_local_data_source.dart';
 import 'package:chat/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:chat/features/auth/data/models/user_data_model.dart';
@@ -14,12 +14,12 @@ class AuthRemoteDataSourceMock extends Mock implements AuthRemoteDataSource {}
 
 class AuthLocalDataSourceMock extends Mock implements AuthLocalDataSource {}
 
-class ConnectivityServiceMock extends Mock implements ConnectivityService {}
+class NetworkStatusMock extends Mock implements NetworkStatus {}
 
 void main() {
   late final AuthLocalDataSourceMock authLocalDataSourceMock;
   late final AuthRemoteDataSourceMock authRemoteDataSourceMock;
-  late final ConnectivityServiceMock connectivityServiceMock;
+  late final NetworkStatusMock networkStatusMock;
   late final AuthRepositoryImplementation authRepositoryImplementation;
   late final UserData userData;
   late final UserDataModel userDataModel;
@@ -27,11 +27,11 @@ void main() {
   setUpAll(() {
     authLocalDataSourceMock = AuthLocalDataSourceMock();
     authRemoteDataSourceMock = AuthRemoteDataSourceMock();
-    connectivityServiceMock = ConnectivityServiceMock();
+    networkStatusMock = NetworkStatusMock();
     authRepositoryImplementation = AuthRepositoryImplementation(
       localDataSource: authLocalDataSourceMock,
       remoteDataSource: authRemoteDataSourceMock,
-      connectivityService: connectivityServiceMock,
+      networkStatus: networkStatusMock,
     );
 
     userDataModel = const UserDataModel(
@@ -52,10 +52,10 @@ void main() {
 
     test("Should check if the device is online", () {
       /// Arrange
-      when(() => connectivityServiceMock.isOnline).thenAnswer((_) => true);
+      when(() => networkStatusMock.isOnline).thenAnswer((_) => true);
 
       /// Act
-      final result = connectivityServiceMock.isOnline;
+      final result = networkStatusMock.isOnline;
 
       /// Assert
       expect(result, true);
@@ -63,7 +63,7 @@ void main() {
 
     group("When device is online", () {
       setUp(() {
-        when(() => connectivityServiceMock.isOnline).thenAnswer((_) => true);
+        when(() => networkStatusMock.isOnline).thenAnswer((_) => true);
         registerFallbackValue(form);
         registerFallbackValue(userData);
       });
@@ -88,7 +88,7 @@ void main() {
 
     group("When device is offline", () {
       setUp(() {
-        when(() => connectivityServiceMock.isOnline).thenAnswer((_) => false);
+        when(() => networkStatusMock.isOnline).thenAnswer((_) => false);
         registerFallbackValue(form);
       });
 

@@ -1,5 +1,4 @@
-import '../../../../core/services/connectivity_service.dart';
-
+import '../../../../core/network/network_status.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user.dart';
@@ -12,19 +11,19 @@ import '../dataSources/auth_local_data_source.dart';
 import '../dataSources/auth_remote_data_source.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  final ConnectivityService connectivityService;
+  final NetworkStatus networkStatus;
   final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
 
   AuthRepositoryImplementation({
-    required this.connectivityService,
+    required this.networkStatus,
     required this.remoteDataSource,
     required this.localDataSource,
   });
 
   @override
   FutureData<UserData> signIn(SignInForm form) async {
-    if (connectivityService.isOnline) {
+    if (networkStatus.isOnline) {
       final dataState = await remoteDataSource.signIn(form);
       if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
@@ -34,7 +33,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   FutureData<UserData> signUp(SignUpForm form) async {
-    if (connectivityService.isOnline) {
+    if (networkStatus.isOnline) {
       final dataState = await remoteDataSource.signUp(form);
       if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
@@ -44,7 +43,7 @@ class AuthRepositoryImplementation implements AuthRepository {
 
   @override
   FutureData<User> updateProfile(String imagePath) async {
-    if (connectivityService.isOnline) return remoteDataSource.updateProfile(imagePath);
+    if (networkStatus.isOnline) return remoteDataSource.updateProfile(imagePath);
     return const NetworkFailure();
   }
 
