@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late final User user;
 
-  setUp(() {
+  setUpAll(() {
     user = const User(
       id: "",
       name: "",

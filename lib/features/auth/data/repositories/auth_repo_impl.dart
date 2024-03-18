@@ -1,5 +1,5 @@
-import '../../../../core/network/network_status.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/network/network_status.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/entities/user_data.dart';

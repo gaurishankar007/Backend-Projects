@@ -1,4 +1,4 @@
-import 'package:chat/core/utils/local_database.dart';
+import 'package:chat/core/database/local_database.dart';
 
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
@@ -24,7 +24,7 @@ class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   FutureBool saveUserData(UserData userData) async {
     return await exceptionHandler(() async {
       final userDataCollection = UserDataCollection.fromUserData(userData);
-      await localDatabase.save<UserDataCollection>(userDataCollection);
+      await localDatabase.save(userDataCollection);
       return const DataSuccess(data: true);
     });
   }
@@ -46,7 +46,7 @@ class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   FutureList<UserSetting> getUserSettings() async {
     return await exceptionHandler(() async {
       final userSettingCollections = await localDatabase.getAll<UserSettingCollection>();
-      final userSettings = userSettingCollections.map((e) => e.toUserSetting());
+      final userSettings = userSettingCollections.map((e) => e.toUserSetting()).toList();
       return DataSuccess(data: userSettings);
     });
   }

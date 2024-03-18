@@ -44,4 +44,10 @@ class UserDataCollection {
         accessToken: accessToken,
         refreshToken: refreshToken,
       );
+
+  @override
+  bool operator ==(covariant UserDataCollection other) => userId == other.userId;
+
+  @override
+  int get hashCode => userId.hashCode;
 }

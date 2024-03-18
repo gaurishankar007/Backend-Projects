@@ -5,9 +5,9 @@ import '../../features/auth/data/isarCollections/userData/user_data_collection.d
 import '../../features/auth/data/isarCollections/userSetting/user_setting_collection.dart';
 
 abstract class LocalDatabase {
-  Future<bool> save<T>(T item);
+  Future save<T>(T collection);
   Future<List<T>> getAll<T>();
-  Future<bool> clearAll();
+  Future clearAll();
 }
 
 /// A class for opening local database and executing operations
@@ -36,17 +36,12 @@ class LocalDatabaseImplementation implements LocalDatabase {
   }
 
   @override
-  Future<bool> save<T>(T item) async {
-    await isar.writeTxn(() => isar.collection<T>().put(item));
-    return true;
-  }
+  Future save<T>(T collection) async =>
+      await isar.writeTxn(() => isar.collection<T>().put(collection));
 
   @override
   Future<List<T>> getAll<T>() async => await isar.collection<T>().where().findAll();
 
   @override
-  Future<bool> clearAll() async {
-    await isar.writeTxn(() => isar.clear());
-    return true;
-  }
+  Future clearAll() async => await isar.writeTxn(() => isar.clear());
 }
