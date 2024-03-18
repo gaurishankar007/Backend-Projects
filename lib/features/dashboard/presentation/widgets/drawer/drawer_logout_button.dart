@@ -1,9 +1,9 @@
+import 'package:chat/injection/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
-import '../../../../../core/utils/local_database.dart';
 import '../../../../../core/utils/navigator.dart';
 import '../../inheritedWidget/drawer_key_inherited_widget.dart';
 
@@ -17,8 +17,7 @@ class DrawerLogoutButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () async {
         drawerKey.close();
-        final isar = await openLocalDatabase();
-        isar.writeTxnSync(() => isar.clearSync());
+        localDatabaseImplementation.clearAll();
         replaceToSignIn();
       },
       backgroundColor: primaryColor,

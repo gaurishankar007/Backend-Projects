@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// A class that stores screen height, width, screen paddings, and dynamic sizes
 class ScreenSize {
   double _height = 0;
   double _width = 0;

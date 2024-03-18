@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 
+import '../../../domain/entities/user.dart';
 import '../../../domain/entities/user_data.dart';
-import '../../models/user_model.dart';
 
 part 'user_data_collection.g.dart';
 
@@ -35,7 +35,7 @@ class UserDataCollection {
       );
 
   UserData toUserData() => UserData(
-        user: UserModel(
+        user: User(
           id: userId,
           name: userName,
           email: userEmail,

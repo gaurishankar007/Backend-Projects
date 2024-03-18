@@ -1,8 +1,7 @@
-import 'package:isar/isar.dart';
+import 'package:chat/core/utils/local_database.dart';
 
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/utils/local_database.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user_data.dart';
 import '../../domain/entities/user_setting.dart';
@@ -17,18 +16,15 @@ abstract class AuthLocalDataSource {
 }
 
 class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
-  late final Future<Isar> _database;
+  final LocalDatabase localDatabase;
 
-  AuthLocalDataSourceImplementation() {
-    _database = openLocalDatabase();
-  }
+  AuthLocalDataSourceImplementation({required this.localDatabase});
 
   @override
   FutureBool saveUserData(UserData userData) async {
     return await exceptionHandler(() async {
       final userDataCollection = UserDataCollection.fromUserData(userData);
-      final isar = await _database;
-      isar.writeTxnSync(() => isar.userDataCollections.putSync(userDataCollection));
+      await localDatabase.save<UserDataCollection>(userDataCollection);
       return const DataSuccess(data: true);
     });
   }
@@ -36,10 +32,9 @@ class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   @override
   FutureData<UserData> getUserData() async {
     return await exceptionHandler(() async {
-      final isar = await _database;
-      final userDataCollection = await isar.userDataCollections.where().findFirst();
-      if (userDataCollection != null) {
-        UserData userData = userDataCollection.toUserData();
+      final userDataCollections = await localDatabase.getAll<UserDataCollection>();
+      if (userDataCollections.isNotEmpty) {
+        UserData userData = userDataCollections.first.toUserData();
         return DataSuccess(data: userData);
       }
 
@@ -50,8 +45,7 @@ class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   @override
   FutureList<UserSetting> getUserSettings() async {
     return await exceptionHandler(() async {
-      final isar = await _database;
-      final userSettingCollections = await isar.userSettingCollections.where().findAll();
+      final userSettingCollections = await localDatabase.getAll<UserSettingCollection>();
       final userSettings = userSettingCollections.map((e) => e.toUserSetting());
       return DataSuccess(data: userSettings);
     });
@@ -61,8 +55,7 @@ class AuthLocalDataSourceImplementation implements AuthLocalDataSource {
   FutureBool saveUserSetting(SettingNavigator navigator) async {
     return await exceptionHandler(() async {
       final userSetting = UserSettingCollection.fromSettingNavigator(navigator);
-      final isar = await _database;
-      isar.writeTxnSync(() => isar.userSettingCollections.putSync(userSetting));
+      await localDatabase.save(userSetting);
       return const DataSuccess(data: true);
     });
   }

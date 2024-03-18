@@ -3,6 +3,7 @@ import 'dart:async' show StreamSubscription;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+/// A class responsible for checking internet connection
 class NetworkStatus {
   final InternetConnectionChecker internetConnectionChecker;
   final Connectivity connectivity;

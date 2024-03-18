@@ -10,6 +10,7 @@ import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 import '../../features/setting/domain/entities/setting_navigator.dart';
 
+/// A class that stores user data
 class UserService with DarkModeMixin {
   UserService._();
   static final _singleton = UserService._();

@@ -1,6 +1,7 @@
 part of "injector.dart";
 
 Initializer get initializer => Initializer();
+LocalDatabaseImplementation get localDatabaseImplementation => LocalDatabaseImplementation();
 UserService get userService => UserService();
 ScreenSize get screen => ScreenSize();
 
