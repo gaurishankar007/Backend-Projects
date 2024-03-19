@@ -12,7 +12,7 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
     debugPrint(error.toString());
     // debugPrint(error.response.toString());
 
-    if (dioSocketExceptions.contains(error.type)) return NetworkFailure<T>();
+    if (dioSocketExceptions.contains(error.type)) return DataNetworkFailure<T>();
 
     final errorData = ErrorData(
       error: error.toString(),

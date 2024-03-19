@@ -1,5 +1,5 @@
-import 'package:chat/core/services/network_status.dart';
 import 'package:chat/core/resources/data_state.dart';
+import 'package:chat/core/services/network_status.dart';
 import 'package:chat/features/auth/data/dataSources/auth_local_data_source.dart';
 import 'package:chat/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:chat/features/auth/data/models/user_data_model.dart';
@@ -99,7 +99,7 @@ void main() {
         final result = await authRepositoryImplementation.signIn(form);
 
         /// Assert
-        expect(result, const NetworkFailure<UserData>());
+        expect(result, const DataNetworkFailure<UserData>());
         verifyNever(() => authRemoteDataSourceMock.signIn(form));
         verifyNever(() => authLocalDataSourceMock.saveUserData(userData));
       });

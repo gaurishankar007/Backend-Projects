@@ -29,7 +29,7 @@ class AuthRepositoryImplementation implements AuthRepository {
       if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
     }
-    return const NetworkFailure();
+    return const DataNetworkFailure();
   }
 
   @override
@@ -39,13 +39,13 @@ class AuthRepositoryImplementation implements AuthRepository {
       if (dataState is DataSuccess) localDataSource.saveUserData(dataState.data!);
       return dataState;
     }
-    return const NetworkFailure();
+    return const DataNetworkFailure();
   }
 
   @override
   FutureData<User> updateProfile(DioFormData formData) async {
     if (networkStatus.isOnline) return remoteDataSource.updateProfile(formData);
-    return const NetworkFailure();
+    return const DataNetworkFailure();
   }
 
   @override

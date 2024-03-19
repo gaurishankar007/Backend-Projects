@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -34,6 +35,18 @@ class DioForm {
     this.onSendProgress,
     this.onReceiveProgress,
   });
+
+  @override
+  bool operator ==(covariant DioForm other) {
+    bool equal = other.path == path;
+    if (other.data == null && data == null) return equal;
+
+    bool dataEquality = const DeepCollectionEquality.unordered().equals(other.data, data);
+    return dataEquality && equal;
+  }
+
+  @override
+  int get hashCode => Object.hash(path, data);
 }
 
 /// Convenience methods to make an HTTP PATCH request.

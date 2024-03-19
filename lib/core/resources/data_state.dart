@@ -24,8 +24,8 @@ class DataFailure<T> extends DataState<T> {
   const DataFailure({ErrorData error = const ErrorData()}) : super(error: error);
 }
 
-class NetworkFailure<T> extends DataState<T> {
-  const NetworkFailure({
+class DataNetworkFailure<T> extends DataState<T> {
+  const DataNetworkFailure({
     super.error = const ErrorData(
       error: "Network Connection Error",
       message: "Network connection failed",
