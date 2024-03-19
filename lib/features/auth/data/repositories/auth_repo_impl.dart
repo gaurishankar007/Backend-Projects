@@ -1,5 +1,6 @@
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/network/network_status.dart';
+import '../../../../core/services/network_service.dart';
+import '../../../../core/services/network_status.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/entities/user_data.dart';
@@ -42,8 +43,8 @@ class AuthRepositoryImplementation implements AuthRepository {
   }
 
   @override
-  FutureData<User> updateProfile(String imagePath) async {
-    if (networkStatus.isOnline) return remoteDataSource.updateProfile(imagePath);
+  FutureData<User> updateProfile(DioFormData formData) async {
+    if (networkStatus.isOnline) return remoteDataSource.updateProfile(formData);
     return const NetworkFailure();
   }
 

@@ -1,5 +1,5 @@
 import 'package:chat/core/resources/data_state.dart';
-import 'package:chat/core/database/local_database.dart';
+import 'package:chat/core/services/local_database.dart';
 import 'package:chat/features/auth/data/dataSources/auth_local_data_source.dart';
 import 'package:chat/features/auth/data/isarCollections/userData/user_data_collection.dart';
 import 'package:chat/features/auth/domain/entities/user.dart';

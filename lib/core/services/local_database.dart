@@ -4,21 +4,21 @@ import 'package:path_provider/path_provider.dart';
 import '../../features/auth/data/isarCollections/userData/user_data_collection.dart';
 import '../../features/auth/data/isarCollections/userSetting/user_setting_collection.dart';
 
+typedef IsarException = IsarError;
+
 abstract class LocalDatabase {
-  Future save<T>(T collection);
+  Future<void> open();
+  Future<void> save<T>(T collection);
   Future<List<T>> getAll<T>();
-  Future clearAll();
+  Future<void> clearAll();
 }
 
 /// A class for opening local database and executing operations
 class LocalDatabaseImplementation implements LocalDatabase {
-  LocalDatabaseImplementation._();
-  static final _singleton = LocalDatabaseImplementation._();
-  factory LocalDatabaseImplementation() => _singleton;
-
   late final Isar isar;
 
-  Future openLocalDatabase() async {
+  @override
+  Future<void> open() async {
     /// Open an isar instance if not opened
     if (Isar.instanceNames.isEmpty) {
       /// Get the root directory of the application
@@ -36,12 +36,12 @@ class LocalDatabaseImplementation implements LocalDatabase {
   }
 
   @override
-  Future save<T>(T collection) async =>
+  Future<void> save<T>(T collection) async =>
       await isar.writeTxn(() => isar.collection<T>().put(collection));
 
   @override
   Future<List<T>> getAll<T>() async => await isar.collection<T>().where().findAll();
 
   @override
-  Future clearAll() async => await isar.writeTxn(() => isar.clear());
+  Future<void> clearAll() async => await isar.writeTxn(() => isar.clear());
 }

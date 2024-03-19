@@ -1,25 +1,18 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' show debugPrint;
-import 'package:isar/isar.dart';
 
 import '../resources/data_state.dart';
+import '../services/local_database.dart';
+import '../services/network_service.dart';
 import 'error_data.dart';
 
 FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorData}) async {
   try {
     return await callBack();
-  } on DioException catch (error) {
+  } on DioFailure catch (error) {
     debugPrint(error.toString());
     // debugPrint(error.response.toString());
 
-    bool socketException = [
-      DioExceptionType.connectionError,
-      DioExceptionType.connectionError,
-      DioExceptionType.sendTimeout,
-      DioExceptionType.receiveTimeout,
-    ].contains(error.type);
-
-    if (socketException) return NetworkFailure<T>();
+    if (dioSocketExceptions.contains(error.type)) return NetworkFailure<T>();
 
     final errorData = ErrorData(
       error: error.toString(),
@@ -27,7 +20,7 @@ FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorD
       type: ErrorType.dioException,
     );
     return DataFailure<T>(error: errorData);
-  } on IsarError catch (error) {
+  } on IsarException catch (error) {
     debugPrint(error.toString());
     final errorData = ErrorData(
       error: error.toString(),

@@ -3,23 +3,20 @@ part of "injector.dart";
 final getIt = GetIt.instance;
 
 initializeDependencies() {
-  getIt.registerLazySingleton(
-    () => NetworkStatus(
-      internetConnectionChecker: InternetConnectionChecker(),
-      connectivity: Connectivity(),
-    ),
-  );
+  getIt.registerLazySingleton<LocalDatabase>(() => LocalDatabaseImplementation());
+  getIt.registerLazySingleton<NetworkStatus>(() =>
+      NetworkStatus(internetChecker: InternetConnectionChecker(), connectivity: Connectivity()));
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
-  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<NetworkService>(() => NetworkServiceImplementation(dio: Dio()));
 
   // Bloc
   getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 
   // DataSources
   getIt.registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImplementation(dio: getIt<Dio>()));
+      () => AuthRemoteDataSourceImplementation(networkService: getIt<NetworkService>()));
   getIt.registerLazySingleton<AuthLocalDataSource>(
-      () => AuthLocalDataSourceImplementation(localDatabase: localDatabaseImplementation));
+      () => AuthLocalDataSourceImplementation(localDatabase: getIt<LocalDatabase>()));
 
   // Repository Implementation
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImplementation(

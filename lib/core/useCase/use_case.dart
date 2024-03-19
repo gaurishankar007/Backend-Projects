@@ -4,6 +4,6 @@ abstract class UseCase<T, P> {
   FutureData<T> call(P parameter);
 }
 
-abstract class UseCaseWithoutParameter<T> {
+abstract class UseCaseNoParameter<T> {
   FutureData<T> call();
 }

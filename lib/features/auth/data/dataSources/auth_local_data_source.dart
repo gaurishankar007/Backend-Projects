@@ -1,4 +1,4 @@
-import 'package:chat/core/database/local_database.dart';
+import '../../../../core/services/local_database.dart';
 
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';

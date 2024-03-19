@@ -1,4 +1,4 @@
-import 'package:chat/core/network/network_status.dart';
+import 'package:chat/core/services/network_status.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -17,7 +17,7 @@ void main() {
     internetConnectionCheckerMock = InternetConnectionCheckerMock();
     connectivityMock = ConnectivityMock();
     networkStatus = NetworkStatus(
-      internetConnectionChecker: internetConnectionCheckerMock,
+      internetChecker: internetConnectionCheckerMock,
       connectivity: connectivityMock,
     );
   });

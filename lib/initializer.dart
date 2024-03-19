@@ -14,11 +14,8 @@ class Initializer {
 
     WidgetsFlutterBinding.ensureInitialized();
 
-    /// Isar database should be opened before initializing dependencies
-    /// Because some auth dependencies require isar instance
-    await localDatabaseImplementation.openLocalDatabase();
-
     initializeDependencies();
+    await localDatabase.open();
     await networkStatus.checkConnectionAndListenConnectivity();
     await userService.initializeUserData();
 

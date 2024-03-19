@@ -7,6 +7,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/routes_data.dart';
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/services/network_service.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../injection/injector.dart';
@@ -82,7 +83,15 @@ class UpdateProfile extends StatelessWidget {
                   }
 
                   errorNotifier.value = "";
-                  final dataState = await updateProfileUseCase.call(imagePathNotifier.value);
+                  String imagePath = imagePathNotifier.value;
+                  DioFormData formData = DioFormData.fromMap({
+                    "profile": await DioMultiPartFile.fromFile(
+                      imagePath,
+                      filename: imagePath.split("/").last,
+                      contentType: HttpMediaType("image", "jpg"),
+                    ),
+                  });
+                  final dataState = await updateProfileUseCase.call(formData);
 
                   if (dataState is DataSuccess) {
                     userService.userData = userService.userData.copyWith(user: dataState.data!);

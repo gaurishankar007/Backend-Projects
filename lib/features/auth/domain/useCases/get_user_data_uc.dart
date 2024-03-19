@@ -3,7 +3,7 @@ import '../../../../core/useCase/use_case.dart';
 import '../entities/user_data.dart';
 import '../repositories/auth_repo.dart';
 
-class GetUserDataUseCase implements UseCaseWithoutParameter<UserData> {
+class GetUserDataUseCase implements UseCaseNoParameter<UserData> {
   final AuthRepository authRepo;
   GetUserDataUseCase(this.authRepo);
 

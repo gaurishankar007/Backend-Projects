@@ -1,13 +1,12 @@
 part of "injector.dart";
 
 Initializer get initializer => Initializer();
-LocalDatabaseImplementation get localDatabaseImplementation => LocalDatabaseImplementation();
 UserService get userService => UserService();
 ScreenSize get screen => ScreenSize();
 
+LocalDatabase get localDatabase => getIt<LocalDatabase>();
 NetworkStatus get networkStatus => getIt<NetworkStatus>();
 AppRouter get appRouter => getIt<AppRouter>();
-Dio get dio => getIt<Dio>();
 
 /// Bloc
 ThemeCubit get themeCubit => getIt<ThemeCubit>();

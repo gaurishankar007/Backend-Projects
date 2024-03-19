@@ -1,5 +1,6 @@
-import '../../../core/constants/constant.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/constants/constant.dart';
 
 class CustomPageRoute extends PageRouteBuilder {
   final Widget child;
