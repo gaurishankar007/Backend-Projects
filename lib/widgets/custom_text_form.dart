@@ -4,6 +4,7 @@ import '../core/extensions/int_extension.dart';
 import '../core/utils/text_styles.dart';
 
 class CustomTextForm extends StatelessWidget {
+  final Key? textFormKey;
   final TextEditingController? controller;
   final String? title;
   final TextStyle? titleStyle;
@@ -16,6 +17,7 @@ class CustomTextForm extends StatelessWidget {
 
   const CustomTextForm({
     super.key,
+    this.textFormKey,
     this.controller,
     this.title,
     this.titleStyle,
@@ -34,6 +36,7 @@ class CustomTextForm extends StatelessWidget {
     Widget child = SizedBox(
       height: newHeight,
       child: TextFormField(
+        key: textFormKey,
         controller: controller,
         keyboardType: keyboardType,
         onChanged: onChanged,
