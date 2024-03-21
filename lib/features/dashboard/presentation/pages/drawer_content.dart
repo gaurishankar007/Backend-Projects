@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
 import '../../../../widgets/preferred_size_app_bar.dart';
 import '../widgets/drawer/drawer_app_bar_items.dart';

@@ -5,9 +5,9 @@ import '../forms/sign_in_form.dart';
 import '../repositories/auth_repo.dart';
 
 class SignInUseCase implements UseCase<UserData, SignInForm> {
-  final AuthRepository authRepo;
-  SignInUseCase(this.authRepo);
+  final AuthRepository authRepository;
+  SignInUseCase({required this.authRepository});
 
   @override
-  FutureData<UserData> call(SignInForm parameter) async => await authRepo.signIn(parameter);
+  FutureData<UserData> call(SignInForm parameter) async => await authRepository.signIn(parameter);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show WidgetsFlutterBinding;
 
-import 'injection/injector.dart';
+import 'injector/injector.dart';
 
 class Initializer {
   Initializer._();

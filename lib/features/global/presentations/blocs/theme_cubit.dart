@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../domain/enums/dark_mode_enum.dart';
 import '../mixins/dark_mode_mixin.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../injection/injector.dart';
+import '../../../../../injector/injector.dart';
 import '../../../../../widgets/buttons/custom_icon_button.dart';
 import '../../../../../widgets/modalSheets/setting_bottom_sheet.dart';
 import '../../../../../widgets/user/user_image.dart';

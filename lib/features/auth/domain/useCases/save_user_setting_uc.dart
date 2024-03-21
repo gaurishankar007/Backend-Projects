@@ -4,10 +4,10 @@ import '../../../setting/domain/entities/setting_navigator.dart';
 import '../repositories/auth_repo.dart';
 
 class SaveUserSettingUseCase implements UseCase<bool, SettingNavigator> {
-  final AuthRepository authRepo;
-  SaveUserSettingUseCase(this.authRepo);
+  final AuthRepository authRepository;
+  SaveUserSettingUseCase({required this.authRepository});
 
   @override
   FutureData<bool> call(SettingNavigator parameter) async =>
-      await authRepo.saveUserSetting(parameter);
+      await authRepository.saveUserSetting(parameter);
 }

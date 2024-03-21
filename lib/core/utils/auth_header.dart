@@ -1,4 +1,4 @@
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 
 Map<String, String> reqHeaders({bool isFormData = false}) {
   String accessToken = userService.userData.accessToken;

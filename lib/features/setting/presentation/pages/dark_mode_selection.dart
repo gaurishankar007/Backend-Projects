@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../global/domain/enums/dark_mode_enum.dart';
 import '../../domain/entities/setting_navigator.dart';
 import '../../domain/parameters/setting_parameter.dart';

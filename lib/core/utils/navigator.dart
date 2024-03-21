@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 
 import '../../config/routes/routes.gr.dart';
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 import '../constants/routes_data.dart';
 
 /// Pops the page which is at the top of the pages stack

@@ -17,7 +17,7 @@ void main() {
     internetConnectionCheckerMock = InternetConnectionCheckerMock();
     connectivityMock = ConnectivityMock();
     networkStatus = NetworkStatus(
-      internetChecker: internetConnectionCheckerMock,
+      internetConnectionChecker: internetConnectionCheckerMock,
       connectivity: connectivityMock,
     );
   });

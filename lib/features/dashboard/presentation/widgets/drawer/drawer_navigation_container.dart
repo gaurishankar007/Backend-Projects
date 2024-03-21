@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../injection/injector.dart';
+import '../../../../../injector/injector.dart';
 import '../../../domain/entities/dashboard_navigator.dart';
 import 'drawer_navigation_item.dart';
 

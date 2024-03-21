@@ -10,12 +10,13 @@ import '../../../../core/resources/data_state.dart';
 import '../../../../core/services/network_service.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/buttons/custom_text_button.dart';
 import '../../../../widgets/image_builder.dart';
 import '../../../../widgets/modalSheets/image_picker_bottom_sheet.dart';
-import '../../injection/auth_injector.dart';
+import '../../domain/useCases/save_user_data_uc.dart';
+import '../../domain/useCases/update_profile_uc.dart';
 import '../widgets/error_text_notifier.dart';
 
 @RoutePage(name: kUpdateProfileRoute)
@@ -91,11 +92,11 @@ class UpdateProfile extends StatelessWidget {
                       contentType: HttpMediaType("image", "jpg"),
                     ),
                   });
-                  final dataState = await updateProfileUseCase.call(formData);
+                  final dataState = await getIt<UpdateProfileUseCase>().call(formData);
 
                   if (dataState is DataSuccess) {
                     userService.userData = userService.userData.copyWith(user: dataState.data!);
-                    saveUserDataUseCase.call(userService.userData);
+                    getIt<SaveUserDataUseCase>().call(userService.userData);
                     return replaceToDashboard();
                   }
 

@@ -4,9 +4,9 @@ import '../entities/user_setting.dart';
 import '../repositories/auth_repo.dart';
 
 class GetUserSettingUseCase implements UseCaseNoParameter<List<UserSetting>> {
-  final AuthRepository authRepo;
-  GetUserSettingUseCase(this.authRepo);
+  final AuthRepository authRepository;
+  GetUserSettingUseCase({required this.authRepository});
 
   @override
-  FutureData<List<UserSetting>> call() async => await authRepo.getUserSettings();
+  FutureData<List<UserSetting>> call() async => await authRepository.getUserSettings();
 }

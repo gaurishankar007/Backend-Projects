@@ -1,4 +1,4 @@
-import '../../../../../injection/injector.dart';
+import '../../../../../injector/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 

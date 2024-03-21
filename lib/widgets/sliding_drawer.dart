@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 import '../core/constants/constant.dart';
-import '../injection/injector.dart';
+import '../injector/injector.dart';
 
 class SlidingDrawerWidget extends StatelessWidget {
   final GlobalKey<SlidingDrawerState> drawerKey;

@@ -3,7 +3,7 @@ import 'package:chat/config/themes/light_theme.dart';
 import 'package:chat/features/auth/presentation/pages/sign_in.dart';
 import 'package:chat/features/auth/presentation/pages/sign_up.dart';
 import 'package:chat/features/global/presentations/blocs/theme_cubit.dart';
-import 'package:chat/injection/injector.dart';
+import 'package:chat/injector/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';

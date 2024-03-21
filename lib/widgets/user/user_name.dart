@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/utils/text_styles.dart';
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 
 class UserName extends StatelessWidget {
   final TextStyle? textStyle;

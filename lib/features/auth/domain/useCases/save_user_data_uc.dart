@@ -4,9 +4,9 @@ import '../entities/user_data.dart';
 import '../repositories/auth_repo.dart';
 
 class SaveUserDataUseCase implements UseCase<bool, UserData> {
-  final AuthRepository authRepo;
-  SaveUserDataUseCase(this.authRepo);
+  final AuthRepository authRepository;
+  SaveUserDataUseCase({required this.authRepository});
 
   @override
-  FutureData<bool> call(UserData parameter) async => await authRepo.saveUserData(parameter);
+  FutureData<bool> call(UserData parameter) async => await authRepository.saveUserData(parameter);
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/int_extension.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 
 class SettingValueContainer extends StatelessWidget {
   final Widget child;

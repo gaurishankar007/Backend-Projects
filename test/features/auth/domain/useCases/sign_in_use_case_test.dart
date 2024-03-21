@@ -17,7 +17,7 @@ void main() {
   setUp(() {
     form = const SignInForm(email: "user", password: "pwd");
     authRepositoryMock = AuthRepositoryMock();
-    signInUseCase = SignInUseCase(authRepositoryMock);
+    signInUseCase = SignInUseCase(authRepository: authRepositoryMock);
     userData = const UserData.empty();
 
     /// Register a fallback value for `SignInForm`

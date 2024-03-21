@@ -3,18 +3,18 @@ import 'dart:async' show StreamSubscription;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-/// A class responsible for checking internet connection
+/// Check whether the device is online or offline
 class NetworkStatus {
-  final InternetConnectionChecker internetChecker;
+  final InternetConnectionChecker internetConnectionChecker;
   final Connectivity connectivity;
 
-  NetworkStatus({required this.internetChecker, required this.connectivity});
+  NetworkStatus({required this.internetConnectionChecker, required this.connectivity});
 
   StreamSubscription<ConnectivityResult>? _subscription;
   bool _online = true;
   bool get isOnline => _online;
 
-  Future<bool> checkConnection() async => await internetChecker.hasConnection;
+  Future<bool> checkConnection() async => await internetConnectionChecker.hasConnection;
 
   /// Checks weather internet is available or not and listens to the connectivity changes
   checkConnectionAndListenConnectivity() async {

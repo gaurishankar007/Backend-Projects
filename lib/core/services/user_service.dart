@@ -1,3 +1,6 @@
+import '../../features/auth/domain/useCases/get_user_data_uc.dart';
+import '../../features/auth/domain/useCases/get_user_setting_uc.dart';
+import '../../features/auth/domain/useCases/save_user_setting_uc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/colors.dart';
@@ -5,16 +8,21 @@ import '../../../../../core/constants/routes_data.dart';
 import '../../../../../core/resources/data_state.dart';
 import '../../features/auth/domain/entities/user_data.dart';
 import '../../features/auth/domain/entities/user_setting.dart';
-import '../../features/auth/injection/auth_injector.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 import '../../features/setting/domain/entities/setting_navigator.dart';
 
 /// A class that stores user data
 class UserService with DarkModeMixin {
-  UserService._();
-  static final _singleton = UserService._();
-  factory UserService() => _singleton;
+  final GetUserDataUseCase getUserDataUseCase;
+  final GetUserSettingUseCase getUserSettingUseCase;
+  final SaveUserSettingUseCase saveUserSettingUseCase;
+
+  UserService({
+    required this.getUserDataUseCase,
+    required this.getUserSettingUseCase,
+    required this.saveUserSettingUseCase,
+  });
 
   bool _isLoggedIn = true;
   UserData userData = const UserData.empty();

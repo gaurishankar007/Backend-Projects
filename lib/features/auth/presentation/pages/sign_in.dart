@@ -7,12 +7,12 @@ import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/buttons/custom_text_button.dart';
 import '../../../../widgets/custom_text_form.dart';
 import '../../domain/forms/sign_in_form.dart';
-import '../../injection/auth_injector.dart';
+import '../../domain/useCases/sign_in_uc.dart';
 import '../widgets/error_text_notifier.dart';
 
 @RoutePage(name: kSignInRoute)
@@ -100,7 +100,7 @@ class _SignInState extends State<SignIn> {
                       onTap: () async {
                         errorNotifier.value = "";
                         final parameter = SignInForm(email: email!, password: password!);
-                        final dataState = await signInUseCase.call(parameter);
+                        final dataState = await getIt<SignInUseCase>().call(parameter);
 
                         if (dataState is DataSuccess) {
                           userService.userData = dataState.data!;

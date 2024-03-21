@@ -1,7 +1,6 @@
-import '../../../../core/services/local_database.dart';
-
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/services/local_database.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
 import '../../domain/entities/user_data.dart';
 import '../../domain/entities/user_setting.dart';

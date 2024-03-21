@@ -5,9 +5,10 @@ import '../entities/user.dart';
 import '../repositories/auth_repo.dart';
 
 class UpdateProfileUseCase implements UseCase<User, DioFormData> {
-  final AuthRepository authRepo;
-  UpdateProfileUseCase(this.authRepo);
+  final AuthRepository authRepository;
+  UpdateProfileUseCase({required this.authRepository});
 
   @override
-  FutureData<User> call(DioFormData parameter) async => await authRepo.updateProfile(parameter);
+  FutureData<User> call(DioFormData parameter) async =>
+      await authRepository.updateProfile(parameter);
 }

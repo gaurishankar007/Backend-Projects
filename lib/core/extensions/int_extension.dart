@@ -1,4 +1,4 @@
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 
 extension IntegerExtension on int {
   /// Required percentage of height according the screen height

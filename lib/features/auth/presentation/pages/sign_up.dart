@@ -7,11 +7,11 @@ import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../widgets/custom_text_form.dart';
 import '../../domain/forms/sign_up_form.dart';
-import '../../injection/auth_injector.dart';
+import '../../domain/useCases/sign_up_uc.dart';
 import '../widgets/error_text_notifier.dart';
 
 @RoutePage(name: kSignUpRoute)
@@ -118,7 +118,7 @@ class SignUp extends StatelessWidget {
 
     errorNotifier.value = "";
     final parameter = SignUpForm(name: name, email: email, password: password);
-    final dataState = await signUpUseCase.call(parameter);
+    final dataState = await  getIt<SignUpUseCase>().call(parameter);
     if (dataState is DataSuccess) {
       userService.userData = dataState.data!;
       return pushName(kUpdateProfilePath);

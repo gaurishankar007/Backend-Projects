@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show Color, Colors;
 
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 
 /// <===== Base Colors  =====>
 Color get white => Colors.white;

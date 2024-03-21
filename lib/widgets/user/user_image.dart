@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/api_paths.dart';
-import '../../injection/injector.dart';
+import '../../injector/injector.dart';
 import '../image_builder.dart';
 
 class UserCircularImage extends StatelessWidget {

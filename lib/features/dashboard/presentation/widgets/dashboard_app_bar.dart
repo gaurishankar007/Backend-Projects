@@ -4,7 +4,7 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_icon_button.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
 import '../inheritedWidget/drawer_key_inherited_widget.dart';

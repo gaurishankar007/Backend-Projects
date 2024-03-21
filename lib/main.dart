@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'features/global/presentations/blocs/theme_cubit.dart';
-import 'injection/injector.dart';
+import 'injector/injector.dart';
 
 Future<void> main() async {
   await initializer.initialize();

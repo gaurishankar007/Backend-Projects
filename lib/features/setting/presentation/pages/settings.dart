@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injection/injector.dart';
+import '../../../../injector/injector.dart';
 import '../../../../widgets/user/user_image.dart';
 import '../../../../widgets/user/user_name.dart';
 import '../widgets/setting_navigators.dart';
