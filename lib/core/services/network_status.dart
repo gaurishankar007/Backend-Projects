@@ -26,7 +26,7 @@ class NetworkStatus {
     /// Listen to connectivity changes
     _subscription = connectivity.onConnectivityChanged.listen((status) async {
       if (status != ConnectivityResult.none) {
-        await checkConnection();
+        _online = await checkConnection();
       } else {
         _online = false;
       }

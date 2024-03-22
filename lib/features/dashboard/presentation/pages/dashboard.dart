@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
-import '../../../../core/constants/routes_data.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../widgets/sliding_drawer.dart';
 import '../../../chat/presentation/pages/chats.dart';
 import '../inheritedWidget/drawer_key_inherited_widget.dart';

@@ -9,7 +9,7 @@ class Initializer {
 
   bool _isInitialized = false;
 
-  Future initialize() async {
+  Future initializeApp() async {
     if (_isInitialized) return;
 
     WidgetsFlutterBinding.ensureInitialized();

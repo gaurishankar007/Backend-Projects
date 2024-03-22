@@ -38,7 +38,7 @@ abstract class $AppRouter extends _i6.RootStackRouter {
     SignInRoute.name: (routeData) {
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.SignIn(),
+        child: _i3.SignIn(),
       );
     },
     SignUpRoute.name: (routeData) {

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/routes_data.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../widgets/preferred_size_app_bar.dart';
 import '../../../dashboard/presentation/widgets/dashboard_app_bar.dart';
 

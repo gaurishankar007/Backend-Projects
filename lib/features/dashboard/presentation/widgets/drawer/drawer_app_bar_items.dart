@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
 import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../injector/injector.dart';
 import '../../../../../widgets/buttons/custom_icon_button.dart';
 import '../../../../../widgets/modalSheets/setting_bottom_sheet.dart';
 import '../../../../../widgets/user/user_image.dart';
@@ -22,7 +21,6 @@ class DrawerAppBarItems extends StatelessWidget {
         const Spacer(),
         CustomIconButton(
           onPressed: () => showSettingBottomSheet(context),
-          padding: EdgeInsets.symmetric(horizontal: screen.horizontalPadding),
           disableSplash: true,
           icon: Icon(Icons.settings_rounded, color: primaryColor, size: appBarIconSize),
         ),

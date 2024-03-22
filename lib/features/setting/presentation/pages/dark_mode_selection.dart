@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../../injector/injector.dart';
 import '../../../global/domain/enums/dark_mode_enum.dart';
 import '../../domain/entities/setting_navigator.dart';
-import '../../domain/parameters/setting_parameter.dart';
+import '../arguments/setting_argument.dart';
 import '../widgets/setting_scaffold.dart';
 import '../widgets/setting_values.dart';
 
 class DarkModeSelection extends StatefulWidget {
-  final SettingParameter parameter;
-  const DarkModeSelection({super.key, required this.parameter});
+  final SettingArgument argument;
+  const DarkModeSelection({super.key, required this.argument});
 
   @override
   State<DarkModeSelection> createState() => _DarkModeSelectionState();
@@ -23,7 +23,7 @@ class _DarkModeSelectionState extends State<DarkModeSelection> {
   @override
   void initState() {
     super.initState();
-    navigationModel = widget.parameter.navigationItem;
+    navigationModel = widget.argument.navigator;
     notifier.value = navigationModel.value;
   }
 
@@ -36,9 +36,9 @@ class _DarkModeSelectionState extends State<DarkModeSelection> {
         values: darkModes,
         onValueSelected: (newValue) {
           notifier.value = newValue;
-          userService.changeSetting(navigationModel.copyWith(value: newValue));
-          widget.parameter.onChange(newValue);
+          widget.argument.onChange(newValue);
           themeCubit.changeTheme(DarkMode.values.byName(newValue));
+          authCubit.changeSetting(navigationModel.copyWith(value: newValue));
         },
       ),
     );

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../injector/injector.dart';
 import '../../domain/entities/setting_navigator.dart';
-import '../../domain/parameters/setting_parameter.dart';
+import '../arguments/setting_argument.dart';
 import '../widgets/setting_scaffold.dart';
 import '../widgets/setting_values.dart';
 
 class AppLock extends StatefulWidget {
-  final SettingParameter parameter;
+  final SettingArgument parameter;
   const AppLock({super.key, required this.parameter});
 
   @override
@@ -22,8 +22,8 @@ class _AppLockState extends State<AppLock> {
   @override
   void initState() {
     super.initState();
-    notifier.value = widget.parameter.navigationItem.value;
-    navigationItem = widget.parameter.navigationItem;
+    notifier.value = widget.parameter.navigator.value;
+    navigationItem = widget.parameter.navigator;
   }
 
   @override
@@ -35,7 +35,7 @@ class _AppLockState extends State<AppLock> {
         values: values,
         onValueSelected: (newValue) {
           notifier.value = newValue;
-          userService.changeSetting(navigationItem.copyWith(value: newValue));
+          authCubit.changeSetting(navigationItem.copyWith(value: newValue));
           widget.parameter.onChange(newValue);
         },
       ),

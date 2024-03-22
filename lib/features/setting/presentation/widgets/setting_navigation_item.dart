@@ -5,7 +5,7 @@ import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../domain/entities/setting_navigator.dart';
-import '../../domain/parameters/setting_parameter.dart';
+import '../arguments/setting_argument.dart';
 
 class SettingNavigationItem extends StatefulWidget {
   final SettingNavigator navigationItem;
@@ -43,11 +43,11 @@ class _SettingNavigationItemState extends State<SettingNavigationItem> {
 
     return ListTile(
       onTap: () {
-        final argument = SettingParameter(
+        final argument = SettingArgument(
           onChange: (newValue) => notifier.value = newValue,
 
           /// Whenever notifier value is changed, then it will be passed again in the new page
-          navigationItem: navigationItem.copyWith(value: notifier.value),
+          navigator: navigationItem.copyWith(value: notifier.value),
         );
         Navigator.pushNamed(context, navigationItem.routePath, arguments: argument);
       },

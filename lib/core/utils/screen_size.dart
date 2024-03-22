@@ -83,7 +83,7 @@ class ScreenSize {
   }
 
   /// Page horizontal padding in smartphones
-  double get horizontalPadding => widthPercentageWithConstraints(3, max: 15);
+  double get horizontalPadding => widthPercentageWithConstraints(5, max: 15);
 
   /// Page horizontal padding in tablet
   double get tabletHorizontalPadding => widthPercentage(17.5);

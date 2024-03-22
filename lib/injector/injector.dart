@@ -20,6 +20,8 @@ import '../features/auth/domain/useCases/save_user_setting_uc.dart';
 import '../features/auth/domain/useCases/sign_in_uc.dart';
 import '../features/auth/domain/useCases/sign_up_uc.dart';
 import '../features/auth/domain/useCases/update_profile_uc.dart';
+import '../features/auth/presentation/cubit/auth_cubit.dart';
+import '../features/auth/presentation/dependencies/auth_cubit_dependency.dart';
 import '../features/global/presentations/blocs/theme_cubit.dart';
 import '../initializer.dart';
 

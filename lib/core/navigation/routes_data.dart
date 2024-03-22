@@ -1,3 +1,5 @@
+part of 'navigator.dart';
+
 // Route names and paths
 const String kSignInRoute = "SignInRoute";
 const String kSignInPath = "/signIn";

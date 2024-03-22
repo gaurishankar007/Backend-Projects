@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/constants/routes_data.dart';
+import '../../core/navigation/navigator.dart';
 import 'helper/auth_guard.dart';
 import 'helper/sliding_auto_route.dart';
 import 'routes.gr.dart';

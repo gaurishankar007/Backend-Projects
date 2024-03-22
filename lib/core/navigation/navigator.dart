@@ -2,10 +2,20 @@ import 'package:flutter/material.dart' show debugPrint;
 
 import '../../config/routes/routes.gr.dart';
 import '../../injector/injector.dart';
-import '../constants/routes_data.dart';
+
+part 'routes_data.dart';
 
 /// Pops the page which is at the top of the pages stack
 popPage() => appRouter.maybePopTop();
+
+/// removes the second last page
+removeLast() => appRouter.removeLast();
+
+/// Pushes the page that matches the path name
+popUntil(String routeName) => appRouter.popUntil((route) => route.settings.name == routeName);
+
+/// Pushes the page that matches the path name
+removeWhere(String routeName) => appRouter.removeWhere((route) => route.name == routeName);
 
 /// Pushes the page that matches the path name
 pushName(String path) => appRouter.pushNamed(path);

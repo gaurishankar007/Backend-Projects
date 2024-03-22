@@ -7,7 +7,7 @@ import 'features/global/presentations/blocs/theme_cubit.dart';
 import 'injector/injector.dart';
 
 Future<void> main() async {
-  await initializer.initialize();
+  await initializer.initializeApp();
   runApp(const ChatApp());
 }
 
@@ -22,6 +22,7 @@ class ChatApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => themeCubit),
+            BlocProvider(create: (_) => authCubit),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {

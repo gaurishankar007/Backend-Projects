@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../config/routes/setting_route.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/constant.dart';
-import '../../core/constants/routes_data.dart';
+import '../../core/navigation/navigator.dart';
 
 showSettingBottomSheet(BuildContext context) {
   return showModalBottomSheet(

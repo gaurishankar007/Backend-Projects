@@ -16,4 +16,4 @@ String get messageUrl => "$apiUrl/message";
 /// Auth
 String get signInUrl => "$authUrl/login";
 String get signUpUrl => "$authUrl/register";
-String get updateProfileUrl => "$authUrl/updateProfilePic";
+String get updateProfileUrl => "$authUrl/updateProfile";

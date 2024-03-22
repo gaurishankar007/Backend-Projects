@@ -6,6 +6,7 @@ ScreenSize get screen => ScreenSize();
 
 /// Bloc
 ThemeCubit get themeCubit => getIt<ThemeCubit>();
+AuthCubit get authCubit => getIt<AuthCubit>();
 
 /// Core
 LocalDatabase get localDatabase => getIt<LocalDatabase>();
