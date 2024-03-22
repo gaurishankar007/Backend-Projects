@@ -35,7 +35,10 @@ class SignInAction extends StatelessWidget {
             bool disabled = (email ?? "").isEmpty || (password ?? "").isEmpty;
 
             return CustomElevatedButton(
-              onTap: () async => authCubit.sigIn(email: email!, password: password!),
+              onTap: () async {
+                bool succeed = await authCubit.sigIn(email: email!, password: password!);
+                if (succeed) replaceToDashboard();
+              },
               text: "Sign In",
               expandWidth: true,
               showLoading: true,

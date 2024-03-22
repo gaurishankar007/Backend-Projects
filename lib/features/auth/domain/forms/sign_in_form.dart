@@ -1,4 +1,7 @@
-class SignInForm {
+import 'package:equatable/equatable.dart';
+
+/// Without equality the auth cubit test will fail
+class SignInForm extends Equatable {
   final String email;
   final String password;
 
@@ -7,4 +10,7 @@ class SignInForm {
         "email": email,
         "password": password,
       };
+
+  @override
+  List<Object?> get props => [email, password];
 }

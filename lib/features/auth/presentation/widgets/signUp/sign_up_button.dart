@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../../core/navigation/navigator.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../domain/forms/sign_up_form.dart';
 import '../../arguments/sign_up_argument.dart';
@@ -45,7 +46,11 @@ class SignUpButton extends StatelessWidget {
               password: password!,
               confirmPassword: confirmPassword!,
             );
-            await authCubit.sigUp(form: form);
+            bool succeed = await authCubit.sigUp(form: form);
+            if (succeed) {
+              pushName(kUpdateProfilePath);
+              removeLast();
+            }
           },
           text: "Sign Up",
           expandWidth: true,

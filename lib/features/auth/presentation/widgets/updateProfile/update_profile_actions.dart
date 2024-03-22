@@ -38,7 +38,8 @@ class UpdateProfileActions extends StatelessWidget {
               });
 
               if (!context.mounted) return;
-              await authCubit.updateProfile(formData);
+              bool succeed = await authCubit.updateProfile(formData);
+              if (succeed) replaceToDashboard();
             },
             text: "Update",
             color: primaryColor,

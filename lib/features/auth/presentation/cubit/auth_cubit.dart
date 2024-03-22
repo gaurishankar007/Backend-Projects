@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/navigation/navigator.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/services/network_service.dart';
 import '../../../setting/domain/entities/setting_navigator.dart';
@@ -19,39 +18,40 @@ class AuthCubit extends Cubit<AuthState> {
   updateProfileError(String error) => emit(state.copyWith(updateProfileError: error));
   removeUpdateProfileError() => emit(state.copyWith(updateProfileError: ""));
 
-  sigIn({required String email, required String password}) async {
+  Future<bool> sigIn({required String email, required String password}) async {
     emit(state.copyWith(signInError: ""));
 
-    final parameter = SignInForm(email: email, password: password);
-    final dataState = await dependency.signInUseCase.call(parameter);
+    final form = SignInForm(email: email, password: password);
+    final dataState = await dependency.signInUseCase.call(form);
 
     if (dataState is DataSuccess) {
       dependency.userService.userData = dataState.data!;
-      return replaceToDashboard();
+      return true;
     }
 
     emit(state.copyWith(signInError: dataState.error!.message));
+    return false;
   }
 
-  sigUp({required SignUpForm form}) async {
+  Future<bool> sigUp({required SignUpForm form}) async {
     emit(state.copyWith(signUpError: ""));
 
     if (form.password != form.confirmPassword) {
-      return emit(state.copyWith(signUpError: "Password did not matched with confirm password"));
+      emit(state.copyWith(signUpError: "Password did not matched with confirm password"));
+      return false;
     }
 
     final dataState = await dependency.signUpUseCase.call(form);
     if (dataState is DataSuccess) {
       dependency.userService.userData = dataState.data!;
-      pushName(kUpdateProfilePath);
-      removeLast();
-      return;
+      return true;
     }
 
     emit(state.copyWith(signUpError: dataState.error!.message));
+    return false;
   }
 
-  updateProfile(DioFormData formData) async {
+  Future<bool> updateProfile(DioFormData formData) async {
     emit(state.copyWith(updateProfileError: ""));
 
     final dataState = await dependency.updateProfileUseCase.call(formData);
@@ -60,10 +60,11 @@ class AuthCubit extends Cubit<AuthState> {
       dependency.userService.userData =
           dependency.userService.userData.copyWith(user: dataState.data!);
       dependency.saveUserDataUseCase.call(dependency.userService.userData);
-      return replaceToDashboard();
+      return true;
     }
 
     emit(state.copyWith(updateProfileError: dataState.error!.message));
+    return false;
   }
 
   changeSetting(SettingNavigator navigator) {
