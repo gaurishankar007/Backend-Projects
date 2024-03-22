@@ -15,7 +15,7 @@ showSettingBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.circular(border10),
       child: Navigator(
         key: SettingRoute.navigator,
-        initialRoute: kSettingPath,
+        initialRoute: SETTING_PATH,
         onGenerateRoute: SettingRoute.routes,
       ),
     ),

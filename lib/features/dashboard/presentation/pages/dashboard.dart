@@ -9,7 +9,7 @@ import '../inheritedWidget/drawer_key_inherited_widget.dart';
 import '../widgets/dashboard_navigation.dart';
 import 'drawer_content.dart';
 
-@RoutePage(name: kDashboardRoute)
+@RoutePage(name: DASHBOARD_ROUTE)
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 

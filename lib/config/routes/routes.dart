@@ -15,21 +15,21 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(
           page: SignInRoute.page,
-          path: kSignInPath,
+          path: SIGN_IN_PATH,
         ),
         slidingRoute(
           page: SignUpRoute.page,
-          path: kSignUpPath,
+          path: SIGN_UP_PATH,
           direction: AxisDirection.left,
         ),
         slidingRoute(
           page: UpdateProfileRoute.page,
-          path: kUpdateProfilePath,
+          path: UPDATE_PROFILE_PATH,
           direction: AxisDirection.left,
         ),
         AutoRoute(
           page: DashboardRoute.page,
-          path: kDashboardPath,
+          path: DASHBOARD_PATH,
           initial: true,
           guards: [AuthGuard()],
         ),

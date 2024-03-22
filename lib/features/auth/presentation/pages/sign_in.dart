@@ -12,7 +12,7 @@ import '../widgets/error_text.dart';
 import '../widgets/signIn/sign_in_actions.dart';
 import '../widgets/signIn/sign_in_form_container.dart';
 
-@RoutePage(name: kSignInRoute)
+@RoutePage(name: SIGN_IN_ROUTE)
 class SignIn extends StatelessWidget {
   SignIn({super.key});
 

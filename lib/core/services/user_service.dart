@@ -33,7 +33,7 @@ class UserService with DarkModeMixin {
       value: "system",
       backgroundColor: Colors.transparent,
       iconData: Icons.dark_mode_rounded,
-      routePath: kDarkModePath,
+      routePath: DARK_MODE_PATH,
     ),
     SettingNavigator(
       id: 2,
@@ -42,7 +42,7 @@ class UserService with DarkModeMixin {
       value: "on",
       backgroundColor: green,
       iconData: Icons.contactless_rounded,
-      routePath: kActiveStatusPath,
+      routePath: ACTIVE_STATUS_PATH,
     ),
     SettingNavigator(
       id: 3,
@@ -51,7 +51,7 @@ class UserService with DarkModeMixin {
       value: "off",
       backgroundColor: primaryColor,
       iconData: Icons.lock_rounded,
-      routePath: kAppLockPath,
+      routePath: APP_LOCK_PATH,
     ),
     SettingNavigator(
       id: 4,
@@ -60,7 +60,7 @@ class UserService with DarkModeMixin {
       value: "on",
       backgroundColor: purple,
       iconData: Icons.notifications_rounded,
-      routePath: kDarkModePath,
+      routePath: DARK_MODE_PATH,
     )
   ];
 

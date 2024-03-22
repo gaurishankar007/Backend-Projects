@@ -5,7 +5,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../widgets/preferred_size_app_bar.dart';
 import '../../../dashboard/presentation/widgets/dashboard_app_bar.dart';
 
-@RoutePage(name: kChatRoute)
+@RoutePage(name: CHAT_ROUTE)
 class Chats extends StatefulWidget {
   const Chats({super.key});
 

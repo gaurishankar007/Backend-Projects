@@ -49,7 +49,7 @@ class UpdateProfileActions extends StatelessWidget {
           ),
         ),
         CustomTextButton(
-          onPressed: () => pushName(kDashboardPath),
+          onPressed: () => pushName(DASHBOARD_PATH),
           text: "Skip",
           compressSize: false,
         ),

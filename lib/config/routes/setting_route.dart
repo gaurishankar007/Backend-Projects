@@ -14,22 +14,22 @@ class SettingRoute {
 
   static Route routes(RouteSettings settings) {
     switch (settings.name) {
-      case kSettingPath:
+      case SETTING_PATH:
         return _materialRoute(const Settings());
 
-      case kDarkModePath:
+      case DARK_MODE_PATH:
         return _customRoute(
           child: DarkModeSelection(argument: settings.arguments as SettingArgument),
           direction: AxisDirection.left,
         );
 
-      case kActiveStatusPath:
+      case ACTIVE_STATUS_PATH:
         return _customRoute(
           child: ActiveStatus(argument: settings.arguments as SettingArgument),
           direction: AxisDirection.left,
         );
 
-      case kAppLockPath:
+      case APP_LOCK_PATH:
         return _customRoute(
           child: AppLock(parameter: settings.arguments as SettingArgument),
           direction: AxisDirection.left,

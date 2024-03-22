@@ -1,27 +1,29 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'navigator.dart';
 
 // Route names and paths
-const String kSignInRoute = "SignInRoute";
-const String kSignInPath = "/signIn";
+const String SIGN_IN_ROUTE = "SignInRoute";
+const String SIGN_IN_PATH = "/signIn";
 
-const String kSignUpRoute = "SignUpRoute";
-const String kSignUpPath = "/signUp";
+const String SIGN_UP_ROUTE = "SignUpRoute";
+const String SIGN_UP_PATH = "/signUp";
 
-const String kUpdateProfileRoute = "UpdateProfileRoute";
-const String kUpdateProfilePath = "/updateProfile";
+const String UPDATE_PROFILE_ROUTE = "UpdateProfileRoute";
+const String UPDATE_PROFILE_PATH = "/updateProfile";
 
-const String kDashboardRoute = "DashboardRoute";
-const String kDashboardPath = "/dashboard";
+const String DASHBOARD_ROUTE = "DashboardRoute";
+const String DASHBOARD_PATH = "/dashboard";
 
-const String kChatRoute = "ChatRoute";
-const String kChatPath = "chat";
+const String CHAT_ROUTE = "ChatRoute";
+const String CHAT_PATH = "chat";
 
-const String kSettingDashboardRoute = "SettingDashboardRoute";
-const String kSettingDashboardPath = "/settingDashboard";
+const String SETTING_DASHBOARD_ROUTE = "SettingDashboardRoute";
+const String SETTING_DASHBOARD_PATH = "/settingDashboard";
 
 /// Setting Generated Routes
-const String kSettingPath = "/setting";
-const String kDarkModePath = "/darkModeSelection";
-const String kActiveStatusPath = "/activeStatus";
-const String kAppLockPath = "/appLock";
-const String kNotificationSoundPath = "/notificationSound";
+const String SETTING_PATH = "/setting";
+const String DARK_MODE_PATH = "/darkModeSelection";
+const String ACTIVE_STATUS_PATH = "/activeStatus";
+const String APP_LOCK_PATH = "/appLock";
+const String NOTIFICATION_SOUND_PATH = "/notificationSound";

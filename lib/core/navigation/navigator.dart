@@ -33,7 +33,7 @@ replaceToSignIn() => appRouter.replaceAll([const SignInRoute()]);
 pushRoute(String routePath, {dynamic arg}) {
   try {
     switch (routePath) {
-      case kSignInPath:
+      case SIGN_IN_PATH:
         return appRouter.push(const SignInRoute());
 
       default:

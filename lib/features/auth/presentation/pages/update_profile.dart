@@ -15,7 +15,7 @@ import '../cubit/auth_cubit.dart';
 import '../widgets/error_text.dart';
 import '../widgets/updateProfile/update_profile_actions.dart';
 
-@RoutePage(name: kUpdateProfileRoute)
+@RoutePage(name: UPDATE_PROFILE_ROUTE)
 class UpdateProfile extends StatefulWidget {
   const UpdateProfile({super.key});
 

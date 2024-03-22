@@ -12,7 +12,7 @@ import '../widgets/error_text.dart';
 import '../widgets/signUp/sign_up_button.dart';
 import '../widgets/signUp/sign_up_form_container.dart';
 
-@RoutePage(name: kSignUpRoute)
+@RoutePage(name: SIGN_UP_ROUTE)
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 

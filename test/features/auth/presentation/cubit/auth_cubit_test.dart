@@ -50,6 +50,7 @@ void main() {
           .thenAnswer((_) async => DataSuccess(data: userData)),
       act: (cubit) async => await cubit.sigIn(email: "", password: ""),
       expect: () => <AuthState>[authState],
+      verify: (_) => verify(() => authRepositoryMock.signIn(signInForm)).called(1),
     );
 
     blocTest(

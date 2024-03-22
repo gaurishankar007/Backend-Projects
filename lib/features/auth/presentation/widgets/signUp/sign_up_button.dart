@@ -48,7 +48,7 @@ class SignUpButton extends StatelessWidget {
             );
             bool succeed = await authCubit.sigUp(form: form);
             if (succeed) {
-              pushName(kUpdateProfilePath);
+              pushName(UPDATE_PROFILE_PATH);
               removeLast();
             }
           },

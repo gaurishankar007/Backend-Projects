@@ -5,6 +5,7 @@ import '../services/local_database.dart';
 import '../services/network_service.dart';
 import 'error_data.dart';
 
+/// Handles exceptions and returns [DataState]
 FutureData<T> exceptionHandler<T>(Future Function() callBack, {ErrorData? errorData}) async {
   try {
     return await callBack();

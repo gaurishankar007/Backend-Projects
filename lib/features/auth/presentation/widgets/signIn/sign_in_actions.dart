@@ -48,7 +48,7 @@ class SignInAction extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomElevatedButton(
-          onTap: () => pushName(kSignUpPath),
+          onTap: () => pushName(SIGN_UP_PATH),
           expandWidth: true,
           text: "Create new account",
         ),
