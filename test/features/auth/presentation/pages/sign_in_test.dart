@@ -18,7 +18,6 @@ void main() {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => themeCubit),
-            BlocProvider(create: (_) => authCubit),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
@@ -42,7 +41,7 @@ void main() {
     "Title is displayed",
     (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
-      await tester.pump();
+      await tester.pumpAndSettle(const Duration(seconds: 5));
       expect(find.text("Sign in with your email"), findsOneWidget);
     },
   );

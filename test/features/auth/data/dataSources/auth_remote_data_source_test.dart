@@ -3,7 +3,6 @@ import 'package:chat/core/resources/data_state.dart';
 import 'package:chat/core/services/network_service.dart';
 import 'package:chat/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:chat/features/auth/data/models/user_data_model.dart';
-import 'package:chat/features/auth/data/models/user_model.dart';
 import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,49 +41,25 @@ void main() {
   group("Account", () {
     late final SignInForm signInForm;
     late final UserDataModel userDataModel;
-    late final DioForm dioForm;
+    late final RequestForm requestForm;
 
     setUp(() {
       signInForm = const SignInForm(email: "", password: "");
       userDataModel = UserDataModel.fromJson(userDataJson["data"]);
-      dioForm = DioForm(signInUrl, data: signInForm.toJson);
+      requestForm = RequestForm(signInUrl, data: signInForm.toJson);
     });
 
     test("Should return user data model after sign in", () async {
       /// Arrange
-      when(() => networkServiceMock.post(dioForm)).thenAnswer((_) async => response(userDataJson));
+      when(() => networkServiceMock.post(requestForm))
+          .thenAnswer((_) async => response(userDataJson));
 
       /// Act
       final result = await authRemoteDataSourceImplementation.signIn(signInForm);
 
       // /// Assert
-      verify(() => networkServiceMock.post(dioForm)).called(1);
+      verify(() => networkServiceMock.post(requestForm)).called(1);
       expect(result, DataSuccess(data: userDataModel));
-    });
-  });
-
-  group("Account", () {
-    late final DioFormData dioFormData;
-    late final UserModel userModel;
-    late final DioForm dioForm;
-
-    setUp(() {
-      dioFormData = FormData.fromMap({"profile": ""});
-      userModel = UserModel.fromJson(userJson);
-      dioForm = DioForm(updateProfileUrl, data: dioFormData);
-    });
-
-    test("Should return user  model after sign in", () async {
-      /// Arrange
-      when(() => networkServiceMock.put(dioForm))
-          .thenAnswer((_) async => response({"status": true, "data": userJson}));
-
-      /// Act
-      final result = await authRemoteDataSourceImplementation.updateProfile(dioFormData);
-
-      // /// Assert
-      verify(() => networkServiceMock.put(dioForm)).called(1);
-      expect(result, DataSuccess(data: userModel));
     });
   });
 }

@@ -5,13 +5,8 @@ import 'package:chat/core/services/user_service.dart';
 import 'package:chat/features/auth/domain/entities/user_data.dart';
 import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
 import 'package:chat/features/auth/domain/repositories/auth_repo.dart';
-import 'package:chat/features/auth/domain/useCases/save_user_data_uc.dart';
-import 'package:chat/features/auth/domain/useCases/save_user_setting_uc.dart';
 import 'package:chat/features/auth/domain/useCases/sign_in_uc.dart';
-import 'package:chat/features/auth/domain/useCases/sign_up_uc.dart';
-import 'package:chat/features/auth/domain/useCases/update_profile_uc.dart';
-import 'package:chat/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:chat/features/auth/presentation/dependencies/auth_cubit_dependency.dart';
+import 'package:chat/features/auth/presentation/cubit/signIn/sign_in_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -22,44 +17,53 @@ class UserServiceMock extends Mock implements UserService {}
 void main() {
   late final AuthRepositoryMock authRepositoryMock;
   late final UserService userServiceMock;
-  late final AuthCubitDependency dependency;
-  late final AuthState authState;
+  late final SignInCubit signInCubit;
+  late final SignInState signInState;
 
   setUpAll(() {
     authRepositoryMock = AuthRepositoryMock();
     userServiceMock = UserServiceMock();
 
-    dependency = AuthCubitDependency(
+    signInCubit = SignInCubit(
       signInUseCase: SignInUseCase(authRepository: authRepositoryMock),
-      signUpUseCase: SignUpUseCase(authRepository: authRepositoryMock),
-      updateProfileUseCase: UpdateProfileUseCase(authRepository: authRepositoryMock),
-      saveUserDataUseCase: SaveUserDataUseCase(authRepository: authRepositoryMock),
-      saveUserSettingUseCase: SaveUserSettingUseCase(authRepository: authRepositoryMock),
       userService: userServiceMock,
     );
-    authState = const AuthState(signInError: "", signUpError: "", updateProfileError: "");
+    signInState = SignInState(
+      emailController: signInCubit.emailController,
+      passwordController: signInCubit.passwordController,
+      error: "",
+    );
   });
 
   group("Auth Cubit", () {
-    SignInForm signInForm = const SignInForm(email: "", password: "");
+    SignInForm signInForm = const SignInForm(email: "a", password: "a");
     UserData userData = const UserData.empty();
     blocTest(
       'Should emit auth state without any errors',
-      build: () => AuthCubit(dependency: dependency),
+      build: () => signInCubit,
       setUp: () => when(() => authRepositoryMock.signIn(signInForm))
           .thenAnswer((_) async => DataSuccess(data: userData)),
-      act: (cubit) async => await cubit.sigIn(email: "", password: ""),
-      expect: () => <AuthState>[authState],
+      act: (cubit) async {
+        cubit.emailController.add("a");
+        cubit.passwordController.add("a");
+        await cubit.sigIn();
+      },
+      expect: () => <SignInState>[],
       verify: (_) => verify(() => authRepositoryMock.signIn(signInForm)).called(1),
     );
 
     blocTest(
       'Should emit auth state with sign in error at last',
-      build: () => AuthCubit(dependency: dependency),
+      build: () => signInCubit,
       setUp: () => when(() => authRepositoryMock.signIn(signInForm))
           .thenAnswer((_) async => const DataFailure(error: ErrorData(message: "Invalid email"))),
-      act: (cubit) async => await cubit.sigIn(email: "", password: ""),
-      expect: () => <AuthState>[authState, authState.copyWith(signInError: "Invalid email")],
+      act: (cubit) async {
+        cubit.emailController.add("a");
+        cubit.passwordController.add("a");
+        await cubit.sigIn();
+      },
+      expect: () => <SignInState>[signInState.copyWith(error: "Invalid email")],
+      verify: (_) => verify(() => authRepositoryMock.signIn(signInForm)).called(1),
     );
   });
 }

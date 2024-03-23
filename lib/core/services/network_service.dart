@@ -75,7 +75,7 @@ abstract class NetworkService {
   Future<Response<T>> put<T>(RequestForm form);
   Future<Response<T>> patch<T>(RequestForm form);
   Future<Response<T>> delete<T>(RequestForm form);
-  Future<MultipartFile> multipartFormFile<T>(MultiPartForm form);
+  Future<MultipartFile> multipartFormFile(MultiPartForm form);
 }
 
 class NetworkServiceImplementation implements NetworkService {
@@ -136,7 +136,7 @@ class NetworkServiceImplementation implements NetworkService {
       );
 
   @override
-  Future<MultipartFile> multipartFormFile<T>(MultiPartForm form) async =>
+  Future<MultipartFile> multipartFormFile(MultiPartForm form) async =>
       await MultipartFile.fromFile(
         form.filePath,
         filename: form.filename,
