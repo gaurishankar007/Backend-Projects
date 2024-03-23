@@ -1,48 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/utils/text_styles.dart';
-import '../../../../../injector/injector.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../../widgets/buttons/custom_text_button.dart';
+import '../../cubit/signIn/sign_in_cubit.dart';
 
 class SignInAction extends StatelessWidget {
-  final BehaviorSubject<String> emailController;
-  final BehaviorSubject<String> passwordController;
-
-  const SignInAction({
-    super.key,
-    required this.emailController,
-    required this.passwordController,
-  });
+  const SignInAction({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        StreamBuilder(
-          stream: Rx.combineLatest2(
-            emailController,
-            passwordController,
-            (a, b) => true,
-          ),
-          builder: (context, snapshot) {
-            String? email = emailController.stream.valueOrNull;
-            String? password = passwordController.stream.valueOrNull;
-            bool disabled = (email ?? "").isEmpty || (password ?? "").isEmpty;
+        BlocBuilder<SignInCubit, SignInState>(
+          buildWhen: (previous, current) => previous.emailController != current.emailController,
+          builder: (context, state) {
+            return StreamBuilder(
+              stream: Rx.combineLatest2(
+                state.emailController,
+                state.passwordController,
 
-            return CustomElevatedButton(
-              onTap: () async {
-                bool succeed = await authCubit.sigIn(email: email!, password: password!);
-                if (succeed) replaceToDashboard();
+                /// If the controllers are not empty then, snapshot data will be true
+                (a, b) => a.isNotEmpty & b.isNotEmpty,
+              ),
+              builder: (context, snapshot) {
+                return CustomElevatedButton(
+                  onTap: () async {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    bool succeed = await context.read<SignInCubit>().sigIn();
+                    if (succeed) replaceToDashboard();
+                  },
+                  text: "Sign In",
+                  expandWidth: true,
+                  showLoading: true,
+                  disabled: !(snapshot.data ?? false),
+                );
               },
-              text: "Sign In",
-              expandWidth: true,
-              showLoading: true,
-              disabled: disabled,
             );
           },
         ),

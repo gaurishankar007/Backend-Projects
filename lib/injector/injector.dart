@@ -1,3 +1,5 @@
+import '../features/auth/presentation/cubit/signIn/sign_in_cubit.dart';
+import '../features/auth/presentation/cubit/updateProfile/update_profile_cubit.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -20,8 +22,7 @@ import '../features/auth/domain/useCases/save_user_setting_uc.dart';
 import '../features/auth/domain/useCases/sign_in_uc.dart';
 import '../features/auth/domain/useCases/sign_up_uc.dart';
 import '../features/auth/domain/useCases/update_profile_uc.dart';
-import '../features/auth/presentation/cubit/auth_cubit.dart';
-import '../features/auth/presentation/dependencies/auth_cubit_dependency.dart';
+import '../features/auth/presentation/cubit/signUp/sign_up_cubit.dart';
 import '../features/global/presentations/blocs/theme_cubit.dart';
 import '../initializer.dart';
 

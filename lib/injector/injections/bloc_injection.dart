@@ -5,16 +5,11 @@ _registerBlocs() {
   getIt.registerLazySingleton(() => ThemeCubit());
 
   /// Auth
-  getIt.registerLazySingleton(
-    () => AuthCubit(
-      dependency: AuthCubitDependency(
-        signInUseCase: getIt(),
-        signUpUseCase: getIt(),
+  getIt.registerFactory(() => SignInCubit(signInUseCase: getIt(), userService: getIt()));
+  getIt.registerFactory(() => SignUpCubit(signUpUseCase: getIt(), userService: getIt()));
+  getIt.registerFactory(() => UpdateProfileCubit(
         updateProfileUseCase: getIt(),
         saveUserDataUseCase: getIt(),
-        saveUserSettingUseCase: getIt(),
         userService: getIt(),
-      ),
-    ),
-  );
+      ));
 }

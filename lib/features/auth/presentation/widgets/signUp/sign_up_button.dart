@@ -1,61 +1,43 @@
+import '../../cubit/signUp/sign_up_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
-import '../../../domain/forms/sign_up_form.dart';
-import '../../arguments/sign_up_argument.dart';
-import '../../cubit/auth_cubit.dart';
 
 class SignUpButton extends StatelessWidget {
-  final SignUpArgument argument;
-
-  const SignUpButton({
-    super.key,
-    required this.argument,
-  });
+  const SignUpButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Rx.combineLatest4(
-        argument.nameController,
-        argument.emailController,
-        argument.passwordController,
-        argument.confirmPasswordController,
-        (a, b, c, d) => true,
-      ),
-      builder: (context, snapshot) {
-        String? name = argument.nameController.stream.valueOrNull;
-        String? email = argument.emailController.stream.valueOrNull;
-        String? password = argument.passwordController.stream.valueOrNull;
-        String? confirmPassword = argument.confirmPasswordController.stream.valueOrNull;
-
-        bool disabled = (name ?? "").isEmpty ||
-            (email ?? "").isEmpty ||
-            (password ?? "").isEmpty ||
-            (confirmPassword ?? "").isEmpty;
-
-        return CustomElevatedButton(
-          onTap: () async {
-            AuthCubit authCubit = context.read<AuthCubit>();
-            SignUpForm form = SignUpForm(
-              name: name!,
-              email: email!,
-              password: password!,
-              confirmPassword: confirmPassword!,
+    return BlocBuilder<SignUpCubit, SignUpState>(
+      buildWhen: (previous, current) => previous.nameController != current.nameController,
+      builder: (context, state) {
+        return StreamBuilder(
+          stream: Rx.combineLatest4(
+            state.nameController,
+            state.emailController,
+            state.passwordController,
+            state.confirmPasswordController,
+            (a, b, c, d) => a.isNotEmpty && b.isNotEmpty && c.isNotEmpty && d.isNotEmpty,
+          ),
+          builder: (context, snapshot) {
+            return CustomElevatedButton(
+              onTap: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+                bool succeed = await context.read<SignUpCubit>().sigUp();
+                if (succeed) {
+                  pushName(UPDATE_PROFILE_PATH);
+                  removeLast();
+                }
+              },
+              text: "Sign Up",
+              expandWidth: true,
+              showLoading: true,
+              disabled: !(snapshot.data ?? false),
             );
-            bool succeed = await authCubit.sigUp(form: form);
-            if (succeed) {
-              pushName(UPDATE_PROFILE_PATH);
-              removeLast();
-            }
           },
-          text: "Sign Up",
-          expandWidth: true,
-          disabled: disabled,
-          showLoading: true,
         );
       },
     );

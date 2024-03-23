@@ -12,7 +12,7 @@ import '../models/user_model.dart';
 abstract class AuthRemoteDataSource {
   FutureData<UserDataModel> signIn(SignInForm form);
   FutureData<UserDataModel> signUp(SignUpForm form);
-  FutureData<UserModel> updateProfile(DioFormData formData);
+  FutureData<UserModel> updateProfile(String imagePath);
 }
 
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
@@ -23,7 +23,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
   @override
   FutureData<UserDataModel> signIn(SignInForm parameter) async {
     return await exceptionHandler(() async {
-      final requestForm = DioForm(
+      final requestForm = RequestForm(
         signInUrl,
         data: parameter.toJson,
         options: DioOptions(
@@ -50,7 +50,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
   @override
   FutureData<UserDataModel> signUp(SignUpForm parameter) async {
     return await exceptionHandler(() async {
-      final requestForm = DioForm(
+      final requestForm = RequestForm(
         signUpUrl,
         data: parameter.toJson,
         options: DioOptions(
@@ -77,9 +77,19 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
   }
 
   @override
-  FutureData<UserModel> updateProfile(DioFormData formData) async {
+  FutureData<UserModel> updateProfile(String imagePath) async {
     return await exceptionHandler(() async {
-      final requestForm = DioForm(
+      MultiPartForm multiPartForm = MultiPartForm(
+        imagePath,
+        filename: imagePath.split("/").last,
+        contentType: HttpMediaType("image", "jpg"),
+      );
+
+      DioFormData formData = DioFormData.fromMap({
+        "profile": await networkService.multipartFormFile(multiPartForm),
+      });
+
+      final requestForm = RequestForm(
         updateProfileUrl,
         data: formData,
         options: DioOptions(

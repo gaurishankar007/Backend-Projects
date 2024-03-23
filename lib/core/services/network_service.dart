@@ -4,7 +4,6 @@ import 'package:http_parser/http_parser.dart';
 
 typedef DioFormData = FormData;
 typedef DioOptions = Options;
-typedef DioMultiPartFile = MultipartFile;
 typedef HttpMediaType = MediaType;
 typedef DioFailure = DioException;
 
@@ -16,8 +15,8 @@ List<DioExceptionType> get dioSocketExceptions => [
       DioExceptionType.receiveTimeout,
     ];
 
-/// A class containing request data
-class DioForm {
+/// Dio request data
+class RequestForm {
   final String path;
   final Object? data;
   final Map<String, dynamic>? queryParameters;
@@ -26,7 +25,7 @@ class DioForm {
   final ProgressCallback? onSendProgress;
   final ProgressCallback? onReceiveProgress;
 
-  const DioForm(
+  const RequestForm(
     this.path, {
     this.data,
     this.queryParameters,
@@ -37,7 +36,7 @@ class DioForm {
   });
 
   @override
-  bool operator ==(covariant DioForm other) {
+  bool operator ==(covariant RequestForm other) {
     bool equal = other.path == path;
     if (other.data == null && data == null) return equal;
 
@@ -49,13 +48,34 @@ class DioForm {
   int get hashCode => Object.hash(path, data);
 }
 
+class MultiPartForm {
+  final String filePath;
+  final String? filename;
+  final MediaType? contentType;
+  final Map<String, List<String>>? headers;
+
+  const MultiPartForm(
+    this.filePath, {
+    this.filename,
+    this.contentType,
+    this.headers,
+  });
+
+  @override
+  bool operator ==(covariant MultiPartForm other) => other.filePath == filePath;
+
+  @override
+  int get hashCode => filePath.hashCode;
+}
+
 /// Convenience methods to make an HTTP PATCH request.
 abstract class NetworkService {
-  Future<Response<T>> get<T>(DioForm form);
-  Future<Response<T>> post<T>(DioForm form);
-  Future<Response<T>> put<T>(DioForm form);
-  Future<Response<T>> patch<T>(DioForm form);
-  Future<Response<T>> delete<T>(DioForm form);
+  Future<Response<T>> get<T>(RequestForm form);
+  Future<Response<T>> post<T>(RequestForm form);
+  Future<Response<T>> put<T>(RequestForm form);
+  Future<Response<T>> patch<T>(RequestForm form);
+  Future<Response<T>> delete<T>(RequestForm form);
+  Future<MultipartFile> multipartFormFile<T>(MultiPartForm form);
 }
 
 class NetworkServiceImplementation implements NetworkService {
@@ -64,7 +84,7 @@ class NetworkServiceImplementation implements NetworkService {
   NetworkServiceImplementation({required this.dio});
 
   @override
-  Future<Response<T>> get<T>(DioForm form) async => await dio.get(
+  Future<Response<T>> get<T>(RequestForm form) async => await dio.get(
         form.path,
         data: form.data,
         queryParameters: form.queryParameters,
@@ -74,7 +94,7 @@ class NetworkServiceImplementation implements NetworkService {
       );
 
   @override
-  Future<Response<T>> post<T>(DioForm form) async => await dio.post(
+  Future<Response<T>> post<T>(RequestForm form) async => await dio.post(
         form.path,
         data: form.data,
         queryParameters: form.queryParameters,
@@ -85,7 +105,7 @@ class NetworkServiceImplementation implements NetworkService {
       );
 
   @override
-  Future<Response<T>> put<T>(DioForm form) async => await dio.put(
+  Future<Response<T>> put<T>(RequestForm form) async => await dio.put(
         form.path,
         data: form.data,
         queryParameters: form.queryParameters,
@@ -96,7 +116,7 @@ class NetworkServiceImplementation implements NetworkService {
       );
 
   @override
-  Future<Response<T>> patch<T>(DioForm form) async => await dio.put(
+  Future<Response<T>> patch<T>(RequestForm form) async => await dio.put(
         form.path,
         data: form.data,
         queryParameters: form.queryParameters,
@@ -107,11 +127,20 @@ class NetworkServiceImplementation implements NetworkService {
       );
 
   @override
-  Future<Response<T>> delete<T>(DioForm form) async => await dio.delete(
+  Future<Response<T>> delete<T>(RequestForm form) async => await dio.delete(
         form.path,
         data: form.data,
         queryParameters: form.queryParameters,
         options: form.options,
         cancelToken: form.cancelToken,
+      );
+
+  @override
+  Future<MultipartFile> multipartFormFile<T>(MultiPartForm form) async =>
+      await MultipartFile.fromFile(
+        form.filePath,
+        filename: form.filename,
+        contentType: form.contentType,
+        headers: form.headers,
       );
 }

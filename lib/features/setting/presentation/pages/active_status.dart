@@ -35,7 +35,7 @@ class _ActiveStatusState extends State<ActiveStatus> {
         values: values,
         onValueSelected: (newValue) {
           notifier.value = newValue;
-          authCubit.changeSetting(navigator.copyWith(value: newValue));
+          userService.changeSetting(navigator.copyWith(value: newValue));
           widget.argument.onChange(newValue);
         },
       ),

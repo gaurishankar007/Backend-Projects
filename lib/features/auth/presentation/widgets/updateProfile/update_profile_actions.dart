@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/extensions/int_extension.dart';
 import '../../../../../core/navigation/navigator.dart';
-import '../../../../../core/services/network_service.dart';
 import '../../../../../injector/injector.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../../widgets/buttons/custom_text_button.dart';
+import '../../cubit/updateProfile/update_profile_cubit.dart';
 
 class UpdateProfileActions extends StatelessWidget {
-  final ValueNotifier<String> notifier;
-  const UpdateProfileActions({super.key, required this.notifier});
+  const UpdateProfileActions({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +26,7 @@ class UpdateProfileActions extends StatelessWidget {
           ),
           child: CustomElevatedButton(
             onTap: () async {
-              String imagePath = notifier.value;
-              if (imagePath.isEmpty) return authCubit.updateProfileError("Select a image");
-
-              DioFormData formData = DioFormData.fromMap({
-                "profile": await DioMultiPartFile.fromFile(
-                  notifier.value,
-                  filename: notifier.value.split("/").last,
-                  contentType: HttpMediaType("image", "jpg"),
-                ),
-              });
-
-              if (!context.mounted) return;
-              bool succeed = await authCubit.updateProfile(formData);
+              bool succeed = await context.read<UpdateProfileCubit>().updateProfile();
               if (succeed) replaceToDashboard();
             },
             text: "Update",

@@ -1,4 +1,4 @@
-String get baseUrl => "http://192.168.3.136:8080";
+String get baseUrl => "http://192.168.1.80:8080";
 
 /// <===== Assets =====>
 String get publicUrl => "$baseUrl/public";

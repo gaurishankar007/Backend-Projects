@@ -6,7 +6,11 @@ _registerCores() {
     () => NetworkStatus(internetConnectionChecker: getIt(), connectivity: getIt()),
   );
   getIt.registerLazySingleton(
-    () => UserService(getUserDataUseCase: getIt(), getUserSettingUseCase: getIt()),
+    () => UserService(
+      getUserDataUseCase: getIt(),
+      getUserSettingUseCase: getIt(),
+      saveUserSettingUseCase: getIt(),
+    ),
   );
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
   getIt.registerLazySingleton<NetworkService>(() => NetworkServiceImplementation(dio: Dio()));

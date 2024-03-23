@@ -38,7 +38,7 @@ class _DarkModeSelectionState extends State<DarkModeSelection> {
           notifier.value = newValue;
           widget.argument.onChange(newValue);
           themeCubit.changeTheme(DarkMode.values.byName(newValue));
-          authCubit.changeSetting(navigationModel.copyWith(value: newValue));
+          userService.changeSetting(navigationModel.copyWith(value: newValue));
         },
       ),
     );

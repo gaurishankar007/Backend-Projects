@@ -35,7 +35,7 @@ class _AppLockState extends State<AppLock> {
         values: values,
         onValueSelected: (newValue) {
           notifier.value = newValue;
-          authCubit.changeSetting(navigationItem.copyWith(value: newValue));
+          userService.changeSetting(navigationItem.copyWith(value: newValue));
           widget.parameter.onChange(newValue);
         },
       ),

@@ -22,7 +22,6 @@ class ChatApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => themeCubit),
-            BlocProvider(create: (_) => authCubit),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {

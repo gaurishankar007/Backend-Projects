@@ -6,6 +6,7 @@ import '../../features/auth/domain/entities/user_data.dart';
 import '../../features/auth/domain/entities/user_setting.dart';
 import '../../features/auth/domain/useCases/get_user_data_uc.dart';
 import '../../features/auth/domain/useCases/get_user_setting_uc.dart';
+import '../../features/auth/domain/useCases/save_user_setting_uc.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 import '../../features/setting/domain/entities/setting_navigator.dart';
@@ -15,10 +16,12 @@ import '../navigation/navigator.dart';
 class UserService with DarkModeMixin {
   final GetUserDataUseCase getUserDataUseCase;
   final GetUserSettingUseCase getUserSettingUseCase;
+  final SaveUserSettingUseCase saveUserSettingUseCase;
 
   UserService({
     required this.getUserDataUseCase,
     required this.getUserSettingUseCase,
+    required this.saveUserSettingUseCase,
   });
 
   bool _isLoggedIn = true;
@@ -97,8 +100,10 @@ class UserService with DarkModeMixin {
   }
 
   /// Set new user setting
-  changeSetting(SettingNavigator navigator) =>
-      _navigators = _navigators.map((e) => e.id == navigator.id ? navigator : e).toList();
+  changeSetting(SettingNavigator navigator) {
+    _navigators = _navigators.map((e) => e.id == navigator.id ? navigator : e).toList();
+    saveUserSettingUseCase.call(navigator);
+  }
 
   bool get isLoggedIn => _isLoggedIn;
   List<SettingNavigator> get navigators => _navigators;
