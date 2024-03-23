@@ -80,6 +80,7 @@ const userController = {
       { _id: req.user._id },
       { profile: file.filename }
     );
+    user.profile = file.filename;
 
     successResponse(res, user);
   }),
