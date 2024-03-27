@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:chat/injector/injector.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/navigation/navigator.dart';
-import 'helper/auth_guard.dart';
 import 'helper/sliding_auto_route.dart';
 import 'routes.gr.dart';
 
@@ -31,7 +31,7 @@ class AppRouter extends $AppRouter {
           page: DashboardRoute.page,
           path: DASHBOARD_PATH,
           initial: true,
-          guards: [AuthGuard()],
+          guards: [authGuard],
         ),
       ];
 }

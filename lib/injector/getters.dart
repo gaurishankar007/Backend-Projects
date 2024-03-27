@@ -12,3 +12,4 @@ LocalDatabase get localDatabase => getIt<LocalDatabase>();
 NetworkStatus get networkStatus => getIt<NetworkStatus>();
 UserService get userService => getIt<UserService>();
 AppRouter get appRouter => getIt<AppRouter>();
+AuthGuard get authGuard => getIt<AuthGuard>();

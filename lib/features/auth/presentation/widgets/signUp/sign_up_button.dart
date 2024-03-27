@@ -1,10 +1,10 @@
-import '../../cubit/signUp/sign_up_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
+import '../../cubit/signUp/sign_up_cubit.dart';
 
 class SignUpButton extends StatelessWidget {
   const SignUpButton({super.key});
@@ -28,8 +28,8 @@ class SignUpButton extends StatelessWidget {
                 FocusManager.instance.primaryFocus?.unfocus();
                 bool succeed = await context.read<SignUpCubit>().sigUp();
                 if (succeed) {
-                  pushName(UPDATE_PROFILE_PATH);
-                  removeLast();
+                  AppNavigator.pushName(UPDATE_PROFILE_PATH);
+                  AppNavigator.removeLast();
                 }
               },
               text: "Sign Up",

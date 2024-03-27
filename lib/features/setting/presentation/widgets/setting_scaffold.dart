@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
-import '../../../../core/navigation/navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_icon_button.dart';
@@ -56,7 +55,7 @@ class SettingScaffold extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () => popPage(),
+                    onPressed: () => Navigator.of(context),
                     child: Text("Done", style: largeSemibold()),
                   ),
                 ),

@@ -1,10 +1,11 @@
 part of '../injector.dart';
 
 _registerCores() {
-  getIt.registerLazySingleton<LocalDatabase>(() => LocalDatabaseImplementation());
   getIt.registerLazySingleton<NetworkStatus>(
     () => NetworkStatus(internetConnectionChecker: getIt(), connectivity: getIt()),
   );
+  getIt.registerLazySingleton<AppRouter>(() => AppRouter());
+  getIt.registerLazySingleton<AuthGuard>(() => AuthGuard(userService: getIt()));
   getIt.registerLazySingleton(
     () => UserService(
       getUserDataUseCase: getIt(),
@@ -12,6 +13,6 @@ _registerCores() {
       saveUserSettingUseCase: getIt(),
     ),
   );
-  getIt.registerLazySingleton<AppRouter>(() => AppRouter());
   getIt.registerLazySingleton<NetworkService>(() => NetworkServiceImplementation(dio: Dio()));
+  getIt.registerLazySingleton<LocalDatabase>(() => LocalDatabaseImplementation());
 }

@@ -27,7 +27,7 @@ class UpdateProfileActions extends StatelessWidget {
           child: CustomElevatedButton(
             onTap: () async {
               bool succeed = await context.read<UpdateProfileCubit>().updateProfile();
-              if (succeed) replaceToDashboard();
+              if (succeed) AppNavigator.replaceToDashboard();
             },
             text: "Update",
             color: primaryColor,
@@ -37,7 +37,7 @@ class UpdateProfileActions extends StatelessWidget {
           ),
         ),
         CustomTextButton(
-          onPressed: () => pushName(DASHBOARD_PATH),
+          onPressed: () => AppNavigator.pushName(DASHBOARD_PATH),
           text: "Skip",
           compressSize: false,
         ),

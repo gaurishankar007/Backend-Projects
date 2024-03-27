@@ -86,14 +86,14 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
       );
 
       DioFormData formData = DioFormData.fromMap({
-        "profile": await networkService.multipartFormFile(multiPartForm),
+        "profile": await networkService.multipartFromFile(multiPartForm),
       });
 
       final requestForm = RequestForm(
         updateProfileUrl,
         data: formData,
         options: DioOptions(
-          headers: reqHeaders(isFormData: true),
+          headers: authHeaders(isForm: true),
           validateStatus: (status) => status == 200 || status == 400,
         ),
       );

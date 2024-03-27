@@ -33,7 +33,7 @@ class SignInAction extends StatelessWidget {
                   onTap: () async {
                     FocusManager.instance.primaryFocus?.unfocus();
                     bool succeed = await context.read<SignInCubit>().sigIn();
-                    if (succeed) replaceToDashboard();
+                    if (succeed) AppNavigator.replaceToDashboard();
                   },
                   text: "Sign In",
                   expandWidth: true,
@@ -46,7 +46,7 @@ class SignInAction extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomElevatedButton(
-          onTap: () => pushName(SIGN_UP_PATH),
+          onTap: () => AppNavigator.pushName(SIGN_UP_PATH),
           expandWidth: true,
           text: "Create new account",
         ),
