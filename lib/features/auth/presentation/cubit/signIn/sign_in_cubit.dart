@@ -6,7 +6,7 @@ import 'package:rxdart/subjects.dart';
 import '../../../../../core/resources/data_state.dart';
 import '../../../../../core/services/user_service.dart';
 import '../../../domain/forms/sign_in_form.dart';
-import '../../../domain/useCases/sign_in_uc.dart';
+import '../../../domain/useCases/sign_in_use_case.dart';
 
 part 'sign_in_state.dart';
 

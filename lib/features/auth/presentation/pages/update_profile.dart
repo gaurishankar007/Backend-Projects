@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/assets.dart';
 import '../../../../core/extensions/int_extension.dart';
-import '../../../../core/navigation/navigator.dart';
+import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../widgets/image_builder.dart';
 import '../../../../widgets/modalSheets/image_picker_bottom_sheet.dart';

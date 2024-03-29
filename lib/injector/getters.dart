@@ -1,11 +1,11 @@
 part of "injector.dart";
 
+/// Bloc
+ThemeCubit get themeCubit => getIt<ThemeCubit>();
+
 /// Singleton Class
 Initializer get initializer => Initializer();
 ScreenSize get screen => ScreenSize();
-
-/// Bloc
-ThemeCubit get themeCubit => getIt<ThemeCubit>();
 
 /// Core
 LocalDatabase get localDatabase => getIt<LocalDatabase>();

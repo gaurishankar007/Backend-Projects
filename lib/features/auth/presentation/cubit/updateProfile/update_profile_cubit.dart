@@ -1,5 +1,5 @@
-import '../../../domain/useCases/save_user_data_uc.dart';
-import '../../../domain/useCases/update_profile_uc.dart';
+import '../../../domain/useCases/save_user_data_use_case.dart';
+import '../../../domain/useCases/update_profile_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';

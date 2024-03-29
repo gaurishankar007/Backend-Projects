@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-part of 'navigator.dart';
+part of 'app_navigator.dart';
 
 // Route names and paths
 const String SIGN_IN_ROUTE = "SignInRoute";

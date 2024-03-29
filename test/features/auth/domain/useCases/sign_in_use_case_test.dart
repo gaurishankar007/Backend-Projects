@@ -1,8 +1,8 @@
 import 'package:chat/core/resources/data_state.dart';
 import 'package:chat/features/auth/domain/entities/user_data.dart';
 import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
-import 'package:chat/features/auth/domain/repositories/auth_repo.dart';
-import 'package:chat/features/auth/domain/useCases/sign_in_uc.dart';
+import 'package:chat/features/auth/domain/repositories/auth_repository.dart';
+import 'package:chat/features/auth/domain/useCases/sign_in_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

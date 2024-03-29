@@ -4,7 +4,7 @@ import 'package:chat/features/auth/data/dataSources/auth_local_data_source.dart'
 import 'package:chat/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:chat/features/auth/data/models/user_data_model.dart';
 import 'package:chat/features/auth/data/models/user_model.dart';
-import 'package:chat/features/auth/data/repositories/auth_repo_impl.dart';
+import 'package:chat/features/auth/data/repositories/auth_repository_implementation.dart';
 import 'package:chat/features/auth/domain/entities/user_data.dart';
 import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,10 +52,10 @@ void main() {
 
     test("Should check if the device is online", () {
       /// Arrange
-      when(() => networkStatusMock.isOnline).thenAnswer((_) => true);
+      when(() => networkStatusMock.hasConnection).thenAnswer((_) => true);
 
       /// Act
-      final result = networkStatusMock.isOnline;
+      final result = networkStatusMock.hasConnection;
 
       /// Assert
       expect(result, true);
@@ -63,7 +63,7 @@ void main() {
 
     group("When device is online", () {
       setUp(() {
-        when(() => networkStatusMock.isOnline).thenAnswer((_) => true);
+        when(() => networkStatusMock.hasConnection).thenAnswer((_) => true);
         registerFallbackValue(form);
         registerFallbackValue(userData);
       });
@@ -88,7 +88,7 @@ void main() {
 
     group("When device is offline", () {
       setUp(() {
-        when(() => networkStatusMock.isOnline).thenAnswer((_) => false);
+        when(() => networkStatusMock.hasConnection).thenAnswer((_) => false);
         registerFallbackValue(form);
       });
 

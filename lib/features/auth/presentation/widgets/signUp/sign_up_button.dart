@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/navigation/app_navigator.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../cubit/signUp/sign_up_cubit.dart';
 

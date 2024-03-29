@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/navigation/app_navigator.dart';
 import '../../../../../injector/injector.dart';
 import '../../../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../../../widgets/buttons/custom_text_button.dart';

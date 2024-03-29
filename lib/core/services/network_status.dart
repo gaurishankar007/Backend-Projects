@@ -6,13 +6,14 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 /// Check whether the device is online or offline
 class NetworkStatus {
   final InternetConnectionChecker internetConnectionChecker;
-  final Connectivity connectivity;
+  final Connectivity _connectivity;
 
-  NetworkStatus({required this.internetConnectionChecker, required this.connectivity});
+  NetworkStatus({required this.internetConnectionChecker, required Connectivity connectivity})
+      : _connectivity = connectivity;
 
   StreamSubscription<ConnectivityResult>? _subscription;
-  bool _online = true;
-  bool get isOnline => _online;
+  bool _connection = true;
+  bool get hasConnection => _connection;
 
   Future<bool> checkConnection() async => await internetConnectionChecker.hasConnection;
 
@@ -21,14 +22,14 @@ class NetworkStatus {
     if (_subscription != null) return;
 
     /// Do manual checking for web version
-    _online = await checkConnection();
+    _connection = await checkConnection();
 
     /// Listen to connectivity changes
-    _subscription = connectivity.onConnectivityChanged.listen((status) async {
+    _subscription = _connectivity.onConnectivityChanged.listen((status) async {
       if (status != ConnectivityResult.none) {
-        _online = await checkConnection();
+        _connection = await checkConnection();
       } else {
-        _online = false;
+        _connection = false;
       }
     });
   }

@@ -3,7 +3,7 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/constant.dart';
-import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/navigation/app_navigator.dart';
 import '../../../../../injector/injector.dart';
 import '../../inheritedWidget/drawer_key_inherited_widget.dart';
 

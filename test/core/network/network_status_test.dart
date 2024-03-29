@@ -32,7 +32,7 @@ void main() {
 
       /// Assert
       verify(() => internetConnectionCheckerMock.hasConnection).called(1);
-      expect(result, networkStatus.isOnline);
+      expect(result, networkStatus.hasConnection);
     });
   });
 }

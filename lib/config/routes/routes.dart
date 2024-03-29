@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:chat/injector/injector.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/navigation/navigator.dart';
+import '../../core/navigation/app_navigator.dart';
 import 'helper/sliding_auto_route.dart';
 import 'routes.gr.dart';
 

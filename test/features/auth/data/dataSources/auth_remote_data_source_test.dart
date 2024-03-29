@@ -1,6 +1,6 @@
 import 'package:chat/core/constants/api_paths.dart';
 import 'package:chat/core/resources/data_state.dart';
-import 'package:chat/core/services/network_service.dart';
+import 'package:chat/core/services/network/network_client.dart';
 import 'package:chat/features/auth/data/dataSources/auth_remote_data_source.dart';
 import 'package:chat/features/auth/data/models/user_data_model.dart';
 import 'package:chat/features/auth/domain/forms/sign_in_form.dart';
@@ -8,18 +8,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class NetworkServiceMock extends Mock implements NetworkService {}
+class NetworkClientMock extends Mock implements NetworkClient {}
+
+class MultiPartClientMock extends Mock implements MultiPartClient {}
 
 void main() {
-  late final NetworkServiceMock networkServiceMock;
+  late final NetworkClientMock networkServiceMock;
+  late final MultiPartClientMock multiPartServiceMock;
   late final AuthRemoteDataSourceImplementation authRemoteDataSourceImplementation;
   late final Map<String, dynamic> userJson;
   late final Map<String, dynamic> userDataJson;
 
   setUpAll(() {
-    networkServiceMock = NetworkServiceMock();
-    authRemoteDataSourceImplementation =
-        AuthRemoteDataSourceImplementation(networkService: networkServiceMock);
+    networkServiceMock = NetworkClientMock();
+    multiPartServiceMock = MultiPartClientMock();
+    authRemoteDataSourceImplementation = AuthRemoteDataSourceImplementation(
+      networkClient: networkServiceMock,
+      multiPartClient: multiPartServiceMock,
+    );
     userJson = {
       "_id": "d7b9144420",
       "email": "user@gmail.com",

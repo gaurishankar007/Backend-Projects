@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' show debugPrint;
 
 import '../resources/data_state.dart';
 import '../services/local_database.dart';
-import '../services/network_service.dart';
+import '../services/network/network_client.dart';
 import 'error_data.dart';
 
 /// Handles exceptions and returns [DataState]

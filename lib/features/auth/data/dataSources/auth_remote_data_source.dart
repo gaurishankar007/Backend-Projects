@@ -2,7 +2,7 @@ import '../../../../core/constants/api_paths.dart';
 import '../../../../core/errors/error_data.dart';
 import '../../../../core/errors/exception_handler.dart';
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/services/network_service.dart';
+import '../../../../core/services/network/network_client.dart';
 import '../../../../core/utils/auth_header.dart';
 import '../../domain/forms/sign_in_form.dart';
 import '../../domain/forms/sign_up_form.dart';
@@ -16,9 +16,13 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
-  final NetworkService networkService;
+  final NetworkClient networkClient;
+  final MultiPartClient multiPartClient;
 
-  AuthRemoteDataSourceImplementation({required this.networkService});
+  AuthRemoteDataSourceImplementation({
+    required this.networkClient,
+    required this.multiPartClient,
+  });
 
   @override
   FutureData<UserDataModel> signIn(SignInForm parameter) async {
@@ -30,7 +34,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
           validateStatus: (status) => status == 200 || status == 401,
         ),
       );
-      final response = await networkService.post(requestForm);
+      final response = await networkClient.post(requestForm);
 
       if (response.data["status"]) {
         UserDataModel userData = UserDataModel.fromJson(response.data["data"]);
@@ -57,7 +61,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
           validateStatus: (status) => status == 200 || status == 400,
         ),
       );
-      final response = await networkService.post(requestForm);
+      final response = await networkClient.post(requestForm);
 
       bool status = response.data["status"];
 
@@ -86,7 +90,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
       );
 
       DioFormData formData = DioFormData.fromMap({
-        "profile": await networkService.multipartFromFile(multiPartForm),
+        "profile": await multiPartClient.multipartFromFile(multiPartForm),
       });
 
       final requestForm = RequestForm(
@@ -98,7 +102,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
         ),
       );
 
-      final response = await networkService.put(requestForm);
+      final response = await networkClient.put(requestForm);
 
       bool status = response.data["status"];
       if (status) {

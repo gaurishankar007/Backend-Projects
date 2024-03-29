@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/navigation/navigator.dart';
+import '../../core/navigation/app_navigator.dart';
 import '../../features/setting/presentation/arguments/setting_argument.dart';
 import '../../features/setting/presentation/pages/active_status.dart';
 import '../../features/setting/presentation/pages/app_lock.dart';

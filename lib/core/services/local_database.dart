@@ -15,7 +15,7 @@ abstract class LocalDatabase {
 
 /// A class for opening local database and executing operations
 class LocalDatabaseImplementation implements LocalDatabase {
-  late final Isar isar;
+  late final Isar _isar;
 
   @override
   Future<void> open() async {
@@ -24,7 +24,7 @@ class LocalDatabaseImplementation implements LocalDatabase {
       /// Get the root directory of the application
       final directory = await getApplicationDocumentsDirectory();
 
-      isar = await Isar.open(
+      _isar = await Isar.open(
         [
           UserDataCollectionSchema,
           UserSettingCollectionSchema,
@@ -37,11 +37,11 @@ class LocalDatabaseImplementation implements LocalDatabase {
 
   @override
   Future<void> save<T>(T collection) async =>
-      await isar.writeTxn(() => isar.collection<T>().put(collection));
+      await _isar.writeTxn(() => _isar.collection<T>().put(collection));
 
   @override
-  Future<List<T>> getAll<T>() async => await isar.collection<T>().where().findAll();
+  Future<List<T>> getAll<T>() async => await _isar.collection<T>().where().findAll();
 
   @override
-  Future<void> clearAll() async => await isar.writeTxn(() => isar.clear());
+  Future<void> clearAll() async => await _isar.writeTxn(() => _isar.clear());
 }

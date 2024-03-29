@@ -13,6 +13,7 @@ _registerCores() {
       saveUserSettingUseCase: getIt(),
     ),
   );
-  getIt.registerLazySingleton<NetworkService>(() => NetworkServiceImplementation(dio: Dio()));
+  getIt.registerLazySingleton<NetworkClient>(() => NetworkClientImplementation(dio: Dio()));
+  getIt.registerLazySingleton<MultiPartClient>(() => MultiPartClientImplementation());
   getIt.registerLazySingleton<LocalDatabase>(() => LocalDatabaseImplementation());
 }

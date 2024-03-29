@@ -4,25 +4,27 @@ import '../../../../../core/constants/colors.dart';
 import '../../../../../core/resources/data_state.dart';
 import '../../features/auth/domain/entities/user_data.dart';
 import '../../features/auth/domain/entities/user_setting.dart';
-import '../../features/auth/domain/useCases/get_user_data_uc.dart';
-import '../../features/auth/domain/useCases/get_user_setting_uc.dart';
-import '../../features/auth/domain/useCases/save_user_setting_uc.dart';
+import '../../features/auth/domain/useCases/get_user_data_use_case.dart';
+import '../../features/auth/domain/useCases/get_user_setting_use_case.dart';
+import '../../features/auth/domain/useCases/save_user_setting_use_case.dart';
 import '../../features/global/domain/enums/dark_mode_enum.dart';
 import '../../features/global/presentations/mixins/dark_mode_mixin.dart';
 import '../../features/setting/domain/entities/setting_navigator.dart';
-import '../navigation/navigator.dart';
+import '../navigation/app_navigator.dart';
 
 /// A class that stores user data
 class UserService with DarkModeMixin {
-  final GetUserDataUseCase getUserDataUseCase;
-  final GetUserSettingUseCase getUserSettingUseCase;
-  final SaveUserSettingUseCase saveUserSettingUseCase;
+  final GetUserDataUseCase _getUserDataUseCase;
+  final GetUserSettingUseCase _getUserSettingUseCase;
+  final SaveUserSettingUseCase _saveUserSettingUseCase;
 
   UserService({
-    required this.getUserDataUseCase,
-    required this.getUserSettingUseCase,
-    required this.saveUserSettingUseCase,
-  });
+    required GetUserDataUseCase getUserDataUseCase,
+    required GetUserSettingUseCase getUserSettingUseCase,
+    required SaveUserSettingUseCase saveUserSettingUseCase,
+  })  : _saveUserSettingUseCase = saveUserSettingUseCase,
+        _getUserSettingUseCase = getUserSettingUseCase,
+        _getUserDataUseCase = getUserDataUseCase;
 
   bool _isLoggedIn = true;
   UserData userData = const UserData.empty();
@@ -74,13 +76,13 @@ class UserService with DarkModeMixin {
   }
 
   getUserData() async {
-    final userDataState = await getUserDataUseCase.call();
+    final userDataState = await _getUserDataUseCase.call();
     if (userDataState is DataSuccess) return userData = userDataState.data!;
     _isLoggedIn = false;
   }
 
   getUserSetting() async {
-    final dataState = await getUserSettingUseCase.call();
+    final dataState = await _getUserSettingUseCase.call();
     if (dataState is DataSuccess) _userSettings = dataState.data!;
   }
 
@@ -102,7 +104,7 @@ class UserService with DarkModeMixin {
   /// Set new user setting
   changeSetting(SettingNavigator navigator) {
     _navigators = _navigators.map((e) => e.id == navigator.id ? navigator : e).toList();
-    saveUserSettingUseCase.call(navigator);
+    _saveUserSettingUseCase.call(navigator);
   }
 
   bool get isLoggedIn => _isLoggedIn;

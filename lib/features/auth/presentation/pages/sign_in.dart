@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extensions/int_extension.dart';
-import '../../../../core/navigation/navigator.dart';
+import '../../../../core/navigation/app_navigator.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../injector/injector.dart';
 import '../widgets/error_text.dart';
