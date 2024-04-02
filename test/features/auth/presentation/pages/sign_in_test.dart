@@ -1,10 +1,13 @@
+import 'package:chat/config/routes/routes.dart';
 import 'package:chat/config/themes/dark_theme.dart';
 import 'package:chat/config/themes/light_theme.dart';
+import 'package:chat/core/utils/screen.dart';
 import 'package:chat/features/global/presentations/blocs/theme_cubit.dart';
 import 'package:chat/injector/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
   setUpAll(() {
@@ -14,10 +17,10 @@ void main() {
   Widget createWidgetUnderTest() {
     return LayoutBuilder(
       builder: (context, constraints) {
-        screen.initializeScreen(constraints, context);
+        Screen.setScreen(constraints, context);
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => themeCubit),
+            BlocProvider(create: (_) => GetIt.I<ThemeCubit>()),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
@@ -26,8 +29,8 @@ void main() {
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 themeMode: state.themeMode,
-                routerDelegate: appRouter.delegate(),
-                routeInformationParser: appRouter.defaultRouteParser(),
+                routerDelegate: GetIt.I<AppRouter>().delegate(),
+                routeInformationParser: GetIt.I<AppRouter>().defaultRouteParser(),
                 debugShowCheckedModeBanner: false,
               );
             },

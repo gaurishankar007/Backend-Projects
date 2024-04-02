@@ -9,7 +9,6 @@ import '../core/services/local_database.dart';
 import '../core/services/network/network_client.dart';
 import '../core/services/network_status.dart';
 import '../core/services/user_service.dart';
-import '../core/utils/screen_size.dart';
 import '../features/auth/data/dataSources/auth_local_data_source.dart';
 import '../features/auth/data/dataSources/auth_remote_data_source.dart';
 import '../features/auth/data/repositories/auth_repository_implementation.dart';
@@ -25,9 +24,7 @@ import '../features/auth/presentation/cubit/signIn/sign_in_cubit.dart';
 import '../features/auth/presentation/cubit/signUp/sign_up_cubit.dart';
 import '../features/auth/presentation/cubit/updateProfile/update_profile_cubit.dart';
 import '../features/global/presentations/blocs/theme_cubit.dart';
-import '../initializer.dart';
 
-part "getters.dart";
 part "injection.dart";
 part "injections/bloc_injection.dart";
 part "injections/core_injection.dart";

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../../../injector/injector.dart';
+import '../../../../core/services/user_service.dart';
 import '../../../global/domain/enums/dark_mode_enum.dart';
+import '../../../global/presentations/blocs/theme_cubit.dart';
 import '../../domain/entities/setting_navigator.dart';
 import '../arguments/setting_argument.dart';
 import '../widgets/setting_scaffold.dart';
@@ -37,8 +39,8 @@ class _DarkModeSelectionState extends State<DarkModeSelection> {
         onValueSelected: (newValue) {
           notifier.value = newValue;
           widget.argument.onChange(newValue);
-          themeCubit.changeTheme(DarkMode.values.byName(newValue));
-          userService.changeSetting(navigationModel.copyWith(value: newValue));
+          GetIt.I<ThemeCubit>().changeTheme(DarkMode.values.byName(newValue));
+          GetIt.I<UserService>().changeSetting(navigationModel.copyWith(value: newValue));
         },
       ),
     );

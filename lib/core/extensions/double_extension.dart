@@ -1,31 +1,31 @@
-import '../../injector/injector.dart';
+import '../utils/screen.dart';
 
 extension DoubleExtension on double {
   /// Required percentage of height according the screen height
-  double get hPercentage => screen.heightPercentage(toDouble());
+  double get hPercentage => Screen.heightPercentage(toDouble());
 
   /// Required percentage of width according the screen width
-  double get wPercentage => screen.widthPercentage(toDouble());
+  double get wPercentage => Screen.widthPercentage(toDouble());
 
   /// proportionate height of the screen according the height of the Design (Figma)
-  double get propHeight => screen.proportionateHeight(toDouble());
+  double get propHeight => Screen.proportionateHeight(toDouble());
 
   /// proportionate width of the screen according the width of the Design (Figma)
-  double get propWidth => screen.proportionateWidth(toDouble());
+  double get propWidth => Screen.proportionateWidth(toDouble());
 
   /// Required percentage of height with limitation
   double hPConstraint({double? min, double? max}) =>
-      screen.heightPercentageWithConstraints(toDouble(), min: min, max: max);
+      Screen.heightPercentageWithConstraints(toDouble(), min: min, max: max);
 
   /// Required percentage of width with limitation
   double wPConstraint({double? min, double? max}) =>
-      screen.widthPercentageWithConstraints(toDouble(), min: min, max: max);
+      Screen.widthPercentageWithConstraints(toDouble(), min: min, max: max);
 
   /// proportionate height with limitation
   double pHConstraint({double? min, double? max}) =>
-      screen.proportionateHeightWithConstraints(toDouble(), min: min, max: max);
+      Screen.proportionateHeightWithConstraints(toDouble(), min: min, max: max);
 
   /// proportionate width with limitation
   double pWConstraint({double? min, double? max}) =>
-      screen.proportionateWidthWithConstraints(toDouble(), min: min, max: max);
+      Screen.proportionateWidthWithConstraints(toDouble(), min: min, max: max);
 }

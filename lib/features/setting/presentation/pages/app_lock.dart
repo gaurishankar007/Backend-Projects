@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../../../injector/injector.dart';
+import '../../../../core/services/user_service.dart';
 import '../../domain/entities/setting_navigator.dart';
 import '../arguments/setting_argument.dart';
 import '../widgets/setting_scaffold.dart';
@@ -35,7 +36,7 @@ class _AppLockState extends State<AppLock> {
         values: values,
         onValueSelected: (newValue) {
           notifier.value = newValue;
-          userService.changeSetting(navigationItem.copyWith(value: newValue));
+          GetIt.I<UserService>().changeSetting(navigationItem.copyWith(value: newValue));
           widget.parameter.onChange(newValue);
         },
       ),

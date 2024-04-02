@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 import '../core/constants/constant.dart';
-import '../injector/injector.dart';
+import '../core/utils/screen.dart';
 
 class SlidingDrawerWidget extends StatelessWidget {
   final GlobalKey<SlidingDrawerState> drawerKey;
@@ -21,7 +21,7 @@ class SlidingDrawerWidget extends StatelessWidget {
     return SlidingDrawer(
       key: drawerKey,
       settings: SlidingDrawerSettings(
-        drawerWidth: screen.dynamicDrawerWidth,
+        drawerWidth: Screen.dynamicDrawerWidth,
         animationDuration: pageTransitionDuration,
       ),
       drawerBuilder: (_) => drawer,

@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../injector/injector.dart';
+import '../../../../core/services/user_service.dart';
 import '../../domain/enums/dark_mode_enum.dart';
 import '../mixins/dark_mode_mixin.dart';
 
@@ -12,8 +13,8 @@ part 'theme_state.dart';
 class ThemeCubit extends Cubit<ThemeState> with DarkModeMixin {
   final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
 
-  ThemeCubit() : super(ThemeState(userService.themeMode)) {
-    final bool enable = userService.navigators.first.value == "System";
+  ThemeCubit() : super(ThemeState(GetIt.I<UserService>().themeMode)) {
+    final bool enable = GetIt.I<UserService>().navigators.first.value == "System";
     _platformBrightnessListener(enable: enable);
   }
 

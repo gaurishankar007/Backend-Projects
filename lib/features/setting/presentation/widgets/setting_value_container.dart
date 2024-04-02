@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/int_extension.dart';
-import '../../../../injector/injector.dart';
+import '../../../../core/utils/screen.dart';
 
 class SettingValueContainer extends StatelessWidget {
   final Widget child;
@@ -17,7 +17,7 @@ class SettingValueContainer extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 20.propHeight,
-        horizontal: screen.horizontalPadding,
+        horizontal: Screen.horizontalPadding,
       ),
       padding: EdgeInsets.all(padding15),
       decoration: BoxDecoration(

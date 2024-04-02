@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/int_extension.dart';
+import '../../../../core/utils/screen.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injector/injector.dart';
 import '../../../../widgets/user/user_image.dart';
 import '../../../../widgets/user/user_name.dart';
 import '../widgets/setting_navigators.dart';
@@ -18,7 +18,7 @@ class Settings extends StatelessWidget {
       showLeading: false,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: EdgeInsets.symmetric(horizontal: screen.horizontalPadding),
+        padding: EdgeInsets.symmetric(horizontal: Screen.horizontalPadding),
         child: Column(
           children: [
             Padding(

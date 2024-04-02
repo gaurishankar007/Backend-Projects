@@ -3,8 +3,8 @@ import 'package:flutter_sliding_drawer/flutter_sliding_drawer.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
+import '../../../../core/utils/screen.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_icon_button.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
 import '../inheritedWidget/drawer_key_inherited_widget.dart';
@@ -23,11 +23,11 @@ class DashboardAppBar extends StatelessWidget {
     final drawerKey = DrawerKeyInheritedWidget.of(context).drawerKey;
 
     return GlassLayerContainer(
-      height: kToolbarHeight + screen.statusBarHeight,
+      height: kToolbarHeight + Screen.statusBarHeight,
       padding: EdgeInsets.only(
-        top: screen.statusBarHeight,
-        left: screen.horizontalPadding,
-        right: screen.horizontalPadding,
+        top: Screen.statusBarHeight,
+        left: Screen.horizontalPadding,
+        right: Screen.horizontalPadding,
       ),
       child: Stack(
         children: [

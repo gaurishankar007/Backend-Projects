@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extensions/int_extension.dart';
 import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/utils/screen.dart';
 import '../../../../core/utils/text_styles.dart';
 import '../../../../injector/injector.dart';
 import '../cubit/signUp/sign_up_cubit.dart';
@@ -34,7 +35,7 @@ class SignUp extends StatelessWidget {
               ),
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: screen.dynamicHorizontalPadding),
+                  padding: EdgeInsets.symmetric(horizontal: Screen.dynamicHorizontalPadding),
                   children: [
                     const SignUpFormContainer(),
                     SizedBox(height: 50.propHeight),

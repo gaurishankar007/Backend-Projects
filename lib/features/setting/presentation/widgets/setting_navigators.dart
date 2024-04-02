@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
 import '../../../../core/extensions/int_extension.dart';
-import '../../../../injector/injector.dart';
+import '../../../../core/services/user_service.dart';
 import 'setting_navigation_item.dart';
 
 class SettingNavigators extends StatelessWidget {
@@ -28,11 +29,11 @@ class SettingNavigators extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userService.navigators.length,
+        itemCount: GetIt.I<UserService>().navigators.length,
         separatorBuilder: (context, index) => Divider(indent: 10.wPercentage),
         itemBuilder: (context, index) {
           return SettingNavigationItem(
-            navigationItem: userService.navigators[index],
+            navigationItem: GetIt.I<UserService>().navigators[index],
             arrowColor: arrowColor,
             valueColor: valueColor,
           );

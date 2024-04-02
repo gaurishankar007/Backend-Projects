@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/constant.dart';
+import '../../../../core/navigation/app_navigator.dart';
+import '../../../../core/utils/screen.dart';
 import '../../../../core/utils/text_styles.dart';
-import '../../../../injector/injector.dart';
 import '../../../../widgets/buttons/custom_icon_button.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
 import '../../../../widgets/preferred_size_app_bar.dart';
@@ -32,7 +33,7 @@ class SettingScaffold extends StatelessWidget {
         appBar: GlassLayerContainer(
           backgroundColor: backgroundColor,
           height: kToolbarHeight,
-          padding: EdgeInsets.symmetric(horizontal: screen.horizontalPadding),
+          padding: EdgeInsets.symmetric(horizontal: Screen.horizontalPadding),
           child: Stack(
             children: [
               if (showLeading)
@@ -55,7 +56,7 @@ class SettingScaffold extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () => Navigator.of(context),
+                    onPressed: () => AppNavigator.popPage(),
                     child: Text("Done", style: largeSemibold()),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show Color, Colors;
+import 'package:get_it/get_it.dart';
 
-import '../../injector/injector.dart';
+import '../../features/global/presentations/blocs/theme_cubit.dart';
 
 /// <===== Base Colors  =====>
 Color get white => Colors.white;
@@ -28,11 +29,11 @@ Color get buttonDark => const Color(0XFF4B4B4B);
 /// <===== Theme Colors =====>
 /// Get background color according to the theme mode
 Color surfaceColor({Color? light, Color? dark}) =>
-    themeCubit.surfaceColor(light: light, dark: dark);
+    GetIt.I<ThemeCubit>().surfaceColor(light: light, dark: dark);
 
 /// Get color of the item lying upon background according to the theme mode
 Color onSurfaceColor({Color? light, Color? dark}) =>
-    themeCubit.onSurfaceColor(light: light, dark: dark);
+    GetIt.I<ThemeCubit>().onSurfaceColor(light: light, dark: dark);
 
 Color get drawerColor => surfaceColor(light: Colors.white, dark: const Color(0XFF303030));
 Color get popUpColor => surfaceColor(light: f5f5f5, dark: const Color(0XFF222222));

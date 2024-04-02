@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart' show WidgetsFlutterBinding;
+import 'package:get_it/get_it.dart';
 
+import 'core/services/local_database.dart';
+import 'core/services/network_status.dart';
+import 'core/services/user_service.dart';
 import 'injector/injector.dart';
 
 class Initializer {
-  Initializer._();
-  static final _singleton = Initializer._();
-  factory Initializer() => _singleton;
+  static bool _isInitialized = false;
 
-  bool _isInitialized = false;
-
-  Future initializeApp() async {
+  static Future initializeApp() async {
     if (_isInitialized) return;
 
     WidgetsFlutterBinding.ensureInitialized();
 
     initializeDependencies();
-    await localDatabase.open();
-    await networkStatus.checkConnectionAndListenConnectivity();
-    await userService.initializeUserData();
+    await GetIt.I<LocalDatabase>().open();
+    await GetIt.I<NetworkStatus>().checkConnectionAndListenConnectivity();
+    await GetIt.I<UserService>().initializeUserData();
 
     _isInitialized = true;
   }

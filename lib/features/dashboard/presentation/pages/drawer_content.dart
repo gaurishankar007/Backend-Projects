@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/colors.dart';
-import '../../../../injector/injector.dart';
+import '../../../../core/utils/screen.dart';
 import '../../../../widgets/glass/glass_layer_container.dart';
 import '../../../../widgets/preferred_size_app_bar.dart';
 import '../widgets/drawer/drawer_app_bar_items.dart';
@@ -24,11 +24,11 @@ class DrawerContent extends StatelessWidget {
       appBar: PreferredSizeAppBar(
         appBar: GlassLayerContainer(
           backgroundColor: backgroundColor,
-          height: kToolbarHeight + screen.statusBarHeight,
+          height: kToolbarHeight + Screen.statusBarHeight,
           padding: EdgeInsets.only(
-            top: screen.statusBarHeight,
-            left: screen.horizontalPadding,
-            right: screen.horizontalPadding,
+            top: Screen.statusBarHeight,
+            left: Screen.horizontalPadding,
+            right: Screen.horizontalPadding,
           ),
           child: const DrawerAppBarItems(),
         ),

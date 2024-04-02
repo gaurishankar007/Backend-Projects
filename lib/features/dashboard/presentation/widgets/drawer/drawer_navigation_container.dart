@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/extensions/int_extension.dart';
-import '../../../../../injector/injector.dart';
+import '../../../../../core/utils/screen.dart';
 import '../../../domain/entities/dashboard_navigator.dart';
 import 'drawer_navigation_item.dart';
 
@@ -27,7 +27,7 @@ class _DrawerNavigationContainerState extends State<DrawerNavigationContainer> {
       builder: (context, selectedIndex, child) {
         return ListView.separated(
           padding: EdgeInsets.symmetric(
-            horizontal: screen.horizontalPadding,
+            horizontal: Screen.horizontalPadding,
             vertical: 15.propHeight,
           ),
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
