@@ -1,7 +1,7 @@
 import { emailRegex, nameRegex, passwordRegex } from "../constants/regex.js";
 
 const authValidator = {
-  register: (json) => {
+  register: (json: any) => {
     const { name, email, password } = json;
 
     if (name === undefined || name.trim() === "") return "Name is required";
@@ -16,7 +16,7 @@ const authValidator = {
 
     return undefined;
   },
-  login: (json) => {
+  login: (json: any) => {
     const { email, password } = json;
 
     if (email === undefined || email.trim() === "") return "Email is required";
@@ -25,7 +25,7 @@ const authValidator = {
 
     return undefined;
   },
-  changePassword: (json) => {
+  changePassword: (json: any) => {
     const { oldPassword, password, confirmPassword } = json;
 
     if (!oldPassword || oldPassword.trim() === "")

@@ -3,35 +3,35 @@ import { publicDirectory } from "../utils/directory.js";
 import { errorResponse } from "../utils/response.js";
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, publicDirectory("/images"));
+  destination: (req: any, file: any, cb: any) => {
+    cb(null, publicDirectory("/profiles"));
   },
-  filename: (req, file, cb) => {
+  filename: (req: any, file: any, cb: any) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-const filter = (req, file, cb) => {
-  const types = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
-  const fileSize = parseInt(req.headers["content-length"]);
+const filter = (req: any, file: any, cb: any) => {
+  const types = ["image/jpg", "image/jpeg", "image/png"];
+  const fileSize = parseInt(req.headers["content-length"] as string);
 
   if (!types.includes(file.mimetype)) {
     cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
-  } else if (fileSize > 50 * 1e6) {
+  } else if (fileSize > 10 * 1e6) {
     cb(new multer.MulterError("LIMIT_FILE_SIZE"), false);
   } else {
     cb(null, true);
   }
 };
 
-const imageMulter = multer({
+const profileMulter = multer({
   storage: storage,
   fileFilter: filter,
-  limits: { fileSize: 50 * 1e6 },
-}).single("image");
+  limits: { fileSize: 10 * 1e6 },
+}).single("profile");
 
-const imageMiddleware = (req, res, next) =>
-  imageMulter(req, res, (error) => {
+const profileMiddleware = (req: any, res: any, next: any) =>
+  profileMulter(req, res, (error: any) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
         return errorResponse(res, "Unsupported image");
@@ -46,4 +46,4 @@ const imageMiddleware = (req, res, next) =>
     next();
   });
 
-export default imageMiddleware;
+export default profileMiddleware;

@@ -1,8 +1,17 @@
+import { NextFunction, Request, Response } from "express";
 import UserModel from "../../models/user.model.js";
 import { errorResponse } from "../utils/response.js";
 import tokenHandler from "../utils/token.handler.js";
 
-const authMiddleware = async (req, res, next) => {
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+
+const authMiddleware = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const authorization = req.headers.authorization;
     if (!authorization)
@@ -12,11 +21,13 @@ const authMiddleware = async (req, res, next) => {
     if (bearer !== "Bearer")
       return errorResponse(res, "Invalid bearer token", undefined, 401);
 
-    const { id, type } = tokenHandler.verifyToken(token);
-    if (type !== "token") return errorResponse(res, "Invalid token", undefined, 401);
+    const { id, type } = tokenHandler.verifyToken(token) as any;
+    if (type !== "token")
+      return errorResponse(res, "Invalid token", undefined, 401);
 
     const user = await UserModel.findOne({ _id: id }, "-password");
-    if (user === null) return errorResponse(res, "Invalid token", undefined, 401);
+    if (user === null)
+      return errorResponse(res, "Invalid token", undefined, 401);
 
     req.user = user;
     next();

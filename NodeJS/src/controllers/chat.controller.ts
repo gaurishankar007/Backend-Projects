@@ -5,7 +5,7 @@ import ChatModel from "../models/chat.model.js";
 import "../models/message.model.js";
 
 const chatController = {
-  create: asyncHandler(async (req, res) => {
+  create: asyncHandler(async (req: any, res: any) => {
     const userId = req.body.userId;
     if (!userId || userId.trim() === "")
       return errorResponse(res, "User id is required");
@@ -17,7 +17,7 @@ const chatController = {
 
     successResponse(res, chat);
   }),
-  createGroup: asyncHandler(async (req, res) => {
+  createGroup: asyncHandler(async (req: any, res: any) => {
     const { userIds, name } = req.body;
     if (!userIds || userIds.length <= 1)
       return errorResponse(res, "At least 2 users' id are required");
@@ -25,7 +25,7 @@ const chatController = {
     const user = req.user;
     const members = [
       { user: `${user._id}`, admin: true },
-      ...userIds.map(function (id) {
+      ...userIds.map(function (id: any) {
         return { user: id, addedBy: user };
       }),
     ];
@@ -36,14 +36,15 @@ const chatController = {
       group: true,
       creator: user,
     });
-    
+
     successResponse(res, chat);
   }),
-  fetch: asyncHandler(async (req, res) => {
+  fetch: asyncHandler(async (req: any, res: any) => {
     const user = req.user;
     const page = req.body.page;
     if (!page) return errorResponse(res, "Page is required");
-    if (!Number.isInteger(page)) return errorResponse(res, "Page must be integer");
+    if (!Number.isInteger(page))
+      return errorResponse(res, "Page must be integer");
 
     let chats = await ChatModel.find({
       members: { $elemMatch: { user: user._id } },
@@ -56,13 +57,13 @@ const chatController = {
 
     successResponse(res, chats);
   }),
-  addMember: asyncHandler(async (req, res) => {
+  addMember: asyncHandler(async (req: any, res: any) => {
     const error = chatValidator.addMember(req.body);
     if (error) return errorResponse(res, error);
 
     const { chatId, userIds } = req.body;
     const user = req.user;
-    const members = userIds.map(function (id) {
+    const members = userIds.map(function (id: any) {
       return { user: id, addedBy: user.id };
     });
 
@@ -74,7 +75,7 @@ const chatController = {
 
     successResponse(res, members);
   }),
-  removeMember: asyncHandler(async (req, res) => {
+  removeMember: asyncHandler(async (req: any, res: any) => {
     const error = chatValidator.removeMember(req.body);
     if (error) return errorResponse(res, error);
 

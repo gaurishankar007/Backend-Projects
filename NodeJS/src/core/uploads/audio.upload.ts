@@ -3,17 +3,17 @@ import { publicDirectory } from "../utils/directory.js";
 import { errorResponse } from "../utils/response.js";
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req: any, file: any, cb: any) => {
     cb(null, publicDirectory("/audios"));
   },
-  filename: (req, file, cb) => {
+  filename: (req: any, file: any, cb: any) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-const filter = (req, file, cb) => {
+const filter = (req: any, file: any, cb: any) => {
   const types = ["audio/mp3", "audio/mp4", "audio/m4A", "audio/mpeg"];
-  const fileSize = parseInt(req.headers["content-length"]);
+  const fileSize = parseInt(req.headers["content-length"] as string);
 
   if (!types.includes(file.mimetype)) {
     cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
@@ -30,8 +30,8 @@ const audioMulter = multer({
   limits: { fileSize: 25 * 1e6 },
 }).single("audio");
 
-const audioMiddleware = (req, res, next) => {
-  audioMulter(req, res, (error) => {
+const audioMiddleware = (req: any, res: any, next: any) => {
+  audioMulter(req, res, (error: any) => {
     if (error instanceof multer.MulterError) {
       if (error.code === "LIMIT_UNEXPECTED_FILE") {
         return errorResponse(res, "Unsupported audio");

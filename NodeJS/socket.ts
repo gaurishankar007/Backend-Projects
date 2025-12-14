@@ -1,5 +1,5 @@
-const socketFunction = (socket) => {
-  socket.on("setup", (userData) => {
+const socketFunction = (socket: any) => {
+  socket.on("setup", (userData: any) => {
     const userId = userData.userId;
     const friends = userData.friends;
 
@@ -9,31 +9,31 @@ const socketFunction = (socket) => {
     }
   });
 
-  socket.on("join-chat", (chatId) => socket.join(chatId));
+  socket.on("join-chat", (chatId: any) => socket.join(chatId));
 
-  socket.on("typing", (typeData) =>
+  socket.on("typing", (typeData: any) =>
     socket.to(typeData.chatId).emit("typing", typeData.typist)
   );
 
-  socket.on("stop-typing", (typeData) =>
+  socket.on("stop-typing", (typeData: any) =>
     socket.to(typeData.chatId).emit("stop-typing", typeData.typist)
   );
 
-  socket.on("message", (messageData) => {
+  socket.on("message", (messageData: any) => {
     socket.in(messageData.chatId).emit("message-received", messageData.message);
   });
 
-  socket.on("message-seen", (seenData) =>
+  socket.on("message-seen", (seenData: any) =>
     socket.to(seenData.chatId).emit("message-seen", seenData.member)
   );
 
-  socket.on("set-theme", (themeData) =>
+  socket.on("set-theme", (themeData: any) =>
     socket.to(themeData.chatId).emit("new-theme", themeData.theme)
   );
 
   socket.off("setup", () => {
-    console.log(userData);
-    socket.leave(userData.userId);
+    // console.log(userData);
+    // socket.leave(userData.userId);
   });
 };
 

@@ -6,7 +6,7 @@ import authValidator from "../core/validators/auth.validator.js";
 import UserModel from "../models/user.model.js";
 
 const userController = {
-  register: asyncHandler(async (req, res) => {
+  register: asyncHandler(async (req: any, res: any) => {
     const error = authValidator.register(req.body);
     if (error) return errorResponse(res, error);
 
@@ -32,7 +32,7 @@ const userController = {
 
     successResponse(res, data);
   }),
-  login: asyncHandler(async (req, res) => {
+  login: asyncHandler(async (req: any, res: any) => {
     const error = authValidator.login(req.body);
     if (error) return errorResponse(res, error);
 
@@ -41,7 +41,10 @@ const userController = {
     const errorMsg = "User credential did not match";
     if (user === null) return errorResponse(res, errorMsg, undefined, 401);
 
-    const pWValid = await hashHandler.compare(password, user.password);
+    const pWValid = await hashHandler.compare(
+      password,
+      user.password as string
+    );
     if (!pWValid) return errorResponse(res, errorMsg, undefined, 401);
     user.password = undefined;
 
@@ -51,15 +54,16 @@ const userController = {
 
     successResponse(res, data);
   }),
-  refreshToken: asyncHandler(async (req, res) => {
+  refreshToken: asyncHandler(async (req: any, res: any) => {
     const refreshToken = req.body.refreshToken;
     if (!refreshToken || refreshToken === "")
       return errorResponse(res, "Refresh token is required");
 
     try {
-      const { id, type } = tokenHandler.verifyToken(refreshToken);
+      const { id, type } = tokenHandler.verifyToken(refreshToken) as any;
       const errorMsg = "Invalid refresh token";
-      if (type !== "refresh") return errorResponse(res, errorMsg, undefined, 401);
+      if (type !== "refresh")
+        return errorResponse(res, errorMsg, undefined, 401);
 
       const user = await UserModel.findOne({ _id: id }, "-password");
       if (user === null) return errorResponse(res, errorMsg, undefined, 401);
@@ -73,24 +77,27 @@ const userController = {
       errorResponse(res, "Refresh token has been expired", undefined, 401);
     }
   }),
-  changeProfile: asyncHandler(async (req, res) => {
+  changeProfile: asyncHandler(async (req: any, res: any) => {
     const file = req.file;
 
     const user = await UserModel.findOneAndUpdate(
       { _id: req.user._id },
       { profile: file.filename }
     );
-    user.profile = file.filename;
+    if (user) user.profile = file.filename;
 
     successResponse(res, user);
   }),
-  changePassword: asyncHandler(async (req, res) => {
+  changePassword: asyncHandler(async (req: any, res: any) => {
     const error = authValidator.changePassword(req.body);
     if (error) return errorResponse(res, error);
 
     const { oldPassword, password } = req.body;
     const user = await UserModel.findOne({ _id: req.user._id });
-    const isValidPW = await hashHandler.compare(oldPassword, user.password);
+    const isValidPW = await hashHandler.compare(
+      oldPassword,
+      user?.password as string
+    );
     if (!isValidPW) return errorResponse(res, "Old password did not matched");
     if (oldPassword === password)
       return errorResponse(res, "Same password can not be used");
@@ -100,18 +107,20 @@ const userController = {
 
     successResponse(res, "Password changed");
   }),
-  changeName: asyncHandler(async (req, res) => {
+  changeName: asyncHandler(async (req: any, res: any) => {
     const user = req.user;
     const name = req.body.name;
-    if (!name || name.trim() === "") return errorResponse(res, "Name is required");
+    if (!name || name.trim() === "")
+      return errorResponse(res, "Name is required");
 
     await UserModel.updateOne({ _id: user._id }, { name: name });
 
     successResponse(res, "Name changed");
   }),
-  search: asyncHandler(async (req, res) => {
+  search: asyncHandler(async (req: any, res: any) => {
     const name = req.body.name;
-    if (!name || name.trim() === "") return errorResponse(res, "Name is required");
+    if (!name || name.trim() === "")
+      return errorResponse(res, "Name is required");
 
     const user = req.user;
     const users = await UserModel.find({

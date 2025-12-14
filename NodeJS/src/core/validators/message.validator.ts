@@ -1,5 +1,5 @@
 const messageValidator = {
-  text: (json) => {
+  text: (json: any) => {
     const { chatId, content, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!content || content.trim() === "") return "Message is required";
@@ -8,7 +8,7 @@ const messageValidator = {
 
     return undefined;
   },
-  replyText: (json) => {
+  replyText: (json: any) => {
     const { chatId, messageId, content, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!messageId || messageId.trim() === "") return "Message id is required";
@@ -18,7 +18,7 @@ const messageValidator = {
 
     return undefined;
   },
-  file: (json) => {
+  file: (json: any) => {
     const { chatId, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!contentType || contentType.trim() === "")
@@ -26,7 +26,7 @@ const messageValidator = {
 
     return undefined;
   },
-  replyFile: (json) => {
+  replyFile: (json: any) => {
     const { chatId, messageId, contentType } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!messageId || messageId.trim() === "") return "Message id is required";
@@ -35,14 +35,14 @@ const messageValidator = {
 
     return undefined;
   },
-  react: (json) => {
+  react: (json: any) => {
     const { reaction, messageId } = json;
     if (!reaction || reaction.trim() === "") return "Reaction is required";
     if (!messageId || messageId.trim() === "") return "Message id is required";
 
     return undefined;
   },
-  removeReaction: (json) => {
+  removeReaction: (json: any) => {
     const { reactionId, messageId } = json;
     if (!reactionId || reactionId.trim() === "")
       return "Reaction id is required";
@@ -50,7 +50,7 @@ const messageValidator = {
 
     return undefined;
   },
-  fetch: (json) => {
+  fetch: (json: any) => {
     const { chatId, page } = json;
     if (!chatId || chatId.trim() === "") return "Chat id is required";
     if (!page) return "Page is required";

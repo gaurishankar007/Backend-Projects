@@ -1,4 +1,22 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+
+export interface IChat extends Document {
+  members: Array<{
+    user: mongoose.Types.ObjectId;
+    nickName: string;
+    addedBy: mongoose.Types.ObjectId;
+    admin: boolean;
+    seenMessage: mongoose.Types.ObjectId;
+  }>;
+  name: string;
+  profile: string;
+  lastMessage: mongoose.Types.ObjectId;
+  group: boolean;
+  creator: mongoose.Types.ObjectId;
+  theme: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 const ChatScheme = new mongoose.Schema(
   {
@@ -42,6 +60,6 @@ const ChatScheme = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ChatModel = mongoose.model("Chat", ChatScheme);
+const ChatModel = mongoose.model<IChat>("Chat", ChatScheme);
 
 export default ChatModel;
