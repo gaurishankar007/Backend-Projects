@@ -1,25 +1,69 @@
-import express from "express";
-import userController from "../controllers/user.controller.js";
-import authMiddleware from "../core/middleware/auth.middleware.js";
-import profileMiddleware from "../core/uploads/profile.upload.js";
+import { Router } from "express";
+import { container } from "tsyringe";
+import { UserController } from "../controllers/user.controller.js";
+import authMiddleware from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
+import profileMiddleware from "../uploads/profile.upload.js";
+import {
+  changeNameSchema,
+  changePasswordSchema,
+  loginSchema,
+  registerSchema,
+  requestRefreshTokenSchema,
+  searchUserSchema,
+} from "../validators/auth.schema.js";
 
-const userRouter = express.Router();
+class UserRoute {
+  public readonly router: Router;
 
-userRouter.post("/register", userController.register);
-userRouter.post("/login", userController.login);
-userRouter.post("/refreshToken", userController.refreshToken);
-userRouter.put(
-  "/updateProfile",
-  authMiddleware,
-  profileMiddleware,
-  userController.changeProfile
-);
-userRouter.put(
-  "/changePassword",
-  authMiddleware,
-  userController.changePassword
-);
-userRouter.put("/changeName", authMiddleware, userController.changeName);
-userRouter.post("/searchUser", authMiddleware, userController.search);
+  constructor() {
+    this.router = Router();
+    this.initRoutes();
+  }
 
-export default userRouter;
+  private initRoutes() {
+    const userController = container.resolve(UserController);
+
+    this.router.post(
+      "/register",
+      validate(registerSchema),
+      userController.register.bind(userController)
+    );
+    this.router.post(
+      "/login",
+      validate(loginSchema),
+      userController.login.bind(userController)
+    );
+    this.router.post(
+      "/refreshToken",
+      validate(requestRefreshTokenSchema),
+      userController.refreshToken.bind(userController)
+    );
+    this.router.put(
+      "/updateProfile",
+      authMiddleware,
+      profileMiddleware,
+      userController.changeProfile.bind(userController)
+    );
+    this.router.put(
+      "/changePassword",
+      authMiddleware,
+      validate(changePasswordSchema),
+      userController.changePassword.bind(userController)
+    );
+    this.router.put(
+      "/changeName",
+      authMiddleware,
+      validate(changeNameSchema),
+      userController.changeName.bind(userController)
+    );
+    this.router.post(
+      "/searchUser",
+      authMiddleware,
+      validate(searchUserSchema),
+      userController.search.bind(userController)
+    );
+  }
+}
+
+export default new UserRoute().router;

@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { errorResponse } from "../utils/response.js";
 
 const urlNotFound = (req: Request, res: Response, next: NextFunction) => {
-  const error = Error(`Url Not Found: ${req.originalUrl}`);
-  res.status(404);
-  next(error);
+  errorResponse(res, `Url '${req.originalUrl}' not found`, undefined, 404);
 };
 
 const errorHandler = (
@@ -13,10 +11,7 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(error);
-
-  const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
-  errorResponse(res, error.message, undefined, statusCode);
+  errorResponse(res, error.message || "Internal Server Error", undefined, 500);
 };
 
 export { errorHandler, urlNotFound };

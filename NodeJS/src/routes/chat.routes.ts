@@ -1,13 +1,58 @@
-import express from "express";
-import authMiddleware from "../core/middleware/auth.middleware.js";
-import chatController from "../controllers/chat.controller.js";
+import { Router } from "express";
+import { container } from "tsyringe";
+import { ChatController } from "../controllers/chat.controller.js";
+import authMiddleware from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
+import {
+  addMemberSchema,
+  createChatSchema,
+  createGroupSchema,
+  fetchChatSchema,
+  removeMemberSchema,
+} from "../validators/chat.schema.js";
 
-const chatRouter = express.Router();
+class ChatRoute {
+  public readonly router: Router;
 
-chatRouter.post("/create", authMiddleware, chatController.create);
-chatRouter.post("/createGroup", authMiddleware, chatController.createGroup);
-chatRouter.get("/fetch", authMiddleware, chatController.fetch);
-chatRouter.put("/addMember", authMiddleware, chatController.addMember);
-chatRouter.delete("/removeMember", authMiddleware, chatController.removeMember);
+  constructor() {
+    this.router = Router();
+    this.initRoutes();
+  }
 
-export default chatRouter;
+  private initRoutes() {
+    const chatController = container.resolve(ChatController);
+
+    this.router.post(
+      "/create",
+      authMiddleware,
+      validate(createChatSchema),
+      chatController.create.bind(chatController)
+    );
+    this.router.post(
+      "/createGroup",
+      authMiddleware,
+      validate(createGroupSchema),
+      chatController.createGroup.bind(chatController)
+    );
+    this.router.get(
+      "/fetch",
+      authMiddleware,
+      validate(fetchChatSchema),
+      chatController.fetch.bind(chatController)
+    );
+    this.router.put(
+      "/addMember",
+      authMiddleware,
+      validate(addMemberSchema),
+      chatController.addMember.bind(chatController)
+    );
+    this.router.delete(
+      "/removeMember",
+      authMiddleware,
+      validate(removeMemberSchema),
+      chatController.removeMember.bind(chatController)
+    );
+  }
+}
+
+export default new ChatRoute().router;

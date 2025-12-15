@@ -1,56 +1,105 @@
-import express from "express";
-import messageController from "../controllers/message.controller.js";
-import authMiddleWare from "../core/middleware/auth.middleware.js";
-import audioMiddleware from "../core/uploads/audio.upload.js";
-import imageMiddleware from "../core/uploads/image.upload.js";
-import videoMiddleware from "../core/uploads/video.upload.js";
+import { Router } from "express";
+import { container } from "tsyringe";
+import { MessageController } from "../controllers/message.controller.js";
+import authMiddleWare from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
+import audioMiddleware from "../uploads/audio.upload.js";
+import imageMiddleware from "../uploads/image.upload.js";
+import videoMiddleware from "../uploads/video.upload.js";
+import {
+  fetchMessageSchema,
+  reactMessageSchema,
+  removeReactionSchema,
+  replyFileSchema,
+  replyMessageSchema,
+  sendFileSchema,
+  sendMessageSchema,
+} from "../validators/message.schema.js";
 
-const messageRouter = express.Router();
+class MessageRoute {
+  public readonly router: Router;
 
-messageRouter.post("/text", authMiddleWare, messageController.text);
-messageRouter.post("/replyText", authMiddleWare, messageController.replyText);
-messageRouter.post(
-  "/image",
-  authMiddleWare,
-  imageMiddleware,
-  messageController.file
-);
-messageRouter.post(
-  "/replyImage",
-  authMiddleWare,
-  imageMiddleware,
-  messageController.replyFile
-);
-messageRouter.post(
-  "/audio",
-  authMiddleWare,
-  audioMiddleware,
-  messageController.file
-);
-messageRouter.post(
-  "/replyAudio",
-  authMiddleWare,
-  audioMiddleware,
-  messageController.replyFile
-);
-messageRouter.post(
-  "/video",
-  authMiddleWare,
-  videoMiddleware,
-  messageController.file
-);
-messageRouter.post(
-  "/replyVideo",
-  authMiddleWare,
-  videoMiddleware,
-  messageController.replyFile
-);
-messageRouter.put("/react", authMiddleWare, messageController.react);
-messageRouter.delete(
-  "/removeReaction",
-  authMiddleWare,
-  messageController.removeReaction
-);
-messageRouter.post("/fetch", authMiddleWare, messageController.fetch);
+  constructor() {
+    this.router = Router();
+    this.initRoutes();
+  }
 
-export default messageRouter;
+  private initRoutes() {
+    const messageController = container.resolve(MessageController);
+
+    this.router.post(
+      "/text",
+      authMiddleWare,
+      validate(sendMessageSchema),
+      messageController.text.bind(messageController)
+    );
+    this.router.post(
+      "/replyText",
+      authMiddleWare,
+      validate(replyMessageSchema),
+      messageController.replyText.bind(messageController)
+    );
+    this.router.post(
+      "/image",
+      authMiddleWare,
+      imageMiddleware,
+      validate(sendFileSchema),
+      messageController.file.bind(messageController)
+    );
+    this.router.post(
+      "/replyImage",
+      authMiddleWare,
+      imageMiddleware,
+      validate(replyFileSchema),
+      messageController.replyFile.bind(messageController)
+    );
+    this.router.post(
+      "/audio",
+      authMiddleWare,
+      audioMiddleware,
+      validate(sendFileSchema),
+      messageController.file.bind(messageController)
+    );
+    this.router.post(
+      "/replyAudio",
+      authMiddleWare,
+      audioMiddleware,
+      validate(replyFileSchema),
+      messageController.replyFile.bind(messageController)
+    );
+    this.router.post(
+      "/video",
+      authMiddleWare,
+      videoMiddleware,
+      validate(sendFileSchema),
+      messageController.file.bind(messageController)
+    );
+    this.router.post(
+      "/replyVideo",
+      authMiddleWare,
+      videoMiddleware,
+      validate(replyFileSchema),
+      messageController.replyFile.bind(messageController)
+    );
+    this.router.put(
+      "/react",
+      authMiddleWare,
+      validate(reactMessageSchema),
+      messageController.react.bind(messageController)
+    );
+    this.router.delete(
+      "/removeReaction",
+      authMiddleWare,
+      validate(removeReactionSchema),
+      messageController.removeReaction.bind(messageController)
+    );
+    this.router.post(
+      "/fetch",
+      authMiddleWare,
+      validate(fetchMessageSchema),
+      messageController.fetch.bind(messageController)
+    );
+  }
+}
+
+export default new MessageRoute().router;

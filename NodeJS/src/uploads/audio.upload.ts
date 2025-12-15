@@ -1,6 +1,7 @@
 import multer from "multer";
 import { publicDirectory } from "../utils/directory.js";
-import { errorResponse } from "../utils/response.js";
+import { errorResponse } from "../utils/response.js"; // Adjusted path
+// The path from src/uploads/audio.upload.ts to src/utils/response.service.ts is "../utils/response.js".
 
 const storage = multer.diskStorage({
   destination: (req: any, file: any, cb: any) => {

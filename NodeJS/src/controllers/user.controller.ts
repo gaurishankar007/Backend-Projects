@@ -1,135 +1,111 @@
-import asyncHandler from "express-async-handler";
-import hashHandler from "../core/utils/hash.handler.js";
-import { errorResponse, successResponse } from "../core/utils/response.js";
-import tokenHandler from "../core/utils/token.handler.js";
-import authValidator from "../core/validators/auth.validator.js";
-import UserModel from "../models/user.model.js";
+import { inject, injectable } from "tsyringe";
+import { UserService } from "../services/user.service.js";
+import { errorResponse, successResponse } from "../utils/response.js";
+import {
+  generateRefreshToken,
+  generateToken,
+  verifyToken,
+} from "../utils/token.js";
 
-const userController = {
-  register: asyncHandler(async (req: any, res: any) => {
-    const error = authValidator.register(req.body);
-    if (error) return errorResponse(res, error);
+@injectable()
+export class UserController {
+  constructor(@inject(UserService) private readonly userService: UserService) {}
 
-    const { name, email, password } = req.body;
-    const hashedPW = await hashHandler.has(password);
-
-    const user = await UserModel.findOne({ email: email });
-    if (user != null) {
-      return errorResponse(res, "User already exist with that email");
+  async register(req: any, res: any) {
+    try {
+      const user = await this.userService.register(req.body);
+      successResponse(res, user);
+    } catch (err: any) {
+      if (err.code === 11000) {
+        errorResponse(res, "Email already exists", undefined, 409);
+      } else {
+        errorResponse(res, err.message);
+      }
     }
+  }
 
-    const newUser = await UserModel.create({
-      name: name,
-      email: email,
-      password: hashedPW,
-    });
-
-    newUser.password = undefined;
-
-    const token = tokenHandler.generateToken({ id: newUser._id });
-    const refresh = tokenHandler.generateRefreshToken({ id: newUser._id });
-    const data = { user: newUser, accessToken: token, refreshToken: refresh };
-
-    successResponse(res, data);
-  }),
-  login: asyncHandler(async (req: any, res: any) => {
-    const error = authValidator.login(req.body);
-    if (error) return errorResponse(res, error);
-
+  async login(req: any, res: any) {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email });
-    const errorMsg = "User credential did not match";
-    if (user === null) return errorResponse(res, errorMsg, undefined, 401);
+    try {
+      const user = await this.userService.login(email, password);
 
-    const pWValid = await hashHandler.compare(
-      password,
-      user.password as string
-    );
-    if (!pWValid) return errorResponse(res, errorMsg, undefined, 401);
-    user.password = undefined;
+      const accessToken = generateToken({ _id: user._id });
+      const refreshToken = generateRefreshToken({ _id: user._id });
 
-    const token = tokenHandler.generateToken({ id: user._id });
-    const refresh = tokenHandler.generateRefreshToken({ id: user._id });
-    const data = { user: user, accessToken: token, refreshToken: refresh };
+      user.refreshToken = refreshToken;
+      await user.save();
 
-    successResponse(res, data);
-  }),
-  refreshToken: asyncHandler(async (req: any, res: any) => {
-    const refreshToken = req.body.refreshToken;
-    if (!refreshToken || refreshToken === "")
-      return errorResponse(res, "Refresh token is required");
+      successResponse(res, { user, accessToken, refreshToken });
+    } catch (err: any) {
+      errorResponse(res, err.message, undefined, 401);
+    }
+  }
+
+  async refreshToken(req: any, res: any) {
+    const { refreshToken } = req.body;
+    try {
+      const decoded = verifyToken(refreshToken);
+      const user = await this.userService.findById(decoded._id);
+      if (!user) return errorResponse(res, "User not found");
+
+      const accessToken = generateToken({ _id: user._id });
+      successResponse(res, { accessToken });
+    } catch (err: any) {
+      errorResponse(res, "Invalid refresh token");
+    }
+  }
+
+  async changeProfile(req: any, res: any) {
+    const file = req.file;
+    if (!file) return errorResponse(res, "Profile image required");
 
     try {
-      const { id, type } = tokenHandler.verifyToken(refreshToken) as any;
-      const errorMsg = "Invalid refresh token";
-      if (type !== "refresh")
-        return errorResponse(res, errorMsg, undefined, 401);
-
-      const user = await UserModel.findOne({ _id: id }, "-password");
-      if (user === null) return errorResponse(res, errorMsg, undefined, 401);
-
-      const accessToken = tokenHandler.generateToken({ id: id });
-      const newRefreshToken = tokenHandler.generateRefreshToken({ id: id });
-      const data = { accessToken, refreshToken: newRefreshToken };
-
-      successResponse(res, data);
-    } catch (error) {
-      errorResponse(res, "Refresh token has been expired", undefined, 401);
+      const user = await this.userService.update(req.user._id, {
+        profile: file.filename,
+      });
+      successResponse(res, user);
+    } catch (err: any) {
+      errorResponse(res, err.message);
     }
-  }),
-  changeProfile: asyncHandler(async (req: any, res: any) => {
-    const file = req.file;
+  }
 
-    const user = await UserModel.findOneAndUpdate(
-      { _id: req.user._id },
-      { profile: file.filename }
-    );
-    if (user) user.profile = file.filename;
-
-    successResponse(res, user);
-  }),
-  changePassword: asyncHandler(async (req: any, res: any) => {
-    const error = authValidator.changePassword(req.body);
-    if (error) return errorResponse(res, error);
-
+  async changePassword(req: any, res: any) {
     const { oldPassword, password } = req.body;
-    const user = await UserModel.findOne({ _id: req.user._id });
-    const isValidPW = await hashHandler.compare(
-      oldPassword,
-      user?.password as string
-    );
-    if (!isValidPW) return errorResponse(res, "Old password did not matched");
-    if (oldPassword === password)
-      return errorResponse(res, "Same password can not be used");
+    try {
+      const user = await this.userService.changePassword(
+        req.user._id,
+        oldPassword,
+        password
+      );
+      successResponse(res, user);
+    } catch (err: any) {
+      errorResponse(res, err.message);
+    }
+  }
 
-    const hashedPW = await hashHandler.has(password);
-    await UserModel.updateOne({ _id: req.user._id }, { password: hashedPW });
+  async changeName(req: any, res: any) {
+    const { name } = req.body;
 
-    successResponse(res, "Password changed");
-  }),
-  changeName: asyncHandler(async (req: any, res: any) => {
-    const user = req.user;
-    const name = req.body.name;
-    if (!name || name.trim() === "")
-      return errorResponse(res, "Name is required");
+    try {
+      const user = await this.userService.update(req.user._id, { name });
+      successResponse(res, user);
+    } catch (err: any) {
+      errorResponse(res, err.message);
+    }
+  }
 
-    await UserModel.updateOne({ _id: user._id }, { name: name });
+  async search(req: any, res: any) {
+    // Validation handled by Zod on body.name or query.query
+    const query = (req.query.query as string) || req.body.name;
 
-    successResponse(res, "Name changed");
-  }),
-  search: asyncHandler(async (req: any, res: any) => {
-    const name = req.body.name;
-    if (!name || name.trim() === "")
-      return errorResponse(res, "Name is required");
-
-    const user = req.user;
-    const users = await UserModel.find({
-      _id: { $ne: user._id },
-      name: { $regex: name, $options: "i" },
-    });
-
-    return successResponse(res, users);
-  }),
-};
-
-export default userController;
+    try {
+      const users = await this.userService.searchUsers(
+        query as string,
+        req.user._id
+      );
+      successResponse(res, users);
+    } catch (err: any) {
+      errorResponse(res, err.message);
+    }
+  }
+}

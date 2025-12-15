@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import UserModel from "../../models/user.model.js";
+import UserModel from "../models/user.model.js";
 import { errorResponse } from "../utils/response.js";
-import tokenHandler from "../utils/token.handler.js";
+import { verifyToken } from "../utils/token.js";
 
 interface AuthenticatedRequest extends Request {
   user?: any;
@@ -21,18 +21,17 @@ const authMiddleware = async (
     if (bearer !== "Bearer")
       return errorResponse(res, "Invalid bearer token", undefined, 401);
 
-    const { id, type } = tokenHandler.verifyToken(token) as any;
-    if (type !== "token")
-      return errorResponse(res, "Invalid token", undefined, 401);
+    const decoded = verifyToken(token);
+    // @ts-ignore
+    const user = await UserModel.findById(decoded._id).select("-password -__v");
 
-    const user = await UserModel.findOne({ _id: id }, "-password");
-    if (user === null)
-      return errorResponse(res, "Invalid token", undefined, 401);
+    if (!user) return errorResponse(res, "Unauthorized", undefined, 401);
 
+    // @ts-ignore
     req.user = user;
     next();
   } catch (error) {
-    errorResponse(res, "Token has been expired", undefined, 401);
+    return errorResponse(res, "Unauthorized", undefined, 401);
   }
 };
 
