@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
 import { ChatService } from "../services/chat.service.js";
 import { errorResponse, successResponse } from "../utils/response.js";
@@ -6,7 +7,7 @@ import { errorResponse, successResponse } from "../utils/response.js";
 export class ChatController {
   constructor(@inject(ChatService) private readonly chatService: ChatService) {}
 
-  async create(req: any, res: any) {
+  async create(req: Request, res: Response) {
     const userId = (req as any).body.userId;
     // Validation: done by Zod (userId required)
 
@@ -18,7 +19,7 @@ export class ChatController {
     }
   }
 
-  async createGroup(req: any, res: any) {
+  async createGroup(req: Request, res: Response) {
     const { userIds, name } = req.body;
     // Validation: done by Zod
 
@@ -34,7 +35,7 @@ export class ChatController {
     }
   }
 
-  async fetch(req: any, res: any) {
+  async fetch(req: Request, res: Response) {
     const page = req.body.page;
     // Validation: done by Zod (page required, integer)
 
@@ -49,7 +50,7 @@ export class ChatController {
     }
   }
 
-  async addMember(req: any, res: any) {
+  async addMember(req: Request, res: Response) {
     // Validation handled by Zod
     const { chatId, userIds } = req.body;
     try {
@@ -70,7 +71,7 @@ export class ChatController {
     }
   }
 
-  async removeMember(req: any, res: any) {
+  async removeMember(req: Request, res: Response) {
     // Validation handled by Zod
     const { chatId, userId } = req.body;
     try {

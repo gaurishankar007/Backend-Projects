@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "main": "server.js",
+  "main": "src/server.ts",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
