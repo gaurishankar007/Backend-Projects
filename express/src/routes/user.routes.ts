@@ -11,7 +11,7 @@ import {
   registerSchema,
   requestRefreshTokenSchema,
   searchUserSchema,
-} from "../validators/auth.schema.js";
+} from "../utils/validators/auth.schema.js";
 
 class UserRoute {
   public readonly router: Router;
@@ -24,6 +24,8 @@ class UserRoute {
   private initRoutes() {
     const userController = container.resolve(UserController);
 
+    // .bind() preserves 'this' context so the method can access this.userService
+    // Without it, 'this' would be undefined when Express calls the handler
     this.router.post(
       "/register",
       validate(registerSchema),

@@ -8,13 +8,9 @@ import imageMiddleware from "../uploads/image.upload.js";
 import videoMiddleware from "../uploads/video.upload.js";
 import {
   fetchMessageSchema,
-  reactMessageSchema,
-  removeReactionSchema,
-  replyFileSchema,
-  replyMessageSchema,
   sendFileSchema,
   sendMessageSchema,
-} from "../validators/message.schema.js";
+} from "../utils/validators/message.schema.js";
 
 class MessageRoute {
   public readonly router: Router;
@@ -33,12 +29,7 @@ class MessageRoute {
       validate(sendMessageSchema),
       messageController.text.bind(messageController)
     );
-    this.router.post(
-      "/replyText",
-      authMiddleWare,
-      validate(replyMessageSchema),
-      messageController.replyText.bind(messageController)
-    );
+
     this.router.post(
       "/image",
       authMiddleWare,
@@ -46,13 +37,7 @@ class MessageRoute {
       validate(sendFileSchema),
       messageController.file.bind(messageController)
     );
-    this.router.post(
-      "/replyImage",
-      authMiddleWare,
-      imageMiddleware,
-      validate(replyFileSchema),
-      messageController.replyFile.bind(messageController)
-    );
+
     this.router.post(
       "/audio",
       authMiddleWare,
@@ -60,13 +45,7 @@ class MessageRoute {
       validate(sendFileSchema),
       messageController.file.bind(messageController)
     );
-    this.router.post(
-      "/replyAudio",
-      authMiddleWare,
-      audioMiddleware,
-      validate(replyFileSchema),
-      messageController.replyFile.bind(messageController)
-    );
+
     this.router.post(
       "/video",
       authMiddleWare,
@@ -74,25 +53,7 @@ class MessageRoute {
       validate(sendFileSchema),
       messageController.file.bind(messageController)
     );
-    this.router.post(
-      "/replyVideo",
-      authMiddleWare,
-      videoMiddleware,
-      validate(replyFileSchema),
-      messageController.replyFile.bind(messageController)
-    );
-    this.router.put(
-      "/react",
-      authMiddleWare,
-      validate(reactMessageSchema),
-      messageController.react.bind(messageController)
-    );
-    this.router.delete(
-      "/removeReaction",
-      authMiddleWare,
-      validate(removeReactionSchema),
-      messageController.removeReaction.bind(messageController)
-    );
+
     this.router.post(
       "/fetch",
       authMiddleWare,

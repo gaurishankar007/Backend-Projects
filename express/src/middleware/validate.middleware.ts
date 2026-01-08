@@ -11,11 +11,10 @@ export const validate =
         query: req.query,
         params: req.params,
       });
+      
       return next();
     } catch (error: any) {
       if (error instanceof ZodError) {
-        // Zod v4 uses .issues? Or .errors? 'errors' was alias in v3.
-        // If errors missing, try issues.
         const zodError = error as any;
         const msg =
           zodError.issues?.[0]?.message ||
@@ -23,6 +22,7 @@ export const validate =
           "Validation Error";
         return errorResponse(res, msg, undefined, 400);
       }
+
       return errorResponse(res, "Validation Error", undefined, 400);
     }
   };

@@ -9,7 +9,7 @@ import {
   createGroupSchema,
   fetchChatSchema,
   removeMemberSchema,
-} from "../validators/chat.schema.js";
+} from "../utils/validators/chat.schema.js";
 
 class ChatRoute {
   public readonly router: Router;

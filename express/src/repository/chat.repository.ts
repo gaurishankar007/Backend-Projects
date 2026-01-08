@@ -1,7 +1,7 @@
 import { singleton } from "tsyringe";
 import { IChat } from "../interfaces/IChat.js";
 import ChatModel from "../models/chat.model.js";
-import { GenericRepository } from "./generic.repository.js";
+import { GenericRepository } from "./base/generic.repository.js";
 
 @singleton()
 export class ChatRepository extends GenericRepository<IChat> {
@@ -12,12 +12,12 @@ export class ChatRepository extends GenericRepository<IChat> {
   async findUserChats(userId: string, page: number): Promise<IChat[]> {
     return this.model
       .find({
-        members: { $elemMatch: { user: userId } },
+        members: userId,
       })
       .sort({ createdAt: -1 })
       .skip((page - 1) * 10)
       .limit(10)
-      .populate("members.user", "-password")
+      .populate("members", "-password")
       .populate("lastMessage")
       .exec();
   }
@@ -34,11 +34,7 @@ export class ChatRepository extends GenericRepository<IChat> {
 
   async removeMember(chatId: string, userId: string): Promise<IChat | null> {
     return this.model
-      .findByIdAndUpdate(
-        chatId,
-        { $pull: { members: { user: userId } } },
-        { new: true }
-      )
+      .findByIdAndUpdate(chatId, { $pull: { members: userId } }, { new: true })
       .exec();
   }
 

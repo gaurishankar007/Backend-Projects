@@ -5,12 +5,6 @@ export interface IMessage extends Document {
   user: mongoose.Types.ObjectId;
   content: string;
   contentType: string;
-  reactions: Array<{
-    reaction: string;
-    user: mongoose.Types.ObjectId;
-  }>;
-  repliedTo: mongoose.Types.ObjectId;
-  pinned: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

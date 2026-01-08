@@ -41,10 +41,6 @@ export class SocketService {
       socket.to(seenData.chatId).emit("message-seen", seenData.member)
     );
 
-    socket.on("set-theme", (themeData: any) =>
-      socket.to(themeData.chatId).emit("new-theme", themeData.theme)
-    );
-
     socket.off("setup", () => {
       // console.log(userData);
       // socket.leave(userData.userId);

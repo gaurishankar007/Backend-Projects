@@ -3,28 +3,7 @@ import { IChat } from "../interfaces/IChat.js";
 
 const ChatScheme = new mongoose.Schema(
   {
-    members: [
-      {
-        type: new mongoose.Schema(
-          {
-            user: { type: mongoose.Types.ObjectId, ref: "User" },
-            nickName: { type: String, default: "" },
-            addedBy: {
-              type: mongoose.Types.ObjectId,
-              ref: "User",
-              default: null,
-            },
-            admin: { type: Boolean, default: false },
-            seenMessage: {
-              type: mongoose.Types.ObjectId,
-              ref: "Message",
-              default: null,
-            },
-          },
-          { timestamps: true }
-        ),
-      },
-    ],
+    members: [{ type: mongoose.Types.ObjectId, ref: "User" }],
     name: { type: String, default: null },
     profile: { type: String, default: null },
     lastMessage: {
@@ -38,7 +17,6 @@ const ChatScheme = new mongoose.Schema(
       ref: "User",
       default: null,
     },
-    theme: { type: String, default: null },
   },
   { timestamps: true }
 );

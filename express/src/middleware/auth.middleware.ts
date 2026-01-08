@@ -22,12 +22,10 @@ const authMiddleware = async (
       return errorResponse(res, "Invalid bearer token", undefined, 401);
 
     const decoded = verifyToken(token);
-    // @ts-ignore
     const user = await UserModel.findById(decoded._id).select("-password -__v");
 
     if (!user) return errorResponse(res, "Unauthorized", undefined, 401);
 
-    // @ts-ignore
     req.user = user;
     next();
   } catch (error) {

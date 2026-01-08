@@ -1,7 +1,7 @@
 import { singleton } from "tsyringe";
 import { IUser } from "../interfaces/IUser.js";
 import UserModel from "../models/user.model.js";
-import { GenericRepository } from "./generic.repository.js";
+import { GenericRepository } from "./base/generic.repository.js";
 
 @singleton()
 export class UserRepository extends GenericRepository<IUser> {

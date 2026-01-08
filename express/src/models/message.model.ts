@@ -11,27 +11,6 @@ const MessageSchema = new mongoose.Schema(
       enum: ["text", "url", "image", "audio", "video", "activity"],
       default: "text",
     },
-    reactions: [
-      {
-        type: new mongoose.Schema(
-          {
-            reaction: { type: String, required: true },
-            user: {
-              type: mongoose.Types.ObjectId,
-              ref: "User",
-              required: true,
-            },
-          },
-          { timestamps: true }
-        ),
-      },
-    ],
-    repliedTo: {
-      type: mongoose.Types.ObjectId,
-      ref: "Message",
-      default: null,
-    },
-    pinned: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
