@@ -1,10 +1,8 @@
-# NodeJS Chat Backend
+# Real-time Chat with Express
 
 ## Overview
 
-This backend powers the Flutter Chat Application. It follows a **Layered Architecture** combining **OOP principles** for stateful components (Services, Repositories) and **Functional Programming** for stateless utilities.
-
-It leverages modern tooling for robustness:
+This repository contains the backend service for a real-time chat application. It provides REST APIs for resource management and a WebSocket interface for real-time messaging. The backend is built following a robust **Layered Architecture** (Controller-Service-Repository pattern) to ensure separation of concerns, scalability, and maintainability. It leverages modern tooling for robustness:
 
 - **Dependency Injection**: Managed by `tsyringe` (declarative, decorator-based).
 - **Validation**: Schema-based validation using `zod`.
@@ -13,16 +11,26 @@ It leverages modern tooling for robustness:
 
 ## Features
 
-- **Auth**: JWT Access/Refresh tokens.
-- **Chat**: One-on-One, Group Chats, Member Management.
-- **Messaging**: Text, File attachments (Images, Video, Audio), Typying Indicators.
-- **Real-time**:
-  - Live socket connection.
-  - Online/Offline user status.
-  - Typing indicators.
-  - Real-time chat list updates.
+- **Real-time Messaging**: Instant message delivery using Socket.IO.
+- **User Authentication**: Secure login and registration (JWT/Bcrypt).
+- **Group Chaos**: Group chat support with member management.
+- **Rich Media**: Support for sending Images, Videos, and Audio.
+- **Presence**: Online/Offline status tracking.
+- **Typing Indicators**: Real-time feedback when users are typing.
 
-## Project Structure
+## Tech Stack & Architecture
+
+**Key Technologies**:
+
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Language**: TypeScript
+- **Real-time**: Socket.IO
+- **Database**: MongoDB (Mongoose ODM)
+- **Validation**: Zod
+- **DI Container**: Tsyringe
+
+### Project Structure
 
 ```text
 src/
@@ -41,37 +49,41 @@ src/
 └── server.ts       # Entry point (DI setup)
 ```
 
-## Architecture Layers
+### Architecture Layers
 
-### 1. Controllers (`src/controllers`)
+#### 1. Presentation Layer (Controllers & Routes)
 
 **Role**: Entry point for HTTP requests.
 
-- **Dependency Injection**: Receives `Services` via constructor.
-- **Responsibility**: Minimal logic. Delegates to services and formats responses.
+- **Routes**: Define API endpoints (`/chat`, `/message`, `/user`), map them to controllers, and enforce middleware (Authentication, File Uploads, Validation).
+- **Controllers**: Handle the HTTP request/response cycle. They extract data from requests, invoke the appropriate Service, and return standardized responses. **No business logic lives here.**
+- **Validators**: `Zod` schemas define strict data shapes (DTOs) for requests. If validation fails, the request is rejected before reaching the controller.
 - **Real-time Integration**: Can trigger socket events (e.g., `emitNewChat` after specific HTTP actions).
 
-### 2. Services (`src/services`)
+#### 2. Business Logic Layer (Services)
 
 **Role**: The heart of the application (Business Logic).
 
 - **Dependency Injection**: Receives `Repositories` via constructor.
 - **SocketService**: A special service managing all WebSocket logic, event listeners, and emitters.
+- **Responsibility**: Contains all business rules (e.g., "Creating a group requires at least 2 other members", "Sending a message updates the chat's `lastMessage`").
 
-### 3. Repositories (`src/repository`)
+#### 3. Data Access Layer (Repositories)
 
 **Role**: Data Access Layer (DAL).
 
 - **Singleton**: Annotated with `@singleton` for efficient reuse.
-- **Responsibility**: Abstracts database queries from business logic.
+- **Responsibility**: Abstracts database queries from business logic. The only layer that interacts directly with Mongoose Models.
 
-### 4. Middleware
+#### 4. Middleware
 
 - **Validation (`validate.middleware.ts`)**: Generic middleware that validates requests against **Zod Schemas**.
 - **Auth**: Verifies JWT tokens.
 - **Socket Middleware**: Authenticates socket handshakes via JWT.
 
-## Workflow
+## System Design
+
+### 1. Request-Response Lifecycle
 
 ```mermaid
 flowchart TD
@@ -93,6 +105,26 @@ flowchart TD
     Service -- Result --> Controller
     Controller -- JSON --> Response[HTTP Response]
     SocketService -- Event --> Client[WebSocket Client]
+```
+
+### 2. Real-time Event Flow (Socket.IO)
+
+```mermaid
+sequenceDiagram
+    participant UserA as Sender (Client)
+    participant Server as Socket Server
+    participant DB as MongoDB
+    participant UserB as Receiver (Client)
+
+    UserA->>Server: emit('send-message', {chatId, content})
+    Server->>Server: Validate & Auth
+    Server->>DB: Save Message (via MessageService)
+    DB-->>Server: Message Document
+    Server->>Server: Ack to UserA (Optimistic UI)
+    Server-->>UserA: Callback({status: 'ok', message})
+    Server->>UserB: emit('new-message', message)
+    UserB->>Server: emit('typing', {chatId})
+    Server->>UserA: emit('typing', {userId})
 ```
 
 ## Dependency Injection (TSyringe)
