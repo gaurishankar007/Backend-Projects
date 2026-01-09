@@ -7,6 +7,7 @@ import audioMiddleware from "../uploads/audio.upload.js";
 import imageMiddleware from "../uploads/image.upload.js";
 import videoMiddleware from "../uploads/video.upload.js";
 import {
+  deleteMessageSchema,
   fetchMessageSchema,
   sendFileSchema,
   sendMessageSchema,
@@ -59,6 +60,13 @@ class MessageRoute {
       authMiddleWare,
       validate(fetchMessageSchema),
       messageController.fetch.bind(messageController)
+    );
+
+    this.router.delete(
+      "/delete",
+      authMiddleWare,
+      validate(deleteMessageSchema),
+      messageController.deleteMessage.bind(messageController)
     );
   }
 }

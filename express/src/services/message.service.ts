@@ -38,4 +38,15 @@ export class MessageService {
   async fetch(chatId: string, page: number): Promise<IMessage[]> {
     return this.messageRepository.findChatMessages(chatId, page);
   }
+
+  async deleteMessage(
+    messageId: string,
+    userId: string
+  ): Promise<IMessage | null> {
+    const message = await this.messageRepository.findById(messageId);
+    if (!message) throw new Error("Invalid message id");
+    if (message.user.toString() !== userId)
+      throw new Error("You are not allowed to delete this message");
+    return this.messageRepository.delete(messageId);
+  }
 }

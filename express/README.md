@@ -9,7 +9,18 @@ It leverages modern tooling for robustness:
 - **Dependency Injection**: Managed by `tsyringe` (declarative, decorator-based).
 - **Validation**: Schema-based validation using `zod`.
 - **Database**: Mongoose ODM.
-- **Real-time**: Socket.IO integration.
+- **Real-time**: Socket.IO integration (Messaging, Online Status, Live Updates).
+
+## Features
+
+- **Auth**: JWT Access/Refresh tokens.
+- **Chat**: One-on-One, Group Chats, Member Management.
+- **Messaging**: Text, File attachments (Images, Video, Audio), Typying Indicators.
+- **Real-time**:
+  - Live socket connection.
+  - Online/Offline user status.
+  - Typing indicators.
+  - Real-time chat list updates.
 
 ## Project Structure
 
@@ -38,15 +49,14 @@ src/
 
 - **Dependency Injection**: Receives `Services` via constructor.
 - **Responsibility**: Minimal logic. Delegates to services and formats responses.
-- **Validation**: Assumes valid data (handled by upstream middleware).
+- **Real-time Integration**: Can trigger socket events (e.g., `emitNewChat` after specific HTTP actions).
 
 ### 2. Services (`src/services`)
 
 **Role**: The heart of the application (Business Logic).
 
 - **Dependency Injection**: Receives `Repositories` via constructor.
-- **Responsibility**: Orchestrates workflows (e.g., Register = Check Email -> Hash -> Save).
-- **Stateless Utils**: Uses `src/utils` for hashing, tokens, etc.
+- **SocketService**: A special service managing all WebSocket logic, event listeners, and emitters.
 
 ### 3. Repositories (`src/repository`)
 
@@ -59,18 +69,20 @@ src/
 
 - **Validation (`validate.middleware.ts`)**: Generic middleware that validates requests against **Zod Schemas**.
 - **Auth**: Verifies JWT tokens.
+- **Socket Middleware**: Authenticates socket handshakes via JWT.
 
 ## Workflow
 
 ```mermaid
 flowchart TD
     Request[HTTP Request] --> Router[Router]
-    Router --> ValMiddleware[Validation Middleware, Zodç]
+    Router --> ValMiddleware[Validation Middleware, Zod]
     ValMiddleware --> AuthMiddleware[Auth Middleware]
     AuthMiddleware --> Controller[Controller]
 
     subgraph Core Logic
     Controller -- Input Data --> Service[Service Layer]
+    Service -- Real-time Event --> SocketService[Socket Service]
     Service -- Logic execution --> Utility[Utils, Hash/Token]
     Service -- Data Request --> Repository[Repository Layer]
     end
@@ -80,6 +92,7 @@ flowchart TD
     Repository -- Data --> Service
     Service -- Result --> Controller
     Controller -- JSON --> Response[HTTP Response]
+    SocketService -- Event --> Client[WebSocket Client]
 ```
 
 ## Dependency Injection (TSyringe)

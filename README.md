@@ -11,6 +11,10 @@ The frontend stack is currently undecided/agnostic, handling clients via standar
 
 - **Real-time Messaging**: Instant message delivery using Socket.IO.
 - **User Authentication**: Secure login and registration (JWT/Bcrypt).
+- **Group Chaos**: Group chat support with member management.
+- **Rich Media**: Support for sending Images, Videos, and Audio.
+- **Presence**: Online/Offline status tracking.
+- **Typing Indicators**: Real-time feedback when users are typing.
 
 ## Tech Stack
 
@@ -44,18 +48,20 @@ graph LR
 
 ```mermaid
 sequenceDiagram
-    participant UserA as Sender
+    participant UserA as Sender (Client)
     participant Server as Socket Server
     participant DB as MongoDB
-    participant UserB as Receiver
+    participant UserB as Receiver (Client)
 
-    UserA->>Server: emit('message', payload)
-    Server->>Server: Socket Middleware (Auth)
+    UserA->>Server: emit('send-message', {chatId, content})
+    Server->>Server: Validate & Auth
     Server->>DB: Save Message (via MessageService)
     DB-->>Server: Message Document
-    Server->>UserB: emit('message-received', message)
-    UserB->>Server: emit('message-seen', {chatId})
-    Server->>UserA: emit('message-seen', {member})
+    Server->>Server: Ack to UserA (Optimistic UI)
+    Server-->>UserA: Callback({status: 'ok', message})
+    Server->>UserB: emit('new-message', message)
+    UserB->>Server: emit('typing', {chatId})
+    Server->>UserA: emit('typing', {userId})
 ```
 
 #### Layer Breakdown

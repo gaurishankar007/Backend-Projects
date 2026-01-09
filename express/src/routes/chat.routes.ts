@@ -7,6 +7,7 @@ import {
   addMemberSchema,
   createChatSchema,
   createGroupSchema,
+  deleteChatSchema,
   fetchChatSchema,
   removeMemberSchema,
 } from "../utils/validators/chat.schema.js";
@@ -51,6 +52,12 @@ class ChatRoute {
       authMiddleware,
       validate(removeMemberSchema),
       chatController.removeMember.bind(chatController)
+    );
+    this.router.delete(
+      "/deleteGroup",
+      authMiddleware,
+      validate(deleteChatSchema),
+      chatController.deleteGroupChat.bind(chatController)
     );
   }
 }

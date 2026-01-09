@@ -35,3 +35,9 @@ export const fetchChatSchema = z.object({
     page: z.number().int("Page must be integer"),
   }),
 });
+
+export const deleteChatSchema = z.object({
+  body: z.object({
+    chatId: chatIdSchema,
+  }),
+});

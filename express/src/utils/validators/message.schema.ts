@@ -26,3 +26,9 @@ export const fetchMessageSchema = z.object({
     page: z.number().int("Page must be integer"),
   }),
 });
+
+export const deleteMessageSchema = z.object({
+  body: z.object({
+    messageId: messageIdSchema,
+  }),
+});

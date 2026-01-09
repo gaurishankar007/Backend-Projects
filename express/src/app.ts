@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { Application } from "express";
 import { Server } from "socket.io"; // Import Server for type
+import { container } from "tsyringe";
 import { Database } from "./config/database.js";
 import ErrorHandler from "./middleware/error.middleware.js"; // Path updated
 import { SocketService } from "./services/socket.service.js";
@@ -17,7 +18,7 @@ export class App {
 
   constructor() {
     this.app = express();
-    this.socketService = new SocketService();
+    this.socketService = container.resolve(SocketService);
     this.initializeConfig();
     this.initializeMiddlewares();
     this.initializeRoutes();

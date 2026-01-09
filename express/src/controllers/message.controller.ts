@@ -50,4 +50,17 @@ export class MessageController {
       errorResponse(res, err.message);
     }
   }
+
+  async deleteMessage(req: any, res: any) {
+    const { messageId } = req.body;
+    try {
+      await this.messageService.deleteMessage(
+        messageId,
+        (req as any).user._id.toString()
+      );
+      successResponse(res, "Message deleted");
+    } catch (err: any) {
+      errorResponse(res, err.message);
+    }
+  }
 }

@@ -17,4 +17,8 @@ export class MessageRepository extends GenericRepository<IMessage> {
       .limit(10)
       .exec();
   }
+
+  async deleteChatMessages(chatId: string): Promise<any> {
+    return this.model.deleteMany({ chat: chatId }).exec();
+  }
 }
