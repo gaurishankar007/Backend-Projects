@@ -7,6 +7,7 @@ This project involves exploring various backend technologies to determine the be
 - **Node.js**:
 
   - **Express.js**: A minimal and flexible Node.js web application framework (being used for the Chat App).
+  - **NestJS**: A progressive Node.js framework for building efficient, reliable and scalable server-side applications (also being used for the Chat App).
 
 - **Dart**:
   - **Dart Frog**: A fast, minimalistic backend framework for Dart (being used for the Todo App).
