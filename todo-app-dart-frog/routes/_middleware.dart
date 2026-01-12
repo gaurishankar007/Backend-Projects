@@ -13,7 +13,7 @@ Handler middleware(Handler handler) {
     // Initialize database connection
     if (_database == null) {
       final mongoUri =
-          env['MONGODB_URI'] ?? 'mongodb://localhost:27017/dart_frog_auth';
+          env['MONGODB_URI'] ?? 'mongodb://localhost:27017/dart_frog_todo';
       _database = await Database.connect(mongoUri);
     }
 

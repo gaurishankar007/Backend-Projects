@@ -1,0 +1,112 @@
+###
+# Dart Frog API - Authentication & Todo App
+#
+# This file contains requests for all API endpoints.
+# You can use the REST Client extension for VS Code to run these requests.
+###
+
+#------------------------------------------------#
+# VARIABLES
+#------------------------------------------------#
+# Set your host and tokens here.
+# The accessToken and refreshToken can be automatically captured from the login response.
+@hostname = localhost
+@port = 8080
+@baseUrl = http://{{hostname}}:{{port}}
+@accessToken =
+@refreshToken =
+@todoId =
+
+
+###
+# ================================================
+# AUTHENTICATION ENDPOINTS
+# ================================================
+
+###
+# 1. Sign Up
+# Creates a new user account.
+# Response includes the user object, accessToken, and refreshToken.
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+# 2. Login
+# Authenticates a user and provides new tokens.
+# The '@name login' directive allows us to capture response values.
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+# Capture tokens from the login response to use in subsequent requests.
+@accessToken = {{login.response.body.accessToken}}
+@refreshToken = {{login.response.body.refreshToken}}
+
+###
+# 3. Refresh Access Token
+# Generates a new access token using a valid refresh token.
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+
+###
+# ================================================
+# TODOs ENDPOINTS (PROTECTED)
+# ================================================
+# All requests below require a valid `accessToken`.
+
+###
+# 4. Create a new Todo
+# @name createTodo
+POST {{baseUrl}}/todos
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Buy groceries",
+  "description": "Milk, eggs, bread"
+}
+
+# Capture the ID of the newly created todo.
+@todoId = {{createTodo.response.body.todo.id}}
+
+###
+# 5. Get All Todos
+GET {{baseUrl}}/todos
+Authorization: Bearer {{accessToken}}
+
+###
+# 6. Get a Single Todo by ID
+GET {{baseUrl}}/todos/{{todoId}}
+Authorization: Bearer {{accessToken}}
+
+###
+# 7. Update a Todo
+PUT {{baseUrl}}/todos/{{todoId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Buy groceries (updated)",
+  "completed": true
+}
+
+###
+# 8. Delete a Todo
+DELETE {{baseUrl}}/todos/{{todoId}}
+Authorization: Bearer {{accessToken}}
