@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { inject, injectable } from "tsyringe";
 import { IChat } from "../interfaces/IChat.js";
 import { IUser } from "../interfaces/IUser.js";
@@ -13,9 +14,12 @@ export class ChatService {
   ) {}
 
   async create(userId: string, currentUser: IUser): Promise<IChat> {
-    const members = [currentUser._id, userId];
+    const members = [
+      currentUser._id as mongoose.Types.ObjectId,
+      new mongoose.Types.ObjectId(userId),
+    ];
     // Mongoose will handle string-to-ObjectId conversion and apply defaults for missing fields
-    return this.chatRepository.create({ members } as any);
+    return this.chatRepository.create({ members } as unknown as Partial<IChat>);
   }
 
   async createGroup(
@@ -23,14 +27,17 @@ export class ChatService {
     name: string,
     currentUser: IUser
   ): Promise<IChat> {
-    const members = [currentUser._id, ...userIds];
+    const members = [
+      currentUser._id as mongoose.Types.ObjectId,
+      ...userIds.map((id) => new mongoose.Types.ObjectId(id)),
+    ];
     // Mongoose will handle string-to-ObjectId conversion and apply defaults for missing fields
     return this.chatRepository.create({
       members,
       name,
       group: true,
-      creator: currentUser._id,
-    } as any);
+      creator: currentUser._id as mongoose.Types.ObjectId,
+    } as unknown as Partial<IChat>);
   }
 
   async fetch(userId: string, page: number): Promise<IChat[]> {
@@ -38,7 +45,7 @@ export class ChatService {
   }
 
   async addMember(chatId: string, userIds: string[]): Promise<IChat | null> {
-    const members = userIds; // Just the IDs now
+    const members = userIds.map((id) => new mongoose.Types.ObjectId(id));
     return this.chatRepository.addMember(chatId, members);
   }
 

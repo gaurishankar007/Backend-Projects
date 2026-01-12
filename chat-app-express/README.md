@@ -148,3 +148,4 @@ export class UserController {
 1. `npm install`
 2. `sudo npm install` (If permission errors occur)
 3. `npm run dev` (Runs with `tsx` watch mode)
+4. `mongod --dbpath path/to/your/mongodb/database` (Start MongoDB from your manual installation directory)
