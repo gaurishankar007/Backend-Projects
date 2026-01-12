@@ -1,0 +1,147 @@
+@baseUrl = http://localhost:8040/api
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJpZCI6IjY5NjQ5MmYxOTNkYjNiODg3YzcwNDBhOSIsImlhdCI6MTc2ODE5ODkyNSwiZXhwIjoxNzcwNzkwOTI1fQ.LGdXqpr55siNMIkid28yxH9L4v4X9CSnh-kZKMEcHXw
+@refreshToken = YOUR_REFRESH_TOKEN_HERE
+
+### --- AUTH ---
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+
+### Refresh Token
+POST {{baseUrl}}/auth/refreshToken
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+
+### --- USER ---
+
+# @name register
+POST {{baseUrl}}/user/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123!",
+  "name": "Test User"
+}
+
+### Get All Users / Search
+GET {{baseUrl}}/user?search=test
+Authorization: Bearer {{authToken}}
+
+### Search User (POST)
+POST {{baseUrl}}/user/searchUser
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "gauri"
+}
+
+### Change Name
+PUT {{baseUrl}}/user/changeName
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "Test User Updated"
+}
+
+### Change Password
+PUT {{baseUrl}}/user/changePassword
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "oldPassword": "Password123!",
+  "password": "NewPassword123!",
+  "confirmPassword": "NewPassword123!"
+}
+
+
+### --- CHAT ---
+
+### Fetch Chats
+GET {{baseUrl}}/chat/fetch
+Authorization: Bearer {{authToken}}
+
+### Access/Create Chat
+POST {{baseUrl}}/chat/create
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "userId": "TARGET_USER_ID"
+}
+
+### Create Group Chat
+POST {{baseUrl}}/chat/createGroup
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "My Team Group",
+  "userIds": ["USER_ID_1", "USER_ID_2"]
+}
+
+### Add Member to Group
+PUT {{baseUrl}}/chat/addMember
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "chatId": "CHAT_ID",
+  "userIds": ["USER_ID_3"]
+}
+
+### Remove Member from Group
+DELETE {{baseUrl}}/chat/removeMember
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "chatId": "CHAT_ID",
+  "userId": "USER_ID_3"
+}
+
+
+### --- MESSAGE ---
+
+### Send Text Message
+POST {{baseUrl}}/message/text
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "chatId": "CHAT_ID",
+  "content": "Hello World!",
+  "contentType": "text"
+}
+
+### Fetch Messages
+POST {{baseUrl}}/message/fetch
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "chatId": "CHAT_ID",
+  "page": 1
+}
+
+### Delete Message
+DELETE {{baseUrl}}/message/delete
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "messageId": "MESSAGE_ID"
+}
